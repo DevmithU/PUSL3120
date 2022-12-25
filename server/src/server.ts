@@ -16,6 +16,7 @@ io.on('connection',()=>{
 });
 mongoose.connect('mongodb://localhost:27017/mdbt1').then(() =>{
     console.log("connected to mongodb");
+
     httpServer.listen(4001,() => {
         console.log('API is listening on port 4001');
     });
