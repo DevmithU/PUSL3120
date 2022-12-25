@@ -1,0 +1,32 @@
+ docker run --name mongodb -d -p 27017:27017 mongo
+
+
+
+
+
+
+
+ docker stop mongodb
+
+ docker container start mongodb
+
+ docker exec -it mongodb mongo
+
+ docker container ls
+
+ docker container ls -all
+
+ docker image ls
+
+
+
+//shutdowm
+use admin
+db.shutdownServer()
+
+net stop MongoDB
+
+net start MongoDB
+
+mongod --version
+mongod --dbpath "C:\Program Files\MongoDB\Server\4.0\data"
