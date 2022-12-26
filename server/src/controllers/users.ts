@@ -1,7 +1,7 @@
 import { NextFunction, Request, Response } from "express";
 import UserModel from "../models/user";
 import { UserDocument } from "../types/user.interface";
-import {Error, MongooseError} from "mongoose";
+import {Error} from "mongoose";
 import jwt from "jsonwebtoken";
 import { secret } from "../config";
 import {MongoError} from "mongodb";
