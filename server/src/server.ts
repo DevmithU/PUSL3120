@@ -4,6 +4,7 @@ import {Server} from "socket.io";
 import * as mongoose from "mongoose";
 import * as usersController from "./controllers/users";
 import bodyParser from "body-parser";
+import authMiddleware from './middlewares/auth'
 
 
 
@@ -21,7 +22,7 @@ app.get("/",(req, res)=>{
 
 app.post("/api/users", usersController.register);
 app.post("/api/login", usersController.login);
-
+app.get('/api/user', authMiddleware, usersController.currentUser);
 
 io.on('connection',()=>{
     console.log("connect");
@@ -34,3 +35,4 @@ mongoose.connect('mongodb://localhost:27017/mdbt1').then(() =>{
         console.log('API is listening on port 4001');
     });
 });
+
