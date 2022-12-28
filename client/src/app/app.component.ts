@@ -11,13 +11,29 @@ export class AppComponent implements OnInit {
 
   ngOnInit(): void {
     this.authService.getCurrentUser().subscribe({
-      next: (res) => {
-        console.log('res', res);
+      next: (currentUser) => {
+
+        console.log('currentUser', currentUser);// comment for checking only
+        this.authService.setCurrentUser(currentUser);
       },
       error: (err) => {
         console.log('err', err);
         this.authService.setCurrentUser(null);
       },
     });
+
+    ///////////////to check logged in status dev check
+    // this.authService.currentUser$.subscribe((res)=> {
+    //     console.log('res',res);
+    //   });
+    // this.authService.isLogged$.subscribe((isLoggedIn)=>{
+    //   console.log('isLoggedIn',isLoggedIn);
+    // });
+    /////////////////
+
+
   }
 }
+
+
+
