@@ -6,7 +6,9 @@ import { AuthService } from './auth.service';
 export class AuthGuardService implements CanActivate {
   constructor(
     private authService: AuthService,
-    private router: Router) {}
+    private router: Router
+  ) {}
+
   canActivate(): Observable<boolean> {
     return this.authService.isLogged$.pipe(
       map((isLoggedIn) => {

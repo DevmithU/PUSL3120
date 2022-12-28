@@ -11,6 +11,7 @@ import {LoginRequestInterface} from "../../types/loginRequest.interface";
 })
 export class LoginComponent {
   errorMessage: string | null = null;
+
   form = this.fb.group({
     email: ['', Validators.required],
     password: ['', Validators.required],
