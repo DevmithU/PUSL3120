@@ -11,6 +11,7 @@
         type="email"
         placeholder="Email"
         class="login-input"
+        (change)="onTextChanged($event)"
       />
       <input
         formControlName="username"

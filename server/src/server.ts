@@ -32,6 +32,8 @@ app.get("/",(req, res)=>{
 
 app.post("/api/users", usersController.register);
 app.post("/api/users/login", usersController.login);
+app.get("/api/users/:email", usersController.emailAvailable);
+
 app.get('/api/user', authMiddleware, usersController.currentUser);
 app.get("/api/boards", authMiddleware, boardsController.getBoards);
 app.get("/api/boards/:boardId", authMiddleware, boardsController.getBoard);

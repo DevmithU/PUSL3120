@@ -41,4 +41,20 @@ export class RegisterComponent {
       },
     });
   }
+
+  onTextChanged(event: any) {
+    let email : string;
+    email = event.target.value
+    this.authService.emailAvailable(email).subscribe( (isChecked) =>  {
+      // console.log(isChecked);
+      if(!isChecked){
+        this.errorMessage = "Email already in use";
+        // console.log("email exist");
+      }else{
+        this.errorMessage = null;
+      }
+    }) ;
+  }
+
+
 }

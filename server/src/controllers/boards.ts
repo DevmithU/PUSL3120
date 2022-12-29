@@ -1,4 +1,4 @@
-import { Request, Response, NextFunction } from "express";
+import {  Response, NextFunction } from "express";
 import BoardModel from "../models/board";
 import { ExpressRequestInterface } from "../types/expressRequest.interface";
 

@@ -34,7 +34,10 @@ export class AuthService {
     const url = environment.apiUrl + '/users/login';
     return this.http.post<CurrentUserInterface>(url, loginRequest);
   }
-
+  emailAvailable(email:string): Observable<boolean> {
+    const status = `${environment.apiUrl}/users/${email}`;
+    return this.http.get<boolean>(status);
+  }
   setToken(currentUser: CurrentUserInterface): void {
     localStorage.setItem('token', currentUser.token);
   }
