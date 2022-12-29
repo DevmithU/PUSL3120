@@ -24,7 +24,7 @@
         placeholder="Password"
         class="login-input"
       />
-      <button type="submit" class="login-submit-button">Register</button>
+      <button type="submit" [class.disabled]="isButtonDisabled2" class="login-submit-button" [disabled]="isButtonDisabled">Register</button>
     </form>
     <div class="bottom-form-links">
       <a routerLink="/login" class="register-link">Sign in</a>

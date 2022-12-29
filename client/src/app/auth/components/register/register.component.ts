@@ -11,6 +11,9 @@ import {RegisterRequestInterface} from "../../types/registerRequest.interface";
 })
 export class RegisterComponent {
   errorMessage: string | null = null;
+  isButtonDisabled = "disabled";
+  isButtonDisabled2 = true;
+
 
   form = this.fb.group({
     email: ['', Validators.required],
@@ -23,7 +26,11 @@ export class RegisterComponent {
     private authService: AuthService,
     private router: Router
   ) {}
+  ngOnInit(): void {
+    this.isButtonDisabled = "disabled";
+    this.isButtonDisabled2 = true;
 
+  }
   onSubmit(): void {
     this.authService.register(<RegisterRequestInterface>(this.form.value)).subscribe({
       next: (currentUser) => {
@@ -49,9 +56,15 @@ export class RegisterComponent {
       // console.log(isChecked);
       if(!isChecked){
         this.errorMessage = "Email already in use";
+        this.isButtonDisabled = "disabled";
+        this.isButtonDisabled2 = true;
+
         // console.log("email exist");
       }else{
         this.errorMessage = null;
+        this.isButtonDisabled = "";
+        this.isButtonDisabled2 = false;
+
       }
     }) ;
   }

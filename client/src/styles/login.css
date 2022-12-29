@@ -79,6 +79,12 @@
 .login-submit-button:hover {
   background-color: #61bd4f;
 }
+.disabled:hover {
+  background-color: #5aac44;
+  cursor: initial;
+
+
+}
 
 .bottom-form-links {
   text-align: center;
