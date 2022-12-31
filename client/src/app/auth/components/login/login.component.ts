@@ -4,6 +4,7 @@ import { FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AuthService } from '../../services/auth.service';
 import {LoginRequestInterface} from "../../types/loginRequest.interface";
+import {SocketService} from "../../../shared/services/socket.service";
 
 @Component({
   selector: 'auth-login',
@@ -20,14 +21,17 @@ export class LoginComponent {
   constructor(
     private fb: FormBuilder,
     private authService: AuthService,
-    private router: Router
-  ) {}
+    private router: Router,
+    private socketService: SocketService
+
+) {}
 
   onSubmit(): void {
     this.authService.login(<LoginRequestInterface>(this.form.value)).subscribe({
       next: (currentUser) => {
         console.log('currentUser', currentUser);
         this.authService.setToken(currentUser);
+        this.socketService.setupSocketConnection(currentUser);
         this.authService.setCurrentUser(currentUser);
         this.errorMessage = null;
         this.router.navigateByUrl('/');

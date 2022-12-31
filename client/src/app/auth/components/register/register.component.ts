@@ -4,6 +4,7 @@ import { FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AuthService } from '../../services/auth.service';
 import {RegisterRequestInterface} from "../../types/registerRequest.interface";
+import {SocketService} from "../../../shared/services/socket.service";
 
 @Component({
   selector: 'auth-register',
@@ -24,7 +25,8 @@ export class RegisterComponent {
   constructor(
     private fb: FormBuilder,
     private authService: AuthService,
-    private router: Router
+    private router: Router,
+    private socketService: SocketService
   ) {}
   ngOnInit(): void {
     this.isButtonDisabled = "disabled";
@@ -36,6 +38,7 @@ export class RegisterComponent {
       next: (currentUser) => {
         console.log('currentUser', currentUser);
         this.authService.setToken(currentUser);
+        this.socketService.setupSocketConnection(currentUser);
         this.authService.setCurrentUser(currentUser);
         this.errorMessage = null;
         this.router.navigateByUrl('/');

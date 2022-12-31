@@ -7,11 +7,20 @@ import bodyParser from "body-parser";
 import authMiddleware from './middlewares/auth'
 import cors from "cors";
 import * as boardsController from "./controllers/boards";
+import {SocketEventsEnum} from "./types/socketEvents.enum";
+import jwt from "jsonwebtoken";
+import User from "./models/user";
+import {Socket} from "./types/socket.interface";
+import { secret } from "./config";
 
 
 const app = express();
 const httpServer = createServer(app);
-const io = new Server(httpServer);
+const io = new Server(httpServer, {
+    cors: {
+        origin: "*",
+    },
+});
 mongoose.set('strictQuery', true);
 
 app.use(cors());
@@ -40,10 +49,34 @@ app.get("/api/boards/:boardId", authMiddleware, boardsController.getBoard);
 app.post("/api/boards", authMiddleware, boardsController.createBoard);
 
 
-io.on('connection',()=>{
-    console.log("connect");
+io.use(async (socket: Socket, next) => {
+    try {
+        const token = (socket.handshake.auth.token as string) ?? "";
+        const data = jwt.verify(token.split(" ")[1], secret) as {
+            id: string;
+            email: string;
+        };
+        const user = await User.findById(data.id);
 
+        if (!user) {
+            return next(new Error("Authentication error"));
+        }
+        socket.user = user;
+        next();
+    } catch (err) {
+        next(new Error("Authentication error"));
+    }
+}).on('connection',(socket)=>{
+    socket.on(SocketEventsEnum.boardsJoin, (data) => {
+        boardsController.joinBoard(io, socket, data);
+    });
+    socket.on(SocketEventsEnum.boardsLeave, (data) => {
+        boardsController.leaveBoard(io, socket, data);
+    });
+    // console.log("connect");
 });
+
+
 mongoose.connect('mongodb://localhost:27017/mdbt1').then(() =>{
     console.log("connected to mongodb");
 
