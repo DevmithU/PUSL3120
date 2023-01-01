@@ -7,6 +7,7 @@ import bodyParser from "body-parser";
 import authMiddleware from './middlewares/auth'
 import cors from "cors";
 import * as boardsController from "./controllers/boards";
+import * as columnsController from "./controllers/columns";
 import {SocketEventsEnum} from "./types/socketEvents.enum";
 import jwt from "jsonwebtoken";
 import User from "./models/user";
@@ -46,6 +47,7 @@ app.get("/api/users/:email", usersController.emailAvailable);
 app.get('/api/user', authMiddleware, usersController.currentUser);
 app.get("/api/boards", authMiddleware, boardsController.getBoards);
 app.get("/api/boards/:boardId", authMiddleware, boardsController.getBoard);
+app.get(    "/api/boards/:boardId/columns", authMiddleware, columnsController.getColumns);
 app.post("/api/boards", authMiddleware, boardsController.createBoard);
 
 
