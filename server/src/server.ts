@@ -13,6 +13,7 @@ import jwt from "jsonwebtoken";
 import User from "./models/user";
 import {Socket} from "./types/socket.interface";
 import { secret } from "./config";
+import * as tasksController from "./controllers/tasks";
 
 
 const app = express();
@@ -48,6 +49,7 @@ app.get('/api/user', authMiddleware, usersController.currentUser);
 app.get("/api/boards", authMiddleware, boardsController.getBoards);
 app.get("/api/boards/:boardId", authMiddleware, boardsController.getBoard);
 app.get(    "/api/boards/:boardId/columns", authMiddleware, columnsController.getColumns);
+app.get("/api/boards/:boardId/tasks", authMiddleware, tasksController.getTasks);
 app.post("/api/boards", authMiddleware, boardsController.createBoard);
 
 
@@ -74,6 +76,12 @@ io.use(async (socket: Socket, next) => {
     });
     socket.on(SocketEventsEnum.boardsLeave, (data) => {
         boardsController.leaveBoard(io, socket, data);
+    });
+    socket.on(SocketEventsEnum.columnsCreate, data => {
+        columnsController.createColumn(io, socket, data)
+    });
+    socket.on(SocketEventsEnum.tasksCreate, (data) => {
+        tasksController.createTask(io, socket, data);
     });
     // console.log("connect");
 });

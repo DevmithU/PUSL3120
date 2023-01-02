@@ -16,7 +16,7 @@ const routes: Routes = [
 ];
 
 @NgModule({
-  imports: [CommonModule, RouterModule.forChild(routes), InlineFormModule,TopbarModule],
+  imports: [CommonModule, RouterModule.forChild(routes), InlineFormModule,TopbarModule,],
   declarations: [BoardsComponent],
   providers: [BoardsService],
 })

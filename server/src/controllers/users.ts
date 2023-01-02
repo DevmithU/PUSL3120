@@ -79,7 +79,7 @@ export const emailAvailable = async (
     // console.log("7");
 
     const user = await UserModel.findOne({ email: req.params.email });
-    // console.log(user);
+    console.log(user);
 
     let status: boolean;
     if (user==null){

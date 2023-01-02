@@ -3,9 +3,15 @@ import {ActivatedRoute, NavigationStart, Router} from '@angular/router';
 import { BoardsService } from 'src/app/shared/services/boards.service';
 import {BoardService} from "../../services/board.service";
 import {BoardInterface} from "../../../shared/types/board.interface";
-import {filter, Observable} from "rxjs";
+import { combineLatest, filter, map, Observable } from 'rxjs';
 import {SocketService} from "../../../shared/services/socket.service";
 import {SocketEventsEnum} from "../../../shared/types/socketEvents.enum";
+import {ColumnsService} from "../../../shared/services/columns.service";
+import {ColumnInterface} from "../../../shared/types/column.interface";
+import {ColumnInputInterface} from "../../../shared/types/columnInput.interface";
+import {TaskInterface} from "../../../shared/types/task.interface";
+import {TasksService} from "../../../shared/services/tasks.service";
+import {TaskInputInterface} from "../../../shared/types/taskInput.interface";
 
 @Component({
   selector: 'board',
@@ -16,14 +22,23 @@ import {SocketEventsEnum} from "../../../shared/types/socketEvents.enum";
 
 export class BoardComponent implements OnInit {
   boardId: string;
-  board$: Observable<BoardInterface>;
+  data$: Observable<{
+    board: BoardInterface;
+    columns: ColumnInterface[];
+    tasks: TaskInterface[];
+
+  }>;
+
 
   constructor(
     private boardsService: BoardsService,
     private route: ActivatedRoute,
     private router: Router,
     private boardService: BoardService,
-    private socketService: SocketService
+    private socketService: SocketService,
+    private columnsService: ColumnsService,
+    private tasksService: TasksService
+
   ) {
     const boardId = this.route.snapshot.paramMap.get('boardId');
 
@@ -32,8 +47,17 @@ export class BoardComponent implements OnInit {
     }
 
     this.boardId = boardId;
-    this.board$ = this.boardService.board$.pipe(filter(Boolean));
-
+    this.data$ = combineLatest([
+      this.boardService.board$.pipe(filter(Boolean)),
+      this.boardService.columns$,
+      this.boardService.tasks$,
+    ]).pipe(
+      map(([board, columns, tasks]) => ({
+        board,
+        columns,
+        tasks,
+      }))
+    );
   }
 
   ngOnInit(): void {
@@ -51,14 +75,64 @@ export class BoardComponent implements OnInit {
         this.boardService.leaveBoard(this.boardId);
       }
     });
+
+    // will add the new column for SELF and OTHER CLIENTS though this listener
+    this.socketService
+      .listen<ColumnInterface>(SocketEventsEnum.columnsCreateSuccess)
+      .subscribe((column) => {
+        this.boardService.addColumn(column);
+        // console.log('column',column);
+
+      });
+    // will add the new task for SELF and OTHER CLIENTS though this listener
+
+    this.socketService
+      .listen<TaskInterface>(SocketEventsEnum.tasksCreateSuccess)
+      .subscribe((task) => {
+        this.boardService.addTask(task);
+      });
+
   }
 
   fetchData(): void {
     this.boardsService.getBoard(this.boardId).subscribe((board) => {
-      // console.log('board', board);
       this.boardService.setBoard(board);
-
+    });
+    this.columnsService.getColumns(this.boardId).subscribe((columns) => {
+      this.boardService.setColumns(columns);
+    });
+    this.tasksService.getTasks(this.boardId).subscribe((tasks) => {
+      this.boardService.setTasks(tasks);
     });
   }
 
+  // test(): void {
+  //   this.socketService.emit('columns:create', {
+  //     boardId: this.boardId,
+  //     title: 'foo',
+  //   });
+  // }
+
+  createColumn(title: string): void {
+    const columnInput: ColumnInputInterface = {
+      title,
+      boardId: this.boardId,
+    };
+    this.columnsService.createColumn(columnInput);
+
+    // console.log('create column',title);
+  }
+
+  createTask(title: string, columnId: string): void {
+    const taskInput: TaskInputInterface = {
+      title,
+      boardId: this.boardId,
+      columnId,
+    };
+    this.tasksService.createTask(taskInput);
+  }
+
+  getTasksByColumn(columnId: string, tasks: TaskInterface[]): TaskInterface[] {
+    return tasks.filter((task) => task.columnId === columnId);
+  }
 }
