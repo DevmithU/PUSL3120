@@ -46,10 +46,8 @@ app.post("/api/users", usersController.register);
 app.post("/api/users/login", usersController.login);
 // app.post("/api/users/login2", usersController.sampleFunction);
 app.post("/api/users/login2",(req, res,next)=>{
-
     usersController.sampleFunction(req, res, next);
 });
-
 app.get("/api/users/:email", usersController.emailAvailable);
 // app.get("/api/users/:email", usersController.addListUser);
 app.get('/api/user', authMiddleware, usersController.currentUser);
@@ -89,6 +87,15 @@ io.use(async (socket: Socket, next) => {
     });
     socket.on(SocketEventsEnum.tasksCreate, (data) => {
         tasksController.createTask(io, socket, data);
+    });
+    socket.on(SocketEventsEnum.boardsUpdate, (data) => {
+        boardsController.updateBoard(io, socket, data);
+    });
+    socket.on(SocketEventsEnum.boardsDelete, (data) => {
+        boardsController.deleteBoard(io, socket, data);
+    });
+    socket.on(SocketEventsEnum.columnsDelete, (data) => {
+        columnsController.deleteColumn(io, socket, data);
     });
     // console.log("connect");
 });
