@@ -1,4 +1,4 @@
-import { Schema, model } from "mongoose";
+import { Schema, model } from 'mongoose';
 import { BoardDocument } from "../types/board.interface";
 
 const boardSchema = new Schema<BoardDocument>({
@@ -10,12 +10,16 @@ const boardSchema = new Schema<BoardDocument>({
     type: Schema.Types.ObjectId,
     required: true,
   },
+  userList: {
+    type: [Schema.Types.ObjectId],
+    required: true,
+  },
 });
 boardSchema.methods.validateMember = function (userId: string) {
   console.log(userId);
   console.log(this.userId);
-
-  if(userId==this.userId){
+  console.log("-----------------------------------");
+  if((userId==this.userId)||(this.userList.includes(userId))){
     return true;
     console.log("true");
 

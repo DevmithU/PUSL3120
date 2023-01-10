@@ -4,4 +4,5 @@ export interface BoardInterface {
   userId: string;
   createdAt: string;
   updatedAt: string;
+  userList:Array<string>;
 }

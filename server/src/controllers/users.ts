@@ -1,4 +1,5 @@
 import { NextFunction, Request, Response } from "express";
+import express from "express";
 import UserModel from "../models/user";
 import { UserDocument } from "../types/user.interface";
 import {Error} from "mongoose";
@@ -9,7 +10,7 @@ import { ExpressRequestInterface } from "../types/expressRequest.interface";
 
 
 const normalizeUser = (user: UserDocument) => {
-  const token = jwt.sign({ id: user.id, email: user.email },secret);
+  const token = jwt.sign({ id: user.id, email: user.email },secret,);
   return {
     email: user.email,
     username: user.username,
@@ -87,7 +88,6 @@ export const emailAvailable = async (
     }else {
       status = false;
     }
-    // console.log(req.params);
     res.send(status);
 
   } catch (err) {
@@ -102,7 +102,7 @@ export const addListUser = async (
   try {
     // console.log("7");
 
-    const user = await UserModel.findOne({ email: req.params.email });
+    const user = await UserModel.findOne({ email: req.body.email });
     console.log(user);
 
     let status: boolean;
@@ -113,6 +113,20 @@ export const addListUser = async (
     }
     // console.log(req.params);
     res.send(status);
+
+  } catch (err) {
+    next(err);
+  }
+};
+
+export const sampleFunction = async (
+    req: ExpressRequestInterface,
+    res: Response,
+    next: NextFunction,
+) => {
+  try {
+    const user = await UserModel.findOne({ email: req.body.email });
+    res.send(user);
 
   } catch (err) {
     next(err);

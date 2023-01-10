@@ -7,11 +7,11 @@ import {SocketService} from "./shared/services/socket.service";
   templateUrl: './app.component.html',
 })
 export class AppComponent implements OnInit {
-  // title = 'PUSL3120ANG';
+  // title = 'PUSL3120ANG2';
   constructor(
     private authService: AuthService,
     private socketService: SocketService,
-) {}
+) {  }
 
   ngOnInit(): void {
     this.authService.getCurrentUser().subscribe({
