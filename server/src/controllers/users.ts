@@ -94,6 +94,30 @@ export const emailAvailable = async (
     next(err);
   }
 };
+export const addListUser = async (
+    req: ExpressRequestInterface,
+    res: Response,
+    next: NextFunction
+) => {
+  try {
+    // console.log("7");
+
+    const user = await UserModel.findOne({ email: req.params.email });
+    console.log(user);
+
+    let status: boolean;
+    if (user==null){
+      status = true;
+    }else {
+      status = false;
+    }
+    // console.log(req.params);
+    res.send(status);
+
+  } catch (err) {
+    next(err);
+  }
+};
 
 export const currentUser = (req: ExpressRequestInterface, res: Response) => {
   if (!req.user) {

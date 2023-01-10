@@ -46,6 +46,7 @@ userSchema.pre("save", async function (next) {
 });
 
 userSchema.methods.validatePassword = function (password: string) {
+
     if(password==this.password){
         return true;
     }

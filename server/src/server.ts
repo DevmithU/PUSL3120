@@ -14,6 +14,7 @@ import User from "./models/user";
 import {Socket} from "./types/socket.interface";
 import { secret } from "./config";
 import * as tasksController from "./controllers/tasks";
+import {addListUser} from "./controllers/users";
 
 
 const app = express();
@@ -44,7 +45,7 @@ app.get("/",(req, res)=>{
 app.post("/api/users", usersController.register);
 app.post("/api/users/login", usersController.login);
 app.get("/api/users/:email", usersController.emailAvailable);
-
+app.get("/api/users/:email", usersController.addListUser);
 app.get('/api/user', authMiddleware, usersController.currentUser);
 app.get("/api/boards", authMiddleware, boardsController.getBoards);
 app.get("/api/boards/:boardId", authMiddleware, boardsController.getBoard);

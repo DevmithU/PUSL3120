@@ -11,5 +11,14 @@ const boardSchema = new Schema<BoardDocument>({
     required: true,
   },
 });
+boardSchema.methods.validateMember = function (userId: string) {
+  console.log(userId);
+  console.log(this.userId);
 
+  if(userId==this.userId){
+    return true;
+    console.log("true");
+
+  }
+};
 export default model<BoardDocument>("Board", boardSchema);

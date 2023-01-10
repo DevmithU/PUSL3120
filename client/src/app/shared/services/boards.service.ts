@@ -16,6 +16,8 @@ export class BoardsService {
   }
   getBoard(boardId: string): Observable<BoardInterface> {
     const url = `${environment.apiUrl}/boards/${boardId}`;
+
+    // console.log("board url",url);
     return this.http.get<BoardInterface>(url);
   }
   createBoard(title: string): Observable<BoardInterface> {

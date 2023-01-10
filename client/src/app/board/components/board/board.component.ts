@@ -41,7 +41,6 @@ export class BoardComponent implements OnInit {
 
   ) {
     const boardId = this.route.snapshot.paramMap.get('boardId');
-
     if (!boardId) {
       throw new Error('Cant get boardID from url');
     }
@@ -58,6 +57,8 @@ export class BoardComponent implements OnInit {
         tasks,
       }))
     );
+    // console.log("data$",this.data$);
+
   }
 
   ngOnInit(): void {
@@ -96,14 +97,23 @@ export class BoardComponent implements OnInit {
 
   fetchData(): void {
     this.boardsService.getBoard(this.boardId).subscribe((board) => {
-      this.boardService.setBoard(board);
-    });
-    this.columnsService.getColumns(this.boardId).subscribe((columns) => {
-      this.boardService.setColumns(columns);
-    });
-    this.tasksService.getTasks(this.boardId).subscribe((tasks) => {
-      this.boardService.setTasks(tasks);
-    });
+
+
+        this.boardService.setBoard(board);
+        this.columnsService.getColumns(this.boardId).subscribe((columns) => {
+          this.boardService.setColumns(columns);
+        });
+        this.tasksService.getTasks(this.boardId).subscribe((tasks) => {
+          this.boardService.setTasks(tasks);
+        });
+
+      },
+      (error) => {
+        console.error(error);
+        this.router.navigate(['/boards']);
+      });
+
+    console.log("comleted");
   }
 
   // test(): void {

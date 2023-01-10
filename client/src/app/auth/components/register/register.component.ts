@@ -11,7 +11,7 @@ import {SocketService} from "../../../shared/services/socket.service";
   templateUrl: './register.component.html',
 })
 export class RegisterComponent {
-  errorMessage: string | null = null;
+  errorMessage: string | null | undefined ;
   isButtonDisabled = "disabled";
   isButtonDisabled2 = true;
 

@@ -1,6 +1,6 @@
 .board {
   background: #00add0;
-  height: 100vh;
+  height: calc(100vh - 40px);
   overflow-x: auto;
 }
 

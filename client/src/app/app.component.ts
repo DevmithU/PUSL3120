@@ -18,7 +18,7 @@ export class AppComponent implements OnInit {
       next: (currentUser) => {
 
         this.socketService.setupSocketConnection(currentUser);
-        console.log('currentUser', currentUser);// comment for checking only
+        console.log('currentUser-app-component', currentUser);// comment for checking only
         this.authService.setCurrentUser(currentUser);
       },
       error: (err) => {

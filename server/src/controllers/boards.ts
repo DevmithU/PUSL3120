@@ -29,10 +29,32 @@ export const getBoard = async (
     if (!req.user) {
       return res.sendStatus(401);
     }
+    console.log("11111 board--------")
+
     const board = await BoardModel.findById(req.params.boardId);
+    // console.log("req.params")
     // console.log(req.params);
+    // console.log("BOARDS")
+    // console.log(board);
+    if (!board) {
+      return res.status(422);
+      console.log("no board--------")
+    }
+    // console.log(board.userId);
+    // console.log("user--",req.user.id);
+
+    const isValidUser =  board.validateMember(req.user.id);
+    if (!isValidUser) {
+      // console.log("not-valid",isValidUser);
+
+      return res.status(422).json({ board: "Not Member of board" });
+    }
+    // console.log("valid",isValidUser);
+
     res.send(board);
   } catch (err) {
+    console.log("error board--------")
+
     next(err);
   }
 };

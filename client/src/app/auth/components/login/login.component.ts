@@ -29,7 +29,7 @@ export class LoginComponent {
   onSubmit(): void {
     this.authService.login(<LoginRequestInterface>(this.form.value)).subscribe({
       next: (currentUser) => {
-        console.log('currentUser', currentUser);
+        console.log('currentUser-login', currentUser);
         this.authService.setToken(currentUser);
         this.socketService.setupSocketConnection(currentUser);
         this.authService.setCurrentUser(currentUser);
