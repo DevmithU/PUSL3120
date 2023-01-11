@@ -19,7 +19,13 @@
 
   <div class="columns">
     <div class="column" *ngFor="let column of data.columns">
-      <div class="column-title">{{ column.title }}
+      <div class="column-title">
+        <inline-form
+          class="edit-column-form"
+          [defaultText]="column.title"
+          [title]="column.title"
+          (handleSubmit)="updateColumnName($event, column.id)"
+        ></inline-form>
         <img
           src="/assets/close_icon.svg"
           class="column-delete-icon"
@@ -29,6 +35,8 @@
       <div
         *ngFor="let task of getTasksByColumn(column.id, data.tasks)"
         class="task"
+        (click)="openTask(task.id)"
+
       >
         {{ task.title }}
       </div>
@@ -51,4 +59,7 @@
     ></inline-form>
   </div>
 </div>
+
+<router-outlet></router-outlet>
+
 
