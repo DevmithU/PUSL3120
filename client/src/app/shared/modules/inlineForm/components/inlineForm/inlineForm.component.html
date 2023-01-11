@@ -2,7 +2,6 @@
   class="inline-form-container"
   [ngClass]="{ 'inline-form-container-editing': isEditing }"
   (click)="activeEditing()"
-  (focusout)="leaveEditing()"
 >
   <div class="inline-form-text" *ngIf="!isEditing">{{ defaultText }}</div>
   <form
@@ -12,19 +11,22 @@
     class="inline-form"
     >
     <input
-      #input2
+      #input1
       type="text"
       formControlName="title"
       class="inline-form-input"
+      (focusout)="leaveEditing()"
 
       [placeholder]="inputPlaceholder"
       *ngIf="inputType === 'input'"
 
       />
     <textarea
+      #input2
       *ngIf="inputType === 'textarea'"
       formControlName="title"
       class="inline-form-input"
+
     ></textarea>
     <button
       *ngIf="hasButton"

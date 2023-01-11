@@ -100,6 +100,12 @@ io.use(async (socket: Socket, next) => {
     socket.on(SocketEventsEnum.columnsUpdate, (data) => {
         columnsController.updateColumn(io, socket, data);
     });
+    socket.on(SocketEventsEnum.tasksUpdate, (data) => {
+        tasksController.updateTask(io, socket, data);
+    });
+    socket.on(SocketEventsEnum.tasksDelete, (data) => {
+        tasksController.deleteTask(io, socket, data);
+    });
     // console.log("connect");
 });
 

@@ -15,7 +15,8 @@ export class InlineFormComponent {
 
   @Output() handleSubmit = new EventEmitter<string>();
 
-  @ViewChild('input2') input2: any ;
+  @ViewChild('input1') input1: ElementRef | undefined ;
+  @ViewChild('input2') input2: ElementRef | undefined ;
 
   // @ViewChild('input2') input2: any;
 
@@ -36,25 +37,21 @@ export class InlineFormComponent {
     this.isEditing = true;
     //need time to delay execution for after render of element
     setTimeout(() => {
-      this.input2.nativeElement.focus();
+      if (this.input2?.nativeElement) {
+        this.input2.nativeElement.focus();
+      }
+      if (this.input1?.nativeElement) {
+        this.input1.nativeElement.focus();
+      }
     }, 0);
-    // this.input2.nativeElement.focus();
-
-
   }
-  // setFocus(): void{
-  //   this.input2.nativeElement.focus();
-  //
-  // }
 
 
   leaveEditing(): void {
-    // if (this.title) {
-    //   this.form.patchValue({ title: this.title });
-    // }
     this.isEditing = false;
-    // this.form.reset();
-
+  }
+  leaveEditingWithCheck(): void {
+    this.isEditing = false;
   }
 
   onSubmit(): void {
