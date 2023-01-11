@@ -28,6 +28,7 @@ export class TaskModalComponent {
     this.boardId = boardId;
   }
   goToBoard(): void {
+
     this.router.navigate(['boards', this.boardId]);
   }
 }
