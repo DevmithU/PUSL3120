@@ -92,6 +92,7 @@ export class BoardComponent implements OnInit ,OnDestroy{
         // console.log('column',column);
 
       });
+
     this.socketService
       .listen<string>(SocketEventsEnum.columnsDeleteSuccess)
       .pipe(takeUntil(this.unsubscribe$))
