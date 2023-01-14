@@ -1,0 +1,35 @@
+<div class="task-modal-container" >
+  <div class="task-modal-header">
+    <div class="inline-form-text">
+      Add Users
+    </div>
+
+    <img
+      src="/assets/close_icon.svg"
+      class="task-modal-close"
+      (click)="goToBoard()"
+    />
+  </div>
+  <div class="task-modal-body">
+    <div>
+      Got Something
+
+
+    </div>
+    <div class="task-modal-actions">
+      <div class="task-modal-actions-label">Actions</div>
+      <div>
+        <div class="task-modal-actions-action" (click)="deleteTask()">
+          <img src="/assets/trash.svg" class="task-modal-actions-icon" />
+          Delete
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="task-modal-backdrop"
+     (dblclick)="goToBoard()"
+></div>
+
+<!--//dev-->
+

@@ -6,6 +6,7 @@
 <app-topbar></app-topbar>
 
 <div class="board" *ngIf="data$ | async as data">
+  <div class="rotate">
   <div class="board-header-container">
     <inline-form
       class="edit-board-form"
@@ -13,7 +14,7 @@
       [title]="data.board.title"
       (handleSubmit)="updateBoardName($event)"
     ></inline-form>
-    <div class="add-member-board" >Add Members</div>
+    <div class="add-member-board" (click)="gerUserList()">Add Members</div>
 
     <div class="delete-board" (click)="deleteBoard()">Delete board</div>
 
@@ -59,6 +60,7 @@
       inputPlaceholder="Add column name"
       (handleSubmit)="createColumn($event)"
     ></inline-form>
+  </div>
   </div>
 </div>
 

@@ -1,4 +1,4 @@
-import { NextFunction, Request, Response } from "express";
+import {json, NextFunction, Request, Response} from "express";
 import express from "express";
 import UserModel from "../models/user";
 import { UserDocument } from "../types/user.interface";
@@ -7,6 +7,7 @@ import jwt from "jsonwebtoken";
 import { secret } from "../config";
 import {MongoError} from "mongodb";
 import { ExpressRequestInterface } from "../types/expressRequest.interface";
+import BoardModel from "../models/board";
 
 
 const normalizeUser = (user: UserDocument) => {
@@ -94,39 +95,20 @@ export const emailAvailable = async (
     next(err);
   }
 };
-export const addListUser = async (
-    req: ExpressRequestInterface,
-    res: Response,
-    next: NextFunction
-) => {
-  try {
-    // console.log("7");
 
-    const user = await UserModel.findOne({ email: req.body.email });
-    console.log(user);
-
-    let status: boolean;
-    if (user==null){
-      status = true;
-    }else {
-      status = false;
-    }
-    // console.log(req.params);
-    res.send(status);
-
-  } catch (err) {
-    next(err);
-  }
-};
 
 export const sampleFunction = async (
     req: ExpressRequestInterface,
     res: Response,
     next: NextFunction,
 ) => {
+  let userList
+
   try {
-    const user = await UserModel.findOne({ email: req.body.email });
-    res.send(user);
+    userList = req.body.userList;
+    console.log(userList);
+    // const user = await UserModel.findOne({ email: req.body.email });
+    // res.send(user);
 
   } catch (err) {
     next(err);

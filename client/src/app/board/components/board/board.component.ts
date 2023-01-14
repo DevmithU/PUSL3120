@@ -21,6 +21,7 @@ import {TaskInputInterface} from "../../../shared/types/taskInput.interface";
 // export class BoardComponent {
 
 export class BoardComponent implements OnInit ,OnDestroy{
+  userList: Array<string> | undefined;
   boardId: string;
   data$: Observable<{
     board: BoardInterface;
@@ -58,7 +59,12 @@ export class BoardComponent implements OnInit ,OnDestroy{
         tasks,
       }))
     );
-    // console.log("data$",this.data$);
+    // this.data$.pipe(takeUntil(this.unsubscribe$)).subscribe(data =>{
+    //   console.log("list", data.board.userList);
+    //   console.log("done!!!");
+    // }
+    // );
+
 
   }
 
@@ -143,6 +149,9 @@ export class BoardComponent implements OnInit ,OnDestroy{
   fetchData(): void {
     this.boardsService.getBoard(this.boardId).subscribe((board) => {
         this.boardService.setBoard(board);
+        //cvatch the user list
+        this.userList = board.userList;
+        // console.log("list", board.userList);
         this.columnsService.getColumns(this.boardId).subscribe((columns) => {
           this.boardService.setColumns(columns);
         });
@@ -190,6 +199,9 @@ export class BoardComponent implements OnInit ,OnDestroy{
   }
   updateBoardName(boardName: string): void {
     this.boardsService.updateBoard(this.boardId, { title: boardName });
+  }
+  gerUserList(): void {
+    this.router.navigate(['boards', this.boardId, 'userList', ], {queryParams: {message: this.userList}} )
   }
   deleteBoard(): void {
     if (confirm('Are you sure you want to delete the board?')) {

@@ -10,6 +10,7 @@ import { TasksService } from '../shared/services/tasks.service';
 import { BoardComponent } from './components/board/board.component';
 import { TaskModalComponent } from './components/taskModal/taskModal.component';
 import { BoardService } from './services/board.service';
+import {UserListComponent} from "./components/userList/userList.component";
 
 const routes: Routes = [
   {
@@ -20,6 +21,10 @@ const routes: Routes = [
       {
         path: 'tasks/:taskId',
         component: TaskModalComponent,
+      },
+      {
+        path: 'userList',
+        component: UserListComponent,
       },
     ],
   },
@@ -33,7 +38,7 @@ const routes: Routes = [
     InlineFormModule,
     ReactiveFormsModule,
   ],
-  declarations: [BoardComponent, TaskModalComponent],
+  declarations: [BoardComponent, TaskModalComponent, UserListComponent],
   providers: [BoardService, ColumnsService, TasksService],
 })
 export class BoardModule {}

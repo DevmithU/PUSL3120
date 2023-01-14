@@ -5,6 +5,7 @@ import { Server } from "socket.io";
 import {Socket} from "../types/socket.interface";
 import {SocketEventsEnum} from "../types/socketEvents.enum";
 import {getErrorMessage} from "../helpers";
+import UserModel from "../models/user";
 
 export const getBoards = async (
   req: ExpressRequestInterface,
@@ -143,5 +144,75 @@ export const deleteBoard = async (
     io.to(data.boardId).emit(SocketEventsEnum.boardsDeleteSuccess);
   } catch (err) {
     socket.emit(SocketEventsEnum.boardsDeleteFailure, getErrorMessage(err));
+  }
+};
+
+export const addUserList = async (
+    req: ExpressRequestInterface,
+    res: Response,
+    next: NextFunction
+) => {
+  let userEmailList = [];
+  let userList = [];
+  try {
+    // console.log("7");
+
+    userEmailList = req.body.userList;
+    // console.log(userList);
+    // res.send(userEmailList);
+    for (let i in userEmailList){
+      const user = await UserModel.findOne({ email: userEmailList[i] });
+      userList[+i] = user?.id;
+      //
+
+    }
+    // console.log(userList);
+    const updatedBoard = await BoardModel.findByIdAndUpdate(
+        req.body.boardId,
+        { userList: userList }
+    );
+    let n1 = { userList, userEmailList, updatedBoard }
+    res.send(n1)
+
+
+    // console.log(req.params);
+
+  } catch (err) {
+    next(err);
+  }
+};
+
+export const getUserList = async (
+    req: ExpressRequestInterface,
+    res: Response,
+    next: NextFunction
+) => {
+  // let userList = [];
+  let boardId;
+  let userIdList;
+  let userEmailList = [] ;
+  try {
+    // console.log("7");
+
+    boardId = req.body.boardId;
+    const board = await BoardModel.findById(boardId);
+
+    userIdList = board?.userList;
+    console.log(userIdList);
+
+    // console.log(userList);
+    // res.send(userEmailList);
+    for (let i in userIdList) {
+
+      const user = await UserModel.findById(userIdList[parseInt(i)]);
+      userEmailList[+i] = user?.email;
+    }
+    res.send(userEmailList)
+
+
+    // console.log(req.params);
+
+  } catch (err) {
+    next(err);
   }
 };

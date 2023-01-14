@@ -10,6 +10,8 @@ export default async (
   next: NextFunction
 ) => {
   try {
+
+
     const authHeader = req.headers.authorization;
 
     if (!authHeader) {
