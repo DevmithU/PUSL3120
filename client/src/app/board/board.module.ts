@@ -11,6 +11,7 @@ import { BoardComponent } from './components/board/board.component';
 import { TaskModalComponent } from './components/taskModal/taskModal.component';
 import { BoardService } from './services/board.service';
 import {UserListComponent} from "./components/userList/userList.component";
+import {UserListService} from "../shared/services/userList.service";
 
 const routes: Routes = [
   {
@@ -39,6 +40,6 @@ const routes: Routes = [
     ReactiveFormsModule,
   ],
   declarations: [BoardComponent, TaskModalComponent, UserListComponent],
-  providers: [BoardService, ColumnsService, TasksService],
+  providers: [BoardService, ColumnsService, TasksService, UserListService],
 })
 export class BoardModule {}

@@ -16,9 +16,9 @@ const boardSchema = new Schema<BoardDocument>({
   },
 });
 boardSchema.methods.validateMember = function (userId: string) {
-  console.log(userId);
-  console.log(this.userId);
-  console.log("-----------------------------------");
+  // console.log(userId);
+  // console.log(this.userId);
+  // console.log("-----------------------------------");
   if((userId==this.userId)||(this.userList.includes(userId))){
     return true;
     console.log("true");

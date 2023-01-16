@@ -36,5 +36,21 @@
         </a>
       </div>
     </div>
-  </div>
+    <div class="my-boards">
+      <div class="my-boards-section-header">
+        <div class="boards-page-header-name">Member boards</div>
+      </div>
+
+      <div class="board-tile-list">
+      <a
+        [routerLink]="['/boards', board.id]"
+        *ngFor="let board of memberBoards"
+        class="board-tile"
+      >
+        <div class="board-tile-details-name">{{ board.title }}</div>
+      </a>
+      </div>
+
+      </div>
+    </div>
 </div>

@@ -13,15 +13,35 @@
   <div class="task-modal-body">
     <div>
       Got Something
+      <div
+        *ngFor="let user of userList"
+        class="task"
 
+      >
+        {{ user }}
+        <img
+          src="/assets/close_icon.svg"
+          class="task-modal-close"
+          (click)="removeUser(user)"
+        />
+      </div>
+      <inline-form
+        class="create-task-form"
+        defaultText="Add user"
+        [hasButton]="true"
+        buttonText="Add User"
+        inputPlaceholder="Enter User Email"
+        (handleSubmit)="addUserEmail($event)"
+      ></inline-form>
 
     </div>
     <div class="task-modal-actions">
       <div class="task-modal-actions-label">Actions</div>
       <div>
-        <div class="task-modal-actions-action" (click)="deleteTask()">
-          <img src="/assets/trash.svg" class="task-modal-actions-icon" />
-          Delete
+        <div class="task-modal-actions-action"
+             (click)="updateUserList()">
+
+          Save
         </div>
       </div>
     </div>

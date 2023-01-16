@@ -150,7 +150,9 @@ export class BoardComponent implements OnInit ,OnDestroy{
     this.boardsService.getBoard(this.boardId).subscribe((board) => {
         this.boardService.setBoard(board);
         //cvatch the user list
+
         this.userList = board.userList;
+
         // console.log("list", board.userList);
         this.columnsService.getColumns(this.boardId).subscribe((columns) => {
           this.boardService.setColumns(columns);
@@ -201,7 +203,7 @@ export class BoardComponent implements OnInit ,OnDestroy{
     this.boardsService.updateBoard(this.boardId, { title: boardName });
   }
   gerUserList(): void {
-    this.router.navigate(['boards', this.boardId, 'userList', ], {queryParams: {message: this.userList}} )
+    this.router.navigate(['boards', this.boardId, 'userList', ], {queryParams: {userList: this.userList}} )
   }
   deleteBoard(): void {
     if (confirm('Are you sure you want to delete the board?')) {

@@ -22,6 +22,21 @@ export const getBoards = async (
     next(err);
   }
 };
+export const getMemberBoards = async (
+    req: ExpressRequestInterface,
+    res: Response,
+    next: NextFunction
+) => {
+  try {
+    if (!req.user) {
+      return res.sendStatus(401);
+    }
+    const boards = await BoardModel.find({ userList: { $in: [req.user.id] } });
+    res.send(boards);
+  } catch (err) {
+    next(err);
+  }
+};
 
 export const getBoard = async (
     req: ExpressRequestInterface,
@@ -32,7 +47,7 @@ export const getBoard = async (
     if (!req.user) {
       return res.sendStatus(401);
     }
-    console.log("11111 board--------")
+    // console.log("11111 board--------")
 
     const board = await BoardModel.findById(req.params.boardId);
     // console.log("req.params")
@@ -55,7 +70,7 @@ export const getBoard = async (
 
     res.send(board);
   } catch (err) {
-    console.log("error board--------")
+    // console.log("error board--------")
 
     next(err);
   }
@@ -153,29 +168,42 @@ export const addUserList = async (
     next: NextFunction
 ) => {
   let userEmailList = [];
-  let userList = [];
+  let newuserEmailList = [];
+  let userIdList = [];
   try {
     // console.log("7");
+    console.log('///////////////////////////////////////////');
 
     userEmailList = req.body.userList;
     // console.log(userList);
     // res.send(userEmailList);
     for (let i in userEmailList){
       const user = await UserModel.findOne({ email: userEmailList[i] });
-      userList[+i] = user?.id;
+      userIdList[+i] = user?.id;
       //
 
     }
     // console.log(userList);
     const updatedBoard = await BoardModel.findByIdAndUpdate(
         req.body.boardId,
-        { userList: userList }
+        { userList: userIdList },
+        { new: true }
     );
-    let n1 = { userList, userEmailList, updatedBoard }
-    res.send(n1)
+    for (let i in updatedBoard?.userList) {
+
+      const user = await UserModel.findById(updatedBoard?.userList[parseInt(i)]);
+      newuserEmailList[+i] = user?.email;
+    }
+    console.log('userEmailList',userEmailList);
+
+    console.log('updatedBoard',updatedBoard);
+    console.log('newuserEmailList',newuserEmailList);
+    console.log('///////////////////////////////////////////');
 
 
-    // console.log(req.params);
+    res.send(newuserEmailList)
+
+
 
   } catch (err) {
     next(err);
@@ -197,8 +225,10 @@ export const getUserList = async (
     boardId = req.body.boardId;
     const board = await BoardModel.findById(boardId);
 
+    // console.log(boardId);
+
     userIdList = board?.userList;
-    console.log(userIdList);
+    // console.log(userIdList);
 
     // console.log(userList);
     // res.send(userEmailList);

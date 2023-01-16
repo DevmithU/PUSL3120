@@ -14,6 +14,7 @@ import User from "./models/user";
 import {Socket} from "./types/socket.interface";
 import { secret } from "./config";
 import * as tasksController from "./controllers/tasks";
+import {getMemberBoards} from "./controllers/boards";
 // import {addListUser} from "./controllers/users";
 
 
@@ -48,9 +49,11 @@ app.post("/api/users/login", usersController.login);
 // app.post("/api/users/login2",authMiddleware,usersController.sampleFunction);
 app.get("/api/users/:email", usersController.emailAvailable);
 app.post("/api/boards/addListUser", authMiddleware,boardsController.addUserList);
-app.get("/api/boards/getListUser", authMiddleware,boardsController.getUserList);
+app.post("/api/boards/getListUser", authMiddleware,boardsController.getUserList);
 app.get('/api/user', authMiddleware, usersController.currentUser);
 app.get("/api/boards", authMiddleware, boardsController.getBoards);
+app.get("/api/boards/memberBoards", authMiddleware, boardsController.getMemberBoards);
+
 app.get("/api/boards/:boardId", authMiddleware, boardsController.getBoard);
 app.get("/api/boards/:boardId/columns", authMiddleware, columnsController.getColumns);
 app.get("/api/boards/:boardId/tasks", authMiddleware, tasksController.getTasks);

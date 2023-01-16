@@ -8,6 +8,8 @@ import {BoardInterface} from "../../../shared/types/board.interface";
 })
 export class BoardsComponent implements OnInit {
   boards: BoardInterface[] = [] ;
+  memberBoards: BoardInterface[] = [] ;
+
   constructor(
     private boardsService: BoardsService)
   { }
@@ -16,6 +18,10 @@ export class BoardsComponent implements OnInit {
     this.boardsService.getBoards().subscribe((boards) => {
       console.log('boards', boards);
       this.boards = boards;
+    });
+    this.boardsService.getMemberBoards().subscribe((memberBoards) => {
+      // console.log('boards', memberBoards);
+      this.memberBoards = memberBoards;
     });
   }
 

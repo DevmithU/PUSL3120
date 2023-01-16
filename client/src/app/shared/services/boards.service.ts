@@ -17,6 +17,10 @@ export class BoardsService {
     const url = environment.apiUrl + '/boards';
     return this.http.get<BoardInterface[]>(url);
   }
+  getMemberBoards(): Observable<BoardInterface[]> {
+    const url = environment.apiUrl + '/boards/memberBoards';
+    return this.http.get<BoardInterface[]>(url);
+  }
   getBoard(boardId: string): Observable<BoardInterface> {
     const url = `${environment.apiUrl}/boards/${boardId}`;
 
