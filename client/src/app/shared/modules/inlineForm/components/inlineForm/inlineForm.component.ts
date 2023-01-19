@@ -19,7 +19,7 @@ export class InlineFormComponent {
   @ViewChild('input2') input2: ElementRef | undefined ;
 
   // @ViewChild('input2') input2: any;
-
+  isButtonHOver: boolean =false;
   isEditing: boolean = false;
   form = this.fb.group({
     title: [''],
@@ -45,13 +45,24 @@ export class InlineFormComponent {
       }
     }, 0);
   }
+  buttonHoverEnter():void{
+    this.isButtonHOver =true;
+
+  }
+  buttonHoverLeave():void{
+    this.isButtonHOver =false;
 
 
+  }
   leaveEditing(): void {
+
     this.isEditing = false;
   }
   leaveEditingWithCheck(): void {
-    this.isEditing = false;
+    if(!this.isButtonHOver){
+      this.isEditing = false;
+
+    }
   }
 
   onSubmit(): void {

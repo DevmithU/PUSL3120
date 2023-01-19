@@ -15,7 +15,7 @@
       type="text"
       formControlName="title"
       class="inline-form-input"
-      (focusout)="leaveEditing()"
+      (focusout)="leaveEditingWithCheck()"
 
       [placeholder]="inputPlaceholder"
       *ngIf="inputType === 'input'"
@@ -33,6 +33,8 @@
       type="submit"
       [disabled]="form.invalid"
       class="inline-form-button"
+      (mouseenter)="buttonHoverEnter()"
+      (mouseleave)="buttonHoverLeave()"
     >
       {{ buttonText }}
     </button>
