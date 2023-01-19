@@ -25,4 +25,8 @@ export enum SocketEventsEnum {
   tasksDelete = "tasks:delete",
   tasksDeleteSuccess = "tasks:deleteSuccess",
   tasksDeleteFailure = "tasks:deleteFailure",
+  addMemberSuccess = "board:addMemberSuccess",
+  dashBoardJoin = "board:join",
+  dashBoardLeave = "board:leave",
+
 }

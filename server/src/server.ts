@@ -48,7 +48,9 @@ app.post("/api/users/login", usersController.login);
 // app.post("/api/users/login2", usersController.sampleFunction);
 // app.post("/api/users/login2",authMiddleware,usersController.sampleFunction);
 app.get("/api/users/:email", usersController.emailAvailable);
-app.post("/api/boards/addListUser", authMiddleware,boardsController.addUserList);
+app.post("/api/boards/addListUser", authMiddleware, (req, res, next) => {
+    boardsController.addUserList(req, res, next, io);
+});
 app.post("/api/boards/getListUser", authMiddleware,boardsController.getUserList);
 app.get('/api/user', authMiddleware, usersController.currentUser);
 app.get("/api/boards", authMiddleware, boardsController.getBoards);
@@ -108,6 +110,12 @@ io.use(async (socket: Socket, next) => {
     });
     socket.on(SocketEventsEnum.tasksDelete, (data) => {
         tasksController.deleteTask(io, socket, data);
+    });
+    socket.on(SocketEventsEnum.dashBoardJoin, (data) => {
+        boardsController.joinDashBoard(io, socket, data);
+    });
+    socket.on(SocketEventsEnum.dashBoardLeave, (data) => {
+        boardsController.leaveDashBoard(io, socket, data);
     });
     // console.log("connect");
 });

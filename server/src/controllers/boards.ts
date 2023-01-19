@@ -6,6 +6,11 @@ import {Socket} from "../types/socket.interface";
 import {SocketEventsEnum} from "../types/socketEvents.enum";
 import {getErrorMessage} from "../helpers";
 import UserModel from "../models/user";
+import jwt from "jsonwebtoken";
+import {secret} from "../config";
+import User from "../models/user";
+import * as columnsController from "./columns";
+import * as tasksController from "./tasks";
 
 export const getBoards = async (
   req: ExpressRequestInterface,
@@ -96,6 +101,23 @@ export const createBoard = async (
   }
 };
 
+export const joinDashBoard = (
+    io: Server,
+    socket: Socket,
+    data: { userId: string }
+) => {
+  console.log("server socket io join", socket.user);
+  //room id given same as board id
+  socket.join(data.userId);
+};
+export const leaveDashBoard = (
+    io: Server,
+    socket: Socket,
+    data: { userId: string }
+) => {
+  console.log("server socket io leave", data.userId);
+  socket.leave(data.userId);
+};
 
 export const joinBoard = (
     io: Server,
@@ -166,7 +188,8 @@ export const deleteBoard = async (
 export const addUserList = async (
     req: ExpressRequestInterface,
     res: Response,
-    next: NextFunction
+    next: NextFunction,
+    io:Server,
 ) => {
   let userEmailList = [];
   let newuserEmailList = [];
@@ -190,6 +213,14 @@ export const addUserList = async (
         { userList: userIdList },
         { new: true }
     );
+    for (let i in userIdList){
+      const userId = userIdList[i];
+      const boards = await BoardModel.find({ userList: { $in: [userId] } });
+      io.to(userId).emit(SocketEventsEnum.addMemberSuccess,boards);
+
+
+    }
+
     for (let i in updatedBoard?.userList) {
 
       const user = await UserModel.findById(updatedBoard?.userList[parseInt(i)]);
