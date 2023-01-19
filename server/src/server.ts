@@ -78,6 +78,7 @@ io.use(async (socket: Socket, next) => {
         next(new Error("Authentication error"));
     }
 }).on('connection',(socket)=>{
+
     socket.on(SocketEventsEnum.boardsJoin, (data) => {
         boardsController.joinBoard(io, socket, data);
     });

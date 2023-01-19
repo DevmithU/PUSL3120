@@ -103,6 +103,7 @@ export const joinBoard = (
     data: { boardId: string }
 ) => {
   console.log("server socket io join", socket.user);
+  //room id given same as board id
   socket.join(data.boardId);
 };
 
