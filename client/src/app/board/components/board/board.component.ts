@@ -48,6 +48,7 @@ export class BoardComponent implements OnInit ,OnDestroy{
     }
 
     this.boardId = boardId;
+    //combine the observable from the board service variables  to this. variables
     this.data$ = combineLatest([
       this.boardService.board$.pipe(filter(Boolean)),
       this.boardService.columns$,
