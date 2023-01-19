@@ -53,12 +53,14 @@ export class TaskModalComponent implements OnDestroy {
       }),
       filter(Boolean)
     );
+
     this.data$ = combineLatest([this.task$, this.boardService.columns$]).pipe(
       map(([task, columns]) => ({
         task,
         columns,
       }))
     );
+
     this.task$.pipe(takeUntil(this.unsubscribe$)).subscribe((task) => {
       this.columnForm.patchValue({ columnId: task.columnId });
     });
