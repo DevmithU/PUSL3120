@@ -23,8 +23,9 @@ export class TasksService {
   updateTask(
     boardId: string,
     taskId: string,
-    fields: { title?: string; description?: string; columnId?: string | null  }
+    fields: { title?: string; description?: string; columnId?: string | null; hasCheck?: boolean}
   ): void {
+
     this.socketService.emit(SocketEventsEnum.tasksUpdate, {
       boardId,
       taskId,

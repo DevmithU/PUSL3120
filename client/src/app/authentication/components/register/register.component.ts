@@ -2,12 +2,12 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { Component } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { AuthService } from '../../services/auth.service';
+import { AuthenticationService } from '../../services/authentication.service';
 import {RegisterRequestInterface} from "../../types/registerRequest.interface";
 import {SocketService} from "../../../shared/services/socket.service";
 
 @Component({
-  selector: 'auth-register',
+  selector: 'authentication-register',
   templateUrl: './register.component.html',
 })
 export class RegisterComponent {
@@ -24,7 +24,7 @@ export class RegisterComponent {
 
   constructor(
     private fb: FormBuilder,
-    private authService: AuthService,
+    private authService: AuthenticationService,
     private router: Router,
     private socketService: SocketService
   ) {}

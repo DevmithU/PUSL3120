@@ -8,7 +8,7 @@ import { LoginRequestInterface } from '../types/loginRequest.interface';
 import {SocketService} from "../../shared/services/socket.service";
 
 @Injectable()
-export class AuthService {
+export class AuthenticationService {
   currentUser$ = new BehaviorSubject<CurrentUserInterface | null | undefined>(
     undefined
   );

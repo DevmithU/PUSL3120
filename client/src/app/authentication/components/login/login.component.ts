@@ -2,12 +2,12 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { Component } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { AuthService } from '../../services/auth.service';
+import { AuthenticationService } from '../../services/authentication.service';
 import {LoginRequestInterface} from "../../types/loginRequest.interface";
 import {SocketService} from "../../../shared/services/socket.service";
 
 @Component({
-  selector: 'auth-login',
+  selector: 'authentication-login',
   templateUrl: './login.component.html',
 })
 export class LoginComponent {
@@ -20,7 +20,7 @@ export class LoginComponent {
 
   constructor(
     private fb: FormBuilder,
-    private authService: AuthService,
+    private authService: AuthenticationService,
     private router: Router,
     private socketService: SocketService
 

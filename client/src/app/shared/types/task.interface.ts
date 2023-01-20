@@ -5,4 +5,5 @@ export interface TaskInterface {
   columnId: string;
   boardId: string;
   userId: string;
+  hasCheck: boolean;
 }

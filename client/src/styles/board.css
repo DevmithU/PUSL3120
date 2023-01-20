@@ -1,32 +1,63 @@
 .board {
-  background: #E5BA73;
+  background: #9796f0;  /* fallback for old browsers */
+  background: -webkit-linear-gradient(to top, #fbc7d4, #9796f0);  /* Chrome 10-25, Safari 5.1-6 */
+  background: linear-gradient(to bottom, #fbc7d4, #9796f0); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+
+  /*background-image: url("https://dummyimage.com/600x400/000/fff");*/
+  /*background-image: url("/client/src/assets/board_background_image.jpg");*/
+
+  /*background-image: url("/assets/image_background.jpg");*/
+  /*background-repeat: no-repeat;*/
+  /*background-size: cover;*/
+
   height: calc(100vh - 40px);
+  /*height: 50vh;*/
+
   /*overflow-x: auto;*/
 
 
 }
+@media (max-height: 650px) {
+  .rotate {
+    height: 100%;
+    padding-bottom: 0px;
+
+  }
+}
 .rotate{
   overflow-x: auto;
   width: auto;
-  padding-bottom: 140px;
-  margin-bottom:auto;
+  padding-bottom: 40px;
+  /*margin-bottom:auto;*/
 }
 .rotate::-webkit-scrollbar {
   height: 25px;               /* width of the entire scrollbar */
 }
 .rotate::-webkit-scrollbar-track {
-  background: #c5a065;        /* color of the tracking area */
+  background:  hsla(0, 100%, 100%, 0.3);        /* color of the tracking area */
+  border-radius: 20px;
+
 }
 .rotate::-webkit-scrollbar-thumb {
-  background-color: #a28759;    /* color of the scroll thumb */
+  background:  hsla(0, 100%, 100%, 0.35);        /* color of the tracking area */
   border-radius: 20px;       /* roundness of the scroll thumb */
-  border: 3px solid #c5a065;  /* creates padding around scroll thumb */
+  border: 3px solid hsla(0, 100%, 100%, 0.4);;  /* creates padding around scroll thumb */
 }
+.board-header-divider{
+  border: 2px solid rgba(255, 255, 255, .45);
+  border-radius: 5px;
+  margin-right: 10px;
+  margin-left: 10px;
+  margin-bottom: 22px;
 
+}
 .board-header-container {
+  margin-top: 5px;
   min-height: 48px;
   display: flex;
   align-items: center;
+  padding-right: 10px;
+  padding-left: 10px;
 }
 
 .delete-board {
@@ -52,7 +83,7 @@
   padding: 5px 8px;
   border-radius: 3px;
   font-size: 14px;
-  background-color: hsla(0, 0%, 100%, 0.3);
+  background-color: hsla(0, 0%, 100%, 0.15);
   height: 32px;
   display: flex;
   align-items: center;
@@ -65,10 +96,15 @@
 
 .columns {
   display: flex;
+  padding-right: 10px;
+  padding-left: 10px;
 }
 
 .column {
-  background: #ebecf0;
+  /*box-shadow:0px -10px 0px #06c909;*/
+
+  background-color: rgba(255, 255, 255, .45);
+  backdrop-filter: blur(14px);
   padding: 8px;
   border-radius: 4px;
   width: 272px;
@@ -80,6 +116,7 @@
 }
 
 .column-title {
+  color: #1d3045;
   font-size: 14px;
   font-weight: 600;
   margin-bottom: 12px;
@@ -110,9 +147,18 @@
   align-items: center;
   padding: 8px;
   margin-bottom: 8px;
+  border-radius: 4px;
+
 }
 
 .task:hover {
   border-bottom-color: rgba(9, 30, 66, 0.25);
   background-color: #f4f5f7;
+}
+
+
+.edit-column-form{
+  padding-left: 5px;
+  padding-top: 7px;
+
 }

@@ -1,5 +1,15 @@
 .navbar-boards {
-  background-color: #026aa7;
+
+
+
+
+  background: #ee0979;  /* fallback for old browsers */
+  background: -webkit-linear-gradient(to right, #ff6a00, #ee0979, #8A2387);  /* Chrome 10-25, Safari 5.1-6 */
+  background: linear-gradient(to right, #ff6a00, #ee0979, #8A2387); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+
+
+
+
   height: 40px;
   display: flex;
   align-items: center;
@@ -35,7 +45,11 @@
   height: 32px;
   margin: 0 auto;
 }
+.navbar-home-right-side{
+  margin-left:  auto;
 
+
+}
 .navbar-left-side {
   display: flex;
   align-items: center;
@@ -68,4 +82,14 @@
   font-weight: bold;
   font-size: 20px;
 
+}
+
+
+@supports (position: -webkit-sticky) or (position: sticky){
+  .sticky-top {
+    position: -webkit-sticky;
+    position: sticky;
+    top: 0;
+    z-index: 1020;
+  }
 }

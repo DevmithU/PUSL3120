@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { CurrentUserInterface } from 'src/app/auth/types/currentUser.interface';
+import { CurrentUserInterface } from 'src/app/authentication/types/currentUser.interface';
 import { io, Socket } from 'socket.io-client';
 import { environment } from 'src/environments/environment';
 import {Observable} from "rxjs";

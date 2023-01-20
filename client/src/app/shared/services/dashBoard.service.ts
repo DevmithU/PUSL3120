@@ -7,18 +7,18 @@ import {SocketEventsEnum} from "../types/socketEvents.enum";
 import {SocketService} from "./socket.service";
 
 @Injectable()
-export class BoardsService {
+export class DashBoardService {
   constructor(
     private http: HttpClient,
     private socketService: SocketService
   ) {}
 
   getBoards(): Observable<BoardInterface[]> {
-    const url = environment.apiUrl + '/boards';
+    const url = environment.apiUrl + '/dashBoard';
     return this.http.get<BoardInterface[]>(url);
   }
   getMemberBoards(): Observable<BoardInterface[]> {
-    const url = environment.apiUrl + '/boards/memberBoards';
+    const url = environment.apiUrl + '/dashBoard/memberBoards';
     return this.http.get<BoardInterface[]>(url);
   }
   getBoard(boardId: string): Observable<BoardInterface> {
@@ -28,7 +28,7 @@ export class BoardsService {
     return this.http.get<BoardInterface>(url);
   }
   createBoard(title: string): Observable<BoardInterface> {
-    const url = environment.apiUrl + '/boards';
+    const url = environment.apiUrl + '/dashBoard';
     return this.http.post<BoardInterface>(url, { title });
   }
   updateBoard(boardId: string, fields: { title: string }): void {

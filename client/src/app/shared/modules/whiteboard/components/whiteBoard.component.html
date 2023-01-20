@@ -1,0 +1,25 @@
+<app-topbar></app-topbar>
+
+<!--check now-->
+<style>
+  .whiteboard-background{
+    height: 50vh;
+    width: 80vw;
+    background-color: #5aac44;
+
+  }
+  .whiteboard-canvas{
+    height: 100%;
+    width: 100%;
+    background-color: #e76de4;
+  }
+</style>
+<div class="whiteboard-background" #wb>
+  <canvas class="whiteboard-canvas" #myCanvas (mousedown)="startDrawing($event)" (mousemove)="drawLine($event)" (mouseup)="stopDrawing()"></canvas>
+
+</div>
+
+<div #myIdentifier>
+  <p>This is test.</p>
+</div>
+

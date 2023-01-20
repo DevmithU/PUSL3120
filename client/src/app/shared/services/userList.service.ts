@@ -12,7 +12,7 @@ export class UserListService {
   ) {}
 
   // getBoards(): Observable<BoardInterface[]> {
-  //   const url = environment.apiUrl + '/boards';
+  //   const url = environment.apiUrl + '/dashBoard';
   //   return this.http.get<BoardInterface[]>(url);
   // }
   getBoard(boardId: string): Observable<BoardInterface> {
@@ -22,7 +22,7 @@ export class UserListService {
     return this.http.get<BoardInterface>(url);
   }
   getUserList(boardId: string): Observable<Array<string>> {
-    const url = environment.apiUrl + '/boards/getListUser';
+    const url = environment.apiUrl + '/dashBoard/getListUser';
     return this.http.post<Array<string>>(url, { "boardId":boardId });
   }
 
@@ -36,7 +36,7 @@ export class UserListService {
     console.log('userList',userList);
     console.log('here 333');
 
-    const url = environment.apiUrl + '/boards/addListUser';
+    const url = environment.apiUrl + '/dashBoard/addListUser';
     let check = this.http.post<Array<string>>(url, {"boardId": boardId, "userList": userList});
     console.log('check',check)
     return check;

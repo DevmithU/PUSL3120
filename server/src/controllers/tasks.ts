@@ -60,7 +60,7 @@ export const updateTask = async (
     data: {
       boardId: string;
       taskId: string;
-      fields: { title?: string; description?: string; columnId?: string };
+      fields: { hasCheck?: boolean; title?: string; description?: string; columnId?: string;  };
     }
 ) => {
   try {
@@ -76,6 +76,7 @@ export const updateTask = async (
         data.fields,
         { new: true }
     );
+
     io.to(data.boardId).emit(SocketEventsEnum.tasksUpdateSuccess, updatedTask);
   } catch (err) {
     socket.emit(SocketEventsEnum.tasksUpdateFailure, getErrorMessage(err));

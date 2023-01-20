@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {AuthService} from "./auth/services/auth.service";
+import {AuthenticationService} from "./authentication/services/authentication.service";
 import {SocketService} from "./shared/services/socket.service";
 
 @Component({
@@ -9,7 +9,7 @@ import {SocketService} from "./shared/services/socket.service";
 export class AppComponent implements OnInit {
   // title = 'PUSL3120ANG2';
   constructor(
-    private authService: AuthService,
+    private authService: AuthenticationService,
     private socketService: SocketService,
 ) {  }
 
@@ -18,7 +18,7 @@ export class AppComponent implements OnInit {
       next: (currentUser) => {
 
         this.socketService.setupSocketConnection(currentUser);
-        console.log('currentUser-app-component', currentUser);// comment for checking only
+        console.log('currentUser-app-components', currentUser);// comment for checking only
         this.authService.setCurrentUser(currentUser);
       },
       error: (err) => {

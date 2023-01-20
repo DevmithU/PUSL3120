@@ -42,7 +42,7 @@ export class UserListComponent implements OnInit,OnDestroy {
   }
 
   goToBoard(): void {
-    this.router.navigate(['boards', this.boardId]);
+    this.router.navigate(['dashBoard', this.boardId]);
 
   }
   updateUserList(): void {

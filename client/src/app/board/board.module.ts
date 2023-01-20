@@ -2,26 +2,26 @@ import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
 import { RouterModule, Routes } from '@angular/router';
-import { AuthGuardService } from '../auth/services/authGuard.service';
+import { AuthenticationGuardService } from '../authentication/services/authenticationGuard.service';
 import { InlineFormModule } from '../shared/modules/inlineForm/inlineForm.module';
 import { TopbarModule } from '../shared/modules/topbar/topbar.module';
 import { ColumnsService } from '../shared/services/columns.service';
 import { TasksService } from '../shared/services/tasks.service';
 import { BoardComponent } from './components/board/board.component';
-import { TaskModalComponent } from './components/taskModal/taskModal.component';
+import { TaskViewComponent } from './components/taskView/taskView.component';
 import { BoardService } from './services/board.service';
 import {UserListComponent} from "./components/userList/userList.component";
 import {UserListService} from "../shared/services/userList.service";
 
 const routes: Routes = [
   {
-    path: 'boards/:boardId',
+    path: 'dashBoard/:boardId',
     component: BoardComponent,
-    canActivate: [AuthGuardService],
+    canActivate: [AuthenticationGuardService],
     children: [
       {
         path: 'tasks/:taskId',
-        component: TaskModalComponent,
+        component: TaskViewComponent,
       },
       {
         path: 'userList',
@@ -39,7 +39,7 @@ const routes: Routes = [
     InlineFormModule,
     ReactiveFormsModule,
   ],
-  declarations: [BoardComponent, TaskModalComponent, UserListComponent],
+  declarations: [BoardComponent, TaskViewComponent, UserListComponent],
   providers: [BoardService, ColumnsService, TasksService, UserListService],
 })
 export class BoardModule {}

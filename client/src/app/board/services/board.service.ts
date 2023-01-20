@@ -66,6 +66,7 @@ export class BoardService {
           title: updatedTask.title,
           description: updatedTask.description,
           columnId: updatedTask.columnId,
+          hasCheck: updatedTask.hasCheck,
         };
       }
       return task;

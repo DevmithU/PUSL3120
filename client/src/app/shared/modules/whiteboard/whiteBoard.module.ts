@@ -1,18 +1,18 @@
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { HomeComponent } from './components/home/home.component';
-import {TopbarModule} from "../shared/modules/topbar/topbar.module";
+import {TopbarModule} from "../topbar/topbar.module";
+import {whiteBoardComponent} from "./components/whiteBoard.component";
 
 const routes: Routes = [
   {
-    path: '',
-    component: HomeComponent,
+    path: 'whiteBoard',
+    component: whiteBoardComponent,
   },
 ];
 
 @NgModule({
   imports: [CommonModule, RouterModule.forChild(routes),TopbarModule],
-  declarations: [HomeComponent],
+  declarations: [whiteBoardComponent],
 })
-export class HomeModule {}
+export class whiteBoardModule {}

@@ -1,16 +1,10 @@
-<div class="navbar-boards">
+<div *ngIf="userName" class="navbar-boards sticky-top">
   <div class="navbar-left-side">
-    <a routerLink="/" class="navbar-icon">
-      <img src="/assets/home.svg" />
+    <a routerLink="/dashBoard" class="navbar-icon navbar-boards-icon">
+        DashBoard
     </a>
-    <a routerLink="/boards" class="navbar-icon navbar-boards-icon">
-
-      <img src="/assets/boards.svg" />
-    </a>
-
-
-
   </div>
+
   <div class="navbar-Hi">
     hi,   <span class="navbar-userName" *ngIf="userName">{{ userName }}</span>
   </div>
@@ -18,4 +12,21 @@
   <div class="navbar-right-side">
     <div class="navbar-icon navbar-logout-icon" (click)="logout()">Logout</div>
   </div>
+</div>
+<div *ngIf="!userName" class="navbar-boards sticky-top">
+
+
+
+  <div class="navbar-left-side">
+    <a routerLink="/" class="home-header-home-link">
+      Collab.io
+    </a>
+  </div>
+
+
+  <div class="navbar-home-right-side">
+    <a routerLink="/login" class="home-header-login">Login</a>
+    <a routerLink="/register" class="home-header-register">Register</a>
+  </div>
+
 </div>

@@ -3,6 +3,7 @@
     <inline-form
       class="task-modal-edit-title-form"
       [defaultText]="data.task.title"
+
       [title]="data.task.title"
       (handleSubmit)="updateTaskName($event)"
     ></inline-form>    <img
@@ -12,7 +13,7 @@
     />
   </div>
   <div class="task-modal-body">
-    <div>
+    <div class="task-modal-fields">
       <form [formGroup]="columnForm" class="column-select-container">
         <select formControlName="columnId" class="column-select">
           <option *ngFor="let column of data.columns" [ngValue]="column.id">
@@ -20,6 +21,9 @@
           </option>
         </select>
       </form>
+      <input type="checkbox" [checked]="data.task.hasCheck" (change)="updateTaskHasCheck($event)" value="hasCheck{{data.task.hasCheck}}">
+      Has Check Box
+
       <div class="task-modal-description">
         <div class="task-modal-description-label">Description</div>
         <inline-form

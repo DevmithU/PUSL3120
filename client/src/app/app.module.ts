@@ -3,12 +3,13 @@ import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { AuthModule } from './auth/auth.module';
+import { AuthModule } from './authentication/auth.module';
 import {HomeModule} from "./home/home.module";
-import {AuthInterceptor} from "./auth/services/authinterceptor.service";
-import {BoardsModule} from "./boards/boards.module";
+import {AuthenticationInterceptor} from "./authentication/services/authenticationInterceptor.service";
+import {DashBoardModule} from "./dashBoard/dashBoard.module";
 import {BoardModule} from "./board/board.module";
 import { SocketService } from './shared/services/socket.service';
+import {whiteBoardModule} from "./shared/modules/whiteboard/whiteBoard.module";
 
 @NgModule({
   declarations: [AppComponent],
@@ -18,13 +19,15 @@ import { SocketService } from './shared/services/socket.service';
     AuthModule,
     HttpClientModule,
     HomeModule,
-    BoardsModule,
-    BoardModule
+    DashBoardModule,
+    BoardModule,
+    whiteBoardModule,
+
   ],
   providers: [
     {
       provide: HTTP_INTERCEPTORS,
-      useClass: AuthInterceptor,
+      useClass: AuthenticationInterceptor,
       multi: true,
   },
     SocketService,

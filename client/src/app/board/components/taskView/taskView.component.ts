@@ -11,9 +11,9 @@ import {SocketEventsEnum} from "../../../shared/types/socketEvents.enum";
 
 @Component({
   selector: 'task-modal',
-  templateUrl: './taskModal.component.html',
+  templateUrl: './taskView.component.html',
 })
-export class TaskModalComponent implements OnDestroy {
+export class TaskViewComponent implements OnDestroy {
   @HostBinding('class') classes = 'task-modal';
 
   boardId: string;
@@ -85,7 +85,7 @@ export class TaskModalComponent implements OnDestroy {
   }
   goToBoard(): void {
 
-    this.router.navigate(['boards', this.boardId]);
+    this.router.navigate(['dashBoard', this.boardId]);
   }
   updateTaskName(taskName: string): void {
     this.tasksService.updateTask(this.boardId, this.taskId, {
@@ -101,6 +101,12 @@ export class TaskModalComponent implements OnDestroy {
     if (confirm('Are you sure you want to delete the task?')) {
       this.tasksService.deleteTask(this.boardId, this.taskId);
     }
+  }
+
+  updateTaskHasCheck(event: any):void{
+    this.tasksService.updateTask(this.boardId, this.taskId, {
+      hasCheck: event.target.checked
+    });
   }
 }
 

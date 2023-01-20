@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
-import { AuthService } from 'src/app/auth/services/auth.service';
+import { AuthenticationService } from 'src/app/authentication/services/authentication.service';
 
 @Component({
   selector: 'app-topbar',
@@ -10,7 +10,7 @@ export class TopbarComponent {
   userName: string | null | undefined ;
 
   constructor(
-    private authService: AuthService,
+    private authService: AuthenticationService,
     private router: Router
   ) {}
   ngOnInit(): void {

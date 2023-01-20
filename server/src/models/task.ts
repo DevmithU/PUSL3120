@@ -21,6 +21,10 @@ const taskSchema = new Schema<TaskDocument>({
     type: Schema.Types.ObjectId,
     required: true,
   },
+  hasCheck:{
+    type: Boolean,
+    required: false,
+  },
 });
 
 export default model<TaskDocument>("Task", taskSchema);

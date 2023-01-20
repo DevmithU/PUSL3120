@@ -1,11 +1,11 @@
-import {Component, ElementRef, EventEmitter, Input, Output, ViewChild} from '@angular/core';
+import {AfterViewInit, Component, ElementRef, EventEmitter, Input, Output, ViewChild} from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 
 @Component({
   selector: 'inline-form',
   templateUrl: './inlineForm.component.html',
 })
-export class InlineFormComponent {
+export class InlineFormComponent implements AfterViewInit{
   @Input() title: string = '';
   @Input() defaultText: string = 'Not defined';
   @Input() hasButton: boolean = false;
@@ -71,5 +71,8 @@ export class InlineFormComponent {
     }
     this.isEditing = false;
     this.form.reset();
+  }
+
+  ngAfterViewInit(): void {
   }
 }

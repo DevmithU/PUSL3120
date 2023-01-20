@@ -1,0 +1,11 @@
+.whiteboard-background{
+  height: 50vh;
+  width: 80vw;
+  background-color: #5aac44;
+
+}
+.whiteboard-canvas{
+  /*height: 100%;*/
+  /*width: 100%;*/
+  background-color: #e76de4;
+}

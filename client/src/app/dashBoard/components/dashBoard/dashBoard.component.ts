@@ -1,25 +1,25 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
-import { BoardsService } from 'src/app/shared/services/boards.service';
+import { DashBoardService } from 'src/app/shared/services/dashBoard.service';
 import {BoardInterface} from "../../../shared/types/board.interface";
 import {SocketService} from "../../../shared/services/socket.service";
 import {SocketEventsEnum} from "../../../shared/types/socketEvents.enum";
 import {Subject, takeUntil} from "rxjs";
-import {AuthService} from "../../../auth/services/auth.service";
+import {AuthenticationService} from "../../../authentication/services/authentication.service";
 
 @Component({
   selector: 'boards',
-  templateUrl: './boards.component.html',
+  templateUrl: './dashBoard.component.html',
 })
-export class BoardsComponent implements OnInit , OnDestroy{
-  boards: BoardInterface[] = [] ;
+export class DashBoardComponent implements OnInit , OnDestroy{
+  dashBoard: BoardInterface[] = [] ;
   memberBoards: BoardInterface[] = [] ;
   unsubscribe$ = new Subject<void>();
   userId: string | null | undefined ;
 
   constructor(
-    private boardsService: BoardsService,
+    private boardsService: DashBoardService,
     private socketService: SocketService,
-    private authService: AuthService,
+    private authService: AuthenticationService,
 
   )
   { }
@@ -32,10 +32,10 @@ export class BoardsComponent implements OnInit , OnDestroy{
     });
     this.boardsService.getBoards().subscribe((boards) => {
       console.log('boards', boards);
-      this.boards = boards;
+      this.dashBoard = boards;
     });
     this.boardsService.getMemberBoards().subscribe((memberBoards) => {
-      // console.log('boards', memberBoards);
+      // console.log('dashBoard', memberBoards);
       this.memberBoards = memberBoards;
     });
     this.initializeListeners();
@@ -45,7 +45,7 @@ export class BoardsComponent implements OnInit , OnDestroy{
   createBoard(title: string): void {
     console.log('title',title);
     this.boardsService.createBoard(title).subscribe((createdBoard) => {
-      this.boards = [...this.boards, createdBoard];
+      this.dashBoard = [...this.dashBoard, createdBoard];
     });
   }
 

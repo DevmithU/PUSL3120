@@ -35,7 +35,13 @@
   align-items: center;
   justify-content: space-between;
 }
-
+.home-header-home-link{
+  color: #fff;
+  text-decoration: none;
+  font-weight: 700;
+  font-size: 22px;
+  margin-right: 20px;
+}
 .home-header-home-link img {
   height: 40px;
 }
@@ -49,7 +55,7 @@
 }
 
 .home-header-register {
-  color: #5067c5;
+  color: #8A2387;
   background: #fff;
   font-weight: 700;
   font-size: 17px;

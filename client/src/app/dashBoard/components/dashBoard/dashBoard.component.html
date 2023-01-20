@@ -2,7 +2,7 @@
 <div class="boards-page-container">
   <div class="home-left-sidebar-container">
     <a
-      routerLink="/boards"
+      routerLink="/dashBoard"
       class="boards-side-menu-option"
       routerLinkActive="boards-side-menu-option-selected"
     >Boards</a
@@ -28,8 +28,8 @@
           (handleSubmit)="createBoard($event)"
         ></inline-form>
         <a
-          [routerLink]="['/boards', board.id]"
-          *ngFor="let board of boards"
+          [routerLink]="['/dashBoard', board.id]"
+          *ngFor="let board of dashBoard"
           class="board-tile"
         >
           <div class="board-tile-details-name">{{ board.title }}</div>
@@ -43,7 +43,7 @@
 
       <div class="board-tile-list">
       <a
-        [routerLink]="['/boards', board.id]"
+        [routerLink]="['/dashBoard', board.id]"
         *ngFor="let board of memberBoards"
         class="board-tile"
       >

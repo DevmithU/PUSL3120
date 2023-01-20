@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {Subscription} from "rxjs";
-import { AuthService } from 'src/app/auth/services/auth.service';
+import { AuthenticationService } from 'src/app/authentication/services/authentication.service';
 import {Router} from "@angular/router";
 
 @Component({
@@ -11,14 +11,14 @@ export class HomeComponent implements OnInit {
   isLoggedInSubscription: Subscription | undefined;
 
   constructor(
-    private authService: AuthService,
+    private authService: AuthenticationService,
     private router: Router) {}
 
   ngOnInit(): void {
     this.isLoggedInSubscription = this.authService.isLogged$.subscribe(
       (isLoggedIn) => {
         if (isLoggedIn) {
-          this.router.navigateByUrl('/boards');
+          this.router.navigateByUrl('/dashBoard');
         }
       }
     );

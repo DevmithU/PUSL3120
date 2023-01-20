@@ -1,6 +1,6 @@
-import {Component, OnDestroy, OnInit} from '@angular/core';
+import {Component, ElementRef, OnDestroy, OnInit, ViewChild,AfterViewInit} from '@angular/core';
 import {ActivatedRoute, NavigationStart, Router} from '@angular/router';
-import { BoardsService } from 'src/app/shared/services/boards.service';
+import { DashBoardService } from 'src/app/shared/services/dashBoard.service';
 import {BoardService} from "../../services/board.service";
 import {BoardInterface} from "../../../shared/types/board.interface";
 import {combineLatest, filter, map, Observable, Subject, takeUntil} from 'rxjs';
@@ -20,7 +20,13 @@ import {TaskInputInterface} from "../../../shared/types/taskInput.interface";
 
 // export class BoardComponent {
 
-export class BoardComponent implements OnInit ,OnDestroy{
+export class BoardComponent implements OnInit ,OnDestroy,AfterViewInit{
+  @ViewChild('myCanvas') public canvas: ElementRef  | undefined;
+  private isDrawing = false;
+  private lastX = 0;
+  private lastY = 0;
+  ctx: CanvasRenderingContext2D | undefined;
+
   userList: Array<string> | undefined;
   boardId: string;
   data$: Observable<{
@@ -33,14 +39,13 @@ export class BoardComponent implements OnInit ,OnDestroy{
 
 
   constructor(
-    private boardsService: BoardsService,
+    private boardsService: DashBoardService,
     private route: ActivatedRoute,
     private router: Router,
     private boardService: BoardService,
     private socketService: SocketService,
     private columnsService: ColumnsService,
-    private tasksService: TasksService
-
+    private tasksService: TasksService,
   ) {
     const boardId = this.route.snapshot.paramMap.get('boardId');
     if (!boardId) {
@@ -69,7 +74,68 @@ export class BoardComponent implements OnInit ,OnDestroy{
 
   }
 
+  canvasMouseMove(event: MouseEvent):void{
+    // console.log(event.clientX, event.clientY);
+    if (this.canvas && this.ctx) {
+      this.ctx.lineTo(event.clientX, event.clientY);
+      console.log('/////////////////////');
+      this.ctx?.stroke();
+    }
+    // // this.ctx?.stroke();
+    // // if (this.canvas){
+    // //   this.canvas.nativeElement.getContext('2d').lineTo(event.clientX, event.clientY);
+    // //   this.canvas.nativeElement.getContext('2d').stroke()
+    // // }
+    // if (this.canvas) {
+    //   let ctx = this.canvas.nativeElement.getContext('2d');
+    //   ctx.fillStyle = 'black';
+    //   ctx.fillRect(event.clientX, event.clientY, 5, 5);
+    // }
+
+  }
+  startDrawing(event: MouseEvent) {
+    this.isDrawing = true;
+    this.lastX = event.clientX;
+    this.lastY = event.clientY;
+    console.log('stdrw',this.lastX)
+
+  }
+
+  drawLine(event: MouseEvent) {
+    if (!this.isDrawing) {
+      return;
+    }
+    this.ctx?.beginPath();
+    this.ctx?.moveTo(this.lastX, this.lastY);
+    this.ctx?.lineTo(event.clientX, event.clientY);
+    console.log('ctx drawing',this.ctx);
+    this.ctx?.stroke();
+
+    this.lastX = event.clientX;
+    this.lastY = event.clientY;
+  }
+
+  stopDrawing() {
+    this.isDrawing = false;
+  }
+  ngAfterViewInit() {
+    if(this.ctx){
+      console.log('defineeeeeeeeeeeeeeeeeed')
+      this.ctx = this.canvas?.nativeElement.getContext('2d');
+
+    }
+    console.log('after intit')
+
+    console.log(this.ctx);
+
+    console.log(this.canvas);
+
+
+  }
   ngOnInit(): void {
+
+
+
     this.socketService.emit(SocketEventsEnum.boardsJoin, {
       boardId: this.boardId,
     });
@@ -84,8 +150,8 @@ export class BoardComponent implements OnInit ,OnDestroy{
 
   initializeListeners(): void {
     this.router.events.subscribe((event) => {
-      //                                       add this condition to not trigger leavebaord when viewing tasks, condition only checks for /boards/, think of better condition
-      if (event instanceof NavigationStart && !event.url.includes('/boards/')) {
+      //                                       add this condition to not trigger leavebaord when viewing tasks, condition only checks for /dashBoard/, think of better condition
+      if (event instanceof NavigationStart && !event.url.includes('/dashBoard/')) {
         this.boardService.leaveBoard(this.boardId);
       }
     });
@@ -142,7 +208,7 @@ export class BoardComponent implements OnInit ,OnDestroy{
       .listen<void>(SocketEventsEnum.boardsDeleteSuccess)
       .pipe(takeUntil(this.unsubscribe$))
       .subscribe(() => {
-        this.router.navigateByUrl('/boards');
+        this.router.navigateByUrl('/dashBoard');
       });
 
   }
@@ -165,7 +231,7 @@ export class BoardComponent implements OnInit ,OnDestroy{
       },
       (error) => {
         console.error(error);
-        this.router.navigate(['/boards']);
+        this.router.navigate(['/dashBoard']);
       });
 
     console.log("comleted");
@@ -204,7 +270,7 @@ export class BoardComponent implements OnInit ,OnDestroy{
     this.boardsService.updateBoard(this.boardId, { title: boardName });
   }
   gerUserList(): void {
-    this.router.navigate(['boards', this.boardId, 'userList', ], {queryParams: {userList: this.userList}} )
+    this.router.navigate(['dashBoard', this.boardId, 'userList', ], {queryParams: {userList: this.userList}} )
   }
   deleteBoard(): void {
     if (confirm('Are you sure you want to delete the board?')) {
@@ -222,6 +288,6 @@ export class BoardComponent implements OnInit ,OnDestroy{
     });
   }
   openTask(taskId: string): void {
-    this.router.navigate(['boards', this.boardId, 'tasks', taskId]);
+    this.router.navigate(['dashBoard', this.boardId, 'tasks', taskId]);
   }
 }

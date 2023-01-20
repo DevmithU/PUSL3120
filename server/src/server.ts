@@ -31,7 +31,7 @@ app.use(cors());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
-//to tune the '_' for ids in boards, only applies for json messages outside mongodb
+//to tune the '_' for ids in dashBoard, only applies for json messages outside mongodb
 mongoose.set("toJSON", {
     virtuals: true,
     transform: (_, converted) => {
@@ -48,18 +48,18 @@ app.post("/api/users/login", usersController.login);
 // app.post("/api/users/login2", usersController.sampleFunction);
 // app.post("/api/users/login2",authMiddleware,usersController.sampleFunction);
 app.get("/api/users/:email", usersController.emailAvailable);
-app.post("/api/boards/addListUser", authMiddleware, (req, res, next) => {
+app.post("/api/dashBoard/addListUser", authMiddleware, (req, res, next) => {
     boardsController.addUserList(req, res, next, io);
 });
-app.post("/api/boards/getListUser", authMiddleware,boardsController.getUserList);
+app.post("/api/dashBoard/getListUser", authMiddleware,boardsController.getUserList);
 app.get('/api/user', authMiddleware, usersController.currentUser);
-app.get("/api/boards", authMiddleware, boardsController.getBoards);
-app.get("/api/boards/memberBoards", authMiddleware, boardsController.getMemberBoards);
+app.get("/api/dashBoard", authMiddleware, boardsController.getBoards);
+app.get("/api/dashBoard/memberBoards", authMiddleware, boardsController.getMemberBoards);
 
 app.get("/api/boards/:boardId", authMiddleware, boardsController.getBoard);
 app.get("/api/boards/:boardId/columns", authMiddleware, columnsController.getColumns);
 app.get("/api/boards/:boardId/tasks", authMiddleware, tasksController.getTasks);
-app.post("/api/boards", authMiddleware, boardsController.createBoard);
+app.post("/api/dashBoard", authMiddleware, boardsController.createBoard);
 
 
 io.use(async (socket: Socket, next) => {
