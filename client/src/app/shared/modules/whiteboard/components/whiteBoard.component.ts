@@ -12,6 +12,10 @@ import {ActivatedRoute, NavigationStart, Router} from "@angular/router";
 })
 export class whiteBoardComponent implements OnInit,AfterViewInit  {
   unsubscribe$ = new Subject<void>();
+  X_page: any| null;
+  Y_page: any| null;
+  X_client: any| null;
+  Y_client: any| null;
 
   @ViewChild('myCanvas') canvas: ElementRef | null;
   @ViewChild('wb') wb: ElementRef | null | undefined;
@@ -85,6 +89,11 @@ export class whiteBoardComponent implements OnInit,AfterViewInit  {
   }
 
   startDrawing(event: MouseEvent):void {
+    this.X_page = event.pageX;
+    this.Y_page = event.pageY;
+    this.X_client = event.clientX;
+    this.Y_client = event.clientY;
+
     this.isDrawing = true;
     let coordinates = {x: event.pageX - this.offset?.x, y: event.pageY - this.offset?.y};
     // if (window.scrollY>0){
