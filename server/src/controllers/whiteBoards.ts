@@ -38,3 +38,12 @@ export const drawDone = (
     console.log('--------------*********************')
     io.to(data.whiteBoardId).emit(SocketEventsEnum.ondraw,data)
 };
+
+export const mouseDown = (
+    io: Server,
+    socket: Socket,
+    data: {whiteBoardId: string, x: any, y:any }
+) => {
+    console.log('--------------*********************')
+    io.to(data.whiteBoardId).emit(SocketEventsEnum.mouseDownRecieve,data)
+};

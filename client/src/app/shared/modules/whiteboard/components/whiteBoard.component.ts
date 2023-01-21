@@ -16,9 +16,15 @@ export class whiteBoardComponent implements OnInit,AfterViewInit  {
   Y_page: any| null;
   X_client: any| null;
   Y_client: any| null;
+  wb_top: any| null;
+  wb_left: any| null;
+  wb_hiegt: any| null;
+  wb_width: any| null;
+  x_cal: any| null;
+  y_cal: any| null;
 
   @ViewChild('myCanvas') canvas: ElementRef | null;
-  @ViewChild('wb') wb: ElementRef | null | undefined;
+  @ViewChild('WBback') WBback: ElementRef | null | undefined;
   private ctx: CanvasRenderingContext2D  | null;
   private isDrawing = false;
   private lastX = 0 ;
@@ -44,7 +50,7 @@ export class whiteBoardComponent implements OnInit,AfterViewInit  {
       console.log('WB id',this.whiteBoardId)
       this.ctx = null;
       this.canvas = null;
-      console.log('width1',this.wb?.nativeElement)
+      console.log('width1',this.WBback?.nativeElement)
     }
   ngOnInit(): void {
     console.log('WB id',this.whiteBoardId)
@@ -70,15 +76,20 @@ export class whiteBoardComponent implements OnInit,AfterViewInit  {
   }
   ngAfterViewInit():void {
 
-    if(this.canvas && this.wb){
-      console.log('width3',this.wb.nativeElement.width)
+    if(this.canvas && this.WBback){
+      console.log('width3',this.WBback.nativeElement.width)
 
-      let wbRect = this.wb.nativeElement.getBoundingClientRect();
+      let wbRect = this.WBback.nativeElement.getBoundingClientRect();
       this.canvas.nativeElement.width = wbRect.width;
       this.canvas.nativeElement.height = wbRect.height;
       this.ctx = this.canvas?.nativeElement.getContext('2d');
       this.offset = {x: wbRect.left, y: wbRect.top};
       // this.offset = {x: wbRect.left, y: 560.667+40};
+
+      this.wb_left = wbRect.left;
+      this.wb_top = wbRect.top;
+      this.wb_hiegt = wbRect.height;
+      this.wb_width = wbRect.width;
 
       console.log('wbrect',wbRect);
       console.log('offset this',this.offset);
@@ -87,18 +98,28 @@ export class whiteBoardComponent implements OnInit,AfterViewInit  {
     }
 
   }
-
+  logPoint(event: MouseEvent):void {
+    this.X_page = event.pageX;
+    this.Y_page = event.pageY;
+    this.X_client = event.clientX;
+    this.Y_client = event.clientY;
+    this.x_cal = event.pageX - this.offset?.x;
+    this.y_cal = event.pageY - this.offset?.y;
+  }
   startDrawing(event: MouseEvent):void {
     this.X_page = event.pageX;
     this.Y_page = event.pageY;
     this.X_client = event.clientX;
     this.Y_client = event.clientY;
+    this.x_cal = event.pageX - this.offset?.x;
+    this.y_cal = event.pageY - this.offset?.y;
 
     this.isDrawing = true;
     let coordinates = {x: event.pageX - this.offset?.x, y: event.pageY - this.offset?.y};
     // if (window.scrollY>0){
     //   coordinates = {x: event.pageX - this.offset?.x, y: event.pageY- this.offset?.y - window.scrollY};
     // }
+    this.socketService.emit(SocketEventsEnum.mouseDown,{whiteBoardId: this.whiteBoardId,x:coordinates.x, y:coordinates.y});
 
     this.lastX = coordinates.x;
     this.lastY = coordinates.y;
@@ -140,6 +161,7 @@ export class whiteBoardComponent implements OnInit,AfterViewInit  {
       .subscribe((message :any) => {
         var newX = message.x;
         var newY = message.y;
+
         let coordinates;
         if(!this.isDrawing){
           console.log("block activated");
@@ -151,8 +173,8 @@ export class whiteBoardComponent implements OnInit,AfterViewInit  {
           /////////////end of start
           if (this.ctx){
             console.log("block activated2");
-
-            coordinates = {x: newX - this.offset?.x, y: newY - this.offset?.y};
+            // coordinates = {x: newX - this.offset?.x, y: newY - this.offset?.y};
+            coordinates = {x: newX, y: newY};
             this.ctx.beginPath();
             this.ctx.moveTo(this.lastX, this.lastY);
             this.ctx.lineTo(coordinates.x, coordinates.y);
@@ -175,6 +197,20 @@ export class whiteBoardComponent implements OnInit,AfterViewInit  {
 
 
 
+
+    this.socketService.listen(SocketEventsEnum.mouseDownRecieve).pipe(takeUntil(this.unsubscribe$))
+      .subscribe((message :any) => {
+        var newX = message.x;
+        var newY = message.y;
+        if(!this.isDrawing) {
+          this.lastX = newX;
+          this.lastY = newY;
+
+        }
+
+
+
+      });
     // this.router.events.subscribe((event) => {
     //   //                                       add this condition to not trigger leavebaord when viewing tasks, condition only checks for /dashBoard/, think of better condition
     //   if (event instanceof NavigationStart && !event.url.includes('/whiteBoard/')) {

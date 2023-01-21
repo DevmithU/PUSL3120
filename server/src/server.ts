@@ -17,6 +17,7 @@ import {Socket} from "./types/socket.interface";
 import { secret } from "./config";
 import * as tasksController from "./controllers/tasks";
 import {createWhiteBoard, getMemberBoards} from "./controllers/boards";
+import {mouseDown} from "./controllers/whiteBoards";
 // import {addListUser} from "./controllers/users";
 
 
@@ -130,6 +131,9 @@ io.use(async (socket: Socket, next) => {
     });
     socket.on(SocketEventsEnum.drawdone, (data) => {
         whiteboardsController.drawDone(io, socket, data);
+    });
+    socket.on(SocketEventsEnum.mouseDown, (data) => {
+        whiteboardsController.mouseDown(io, socket, data);
     });
     // console.log("connect");
 });

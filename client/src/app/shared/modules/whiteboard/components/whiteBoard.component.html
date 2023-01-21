@@ -1,35 +1,41 @@
 <!--<app-topbar></app-topbar>-->
 
 <!--check now-->
-<div #allfather>
-
-</div>
-<div #myIdentifier>
-  <p>This is test.</p>
-  <p>This is test.</p>
-  <p>This is test.</p>
-  <p>This is test.</p>
-  <p>This is test.</p>
+<div #allfather (mousemove)="logPoint($event)">
+  <div #myIdentifier>
+    <p>This is test.</p>
+    <p>This is test.</p>
+    <p>This is test.</p>
+    <p>This is test.</p>
+    <p>This is test.</p>
 
 
-</div>
+  </div>
 
-<div class="add-member-board" >Add Members</div>
-<div class="whiteboard-container">
-  <div class="whiteboard-background" #wb >
-    <canvas class="whiteboard-canvas" #myCanvas (mousedown)="startDrawing($event)" (mousemove)="drawLine($event)" (mouseup)="stopDrawing()"></canvas>
+  <div class="add-member-board" >Add Members</div>
+  <div class="whiteboard-container">
+    <div class="whiteboard-background" #WBback >
+      <canvas class="whiteboard-canvas" #myCanvas (mousedown)="startDrawing($event)" (mousemove)="drawLine($event)" (mouseup)="stopDrawing()"></canvas>
+
+    </div>
+
+
 
   </div>
 
 
-
+  <div #myIdentifier>
+    <p>X page : {{X_page}}</p>
+    <p>Y page : {{Y_page}}</p>
+    <p>X client : {{X_client}}</p>
+    <p>Y client : {{Y_client}}</p><br>
+    <p>wb_left (offset) : {{wb_left}}</p>
+    <p>wb_top (offset): {{wb_top}}</p>
+    <p>wb_hiegt : {{wb_hiegt}}</p>
+    <p>wb_width : {{wb_width}}</p>
+    <p>x cal : {{x_cal}}</p>
+    <p>y cal : {{y_cal}}</p>
+  </div>
 </div>
 
-
-<div #myIdentifier>
-  <p>X page : {{X_page}}</p>
-  <p>Y page : {{Y_page}}</p>
-  <p>X client : {{X_client}}</p>
-  <p>Y client : {{Y_client}}</p>
-</div>
 

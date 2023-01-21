@@ -32,5 +32,8 @@ export enum SocketEventsEnum {
   whiteBoardLeave = "whiteboard:leave",
   drawdone = "whiteboard:drawdone",
   ondraw = "whiteboard:ondraw",
+  mouseDown = "whiteboard:mouseDown",
+  mouseDownRecieve = "whiteboard:mouseDownRecieve",
+
 
 }
