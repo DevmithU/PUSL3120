@@ -4,6 +4,7 @@ import { RouterModule, Routes } from '@angular/router';
 import {TopbarModule} from "../topbar/topbar.module";
 import {whiteBoardComponent} from "./components/whiteBoard.component";
 import {AuthenticationGuardService} from "../../../authentication/services/authenticationGuard.service";
+import {WhiteBoardService} from "../../services/whiteBoard.service";
 
 const routes: Routes = [
   {
@@ -19,6 +20,7 @@ const routes: Routes = [
   declarations: [whiteBoardComponent],
   exports: [
     whiteBoardComponent
-  ]
+  ],
+  providers:[WhiteBoardService],
 })
 export class WhiteBoardModule {}

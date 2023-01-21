@@ -11,7 +11,7 @@
   /*width: 100%;*/
   margin-left: auto;
   margin-right: auto;
-  background-color: #e76de4;
+  background-color: #ffffff;
 }
 .whiteboard-container{
   background-color: #0061e8;
@@ -20,3 +20,37 @@
   justify-content: center;
   width: 100%;
 }
+.whiteboard-pen-options{
+  display: flex;
+
+}
+.whiteboard-pen {
+  padding: 4px 10px;
+  border-radius: 5px;
+  font-size: 14px;
+  /*background-color: #ffffff;*/
+  border: 3px solid #e0e0e0;
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  margin: 0px 5px;
+}
+
+.whiteboard-pen:hover {
+  background-color: #e0e0e0;
+}
+.pen-black{
+  color: #000000;
+
+}
+.pen-red{
+  color: #ff0000;
+}
+.pen-erase{
+  color: #777777;
+}
+.selected-pen{
+  background-color: #e0e0e0;
+
+}
+

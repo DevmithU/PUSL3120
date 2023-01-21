@@ -16,8 +16,7 @@ import User from "./models/user";
 import {Socket} from "./types/socket.interface";
 import { secret } from "./config";
 import * as tasksController from "./controllers/tasks";
-import {createWhiteBoard, getMemberBoards} from "./controllers/boards";
-import {mouseDown} from "./controllers/whiteBoards";
+import {getWhiteBoard} from "./controllers/whiteBoards";
 // import {addListUser} from "./controllers/users";
 
 
@@ -65,7 +64,8 @@ app.get("/api/boards/:boardId", authMiddleware, boardsController.getBoard);
 app.get("/api/boards/:boardId/columns", authMiddleware, columnsController.getColumns);
 app.get("/api/boards/:boardId/tasks", authMiddleware, tasksController.getTasks);
 app.post("/api/dashBoard", authMiddleware, boardsController.createBoard);
-app.post("/api/dashBoard/createWB", authMiddleware, boardsController.createWhiteBoard);
+app.post("/api/dashBoard/createWB", authMiddleware, whiteboardsController.createWhiteBoard);
+app.get("/api/whiteBoards/:whiteBoardId", authMiddleware, whiteboardsController.getWhiteBoard);
 
 
 io.use(async (socket: Socket, next) => {

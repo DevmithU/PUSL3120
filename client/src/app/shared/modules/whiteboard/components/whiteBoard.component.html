@@ -1,4 +1,4 @@
-<!--<app-topbar></app-topbar>-->
+<app-topbar></app-topbar>
 
 <!--check now-->
 <div #allfather (mousemove)="logPoint($event)">
@@ -8,22 +8,19 @@
     <p>This is test.</p>
     <p>This is test.</p>
     <p>This is test.</p>
-
+  </div>
+  <div class="whiteboard-pen-options">
+    <div class="{{divBlack}} whiteboard-pen pen-black " (click)="penBlack()">Black</div>
+    <div class="{{divRed}} whiteboard-pen pen-red" (click)="penRed()">Red</div>
+    <div class="{{divErase}} whiteboard-pen pen-erase" (click)="penErase()">Erase</div>
 
   </div>
-
-  <div class="add-member-board" >Add Members</div>
   <div class="whiteboard-container">
     <div class="whiteboard-background" #WBback >
       <canvas class="whiteboard-canvas" #myCanvas (mousedown)="startDrawing($event)" (mousemove)="drawLine($event)" (mouseup)="stopDrawing()"></canvas>
 
     </div>
-
-
-
   </div>
-
-
   <div #myIdentifier>
     <p>X page : {{X_page}}</p>
     <p>Y page : {{Y_page}}</p>
