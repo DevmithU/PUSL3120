@@ -28,5 +28,9 @@ export enum SocketEventsEnum {
   addMemberSuccess = "board:addMemberSuccess",
   dashBoardJoin = "board:join",
   dashBoardLeave = "board:leave",
+  whiteBoardJoin = "whiteboard:join",
+  whiteBoardLeave = "whiteboard:leave",
+  drawdone = "whiteboard:drawdone",
+  ondraw = "whiteboard:ondraw",
 
 }

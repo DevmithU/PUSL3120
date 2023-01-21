@@ -12,6 +12,7 @@ import { TaskViewComponent } from './components/taskView/taskView.component';
 import { BoardService } from './services/board.service';
 import {UserListComponent} from "./components/userList/userList.component";
 import {UserListService} from "../shared/services/userList.service";
+import {WhiteBoardModule} from "../shared/modules/whiteboard/whiteBoard.module";
 
 const routes: Routes = [
   {
@@ -38,6 +39,7 @@ const routes: Routes = [
     TopbarModule,
     InlineFormModule,
     ReactiveFormsModule,
+    WhiteBoardModule,
   ],
   declarations: [BoardComponent, TaskViewComponent, UserListComponent],
   providers: [BoardService, ColumnsService, TasksService, UserListService],

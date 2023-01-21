@@ -1,0 +1,8 @@
+export interface WhiteBoardInterface {
+  id: string;
+  title: string;
+  userId: string;
+  createdAt: string;
+  updatedAt: string;
+  userList:Array<string>;
+}

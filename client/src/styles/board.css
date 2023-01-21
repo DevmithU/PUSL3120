@@ -31,7 +31,7 @@
   /*margin-bottom:auto;*/
 }
 .rotate::-webkit-scrollbar {
-  height: 25px;               /* width of the entire scrollbar */
+  height: 12px;               /* width of the entire scrollbar */
 }
 .rotate::-webkit-scrollbar-track {
   background:  hsla(0, 100%, 100%, 0.3);        /* color of the tracking area */

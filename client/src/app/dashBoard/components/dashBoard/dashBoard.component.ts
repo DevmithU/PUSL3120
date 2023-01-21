@@ -5,6 +5,7 @@ import {SocketService} from "../../../shared/services/socket.service";
 import {SocketEventsEnum} from "../../../shared/types/socketEvents.enum";
 import {Subject, takeUntil} from "rxjs";
 import {AuthenticationService} from "../../../authentication/services/authentication.service";
+import {WhiteBoardInterface} from "../../../shared/types/whiteBoard.interface";
 
 @Component({
   selector: 'boards',
@@ -12,6 +13,7 @@ import {AuthenticationService} from "../../../authentication/services/authentica
 })
 export class DashBoardComponent implements OnInit , OnDestroy{
   dashBoard: BoardInterface[] = [] ;
+  whiteBoards: WhiteBoardInterface[] = [] ;
   memberBoards: BoardInterface[] = [] ;
   unsubscribe$ = new Subject<void>();
   userId: string | null | undefined ;
@@ -34,6 +36,10 @@ export class DashBoardComponent implements OnInit , OnDestroy{
       console.log('boards', boards);
       this.dashBoard = boards;
     });
+    this.boardsService.getWhiteBoards().subscribe((whiteboards) => {
+      console.log('boards', whiteboards);
+      this.whiteBoards = whiteboards;
+    });
     this.boardsService.getMemberBoards().subscribe((memberBoards) => {
       // console.log('dashBoard', memberBoards);
       this.memberBoards = memberBoards;
@@ -48,7 +54,12 @@ export class DashBoardComponent implements OnInit , OnDestroy{
       this.dashBoard = [...this.dashBoard, createdBoard];
     });
   }
-
+  createWhiteBoard(title: string): void {
+    console.log('title',title);
+    this.boardsService.createWhiteBoard(title).subscribe((createdWhiteBoard) => {
+      this.whiteBoards = [...this.whiteBoards, createdWhiteBoard];
+    });
+  }
 
   private initializeListeners(): void{
     this.socketService

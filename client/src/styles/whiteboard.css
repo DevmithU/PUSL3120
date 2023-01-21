@@ -1,11 +1,22 @@
 .whiteboard-background{
-  height: 50vh;
-  width: 80vw;
+  /*height: 100vh;*/
+  height: 400px;
+  width: 600px;
+  /*width: 80vw;*/
   background-color: #5aac44;
 
 }
 .whiteboard-canvas{
   /*height: 100%;*/
   /*width: 100%;*/
+  margin-left: auto;
+  margin-right: auto;
   background-color: #e76de4;
+}
+.whiteboard-container{
+  background-color: #0061e8;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
 }

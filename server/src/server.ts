@@ -7,6 +7,8 @@ import bodyParser from "body-parser";
 import authMiddleware from './middlewares/auth'
 import cors from "cors";
 import * as boardsController from "./controllers/boards";
+import * as whiteboardsController from "./controllers/whiteBoards";
+
 import * as columnsController from "./controllers/columns";
 import {SocketEventsEnum} from "./types/socketEvents.enum";
 import jwt from "jsonwebtoken";
@@ -14,7 +16,7 @@ import User from "./models/user";
 import {Socket} from "./types/socket.interface";
 import { secret } from "./config";
 import * as tasksController from "./controllers/tasks";
-import {getMemberBoards} from "./controllers/boards";
+import {createWhiteBoard, getMemberBoards} from "./controllers/boards";
 // import {addListUser} from "./controllers/users";
 
 
@@ -54,12 +56,15 @@ app.post("/api/dashBoard/addListUser", authMiddleware, (req, res, next) => {
 app.post("/api/dashBoard/getListUser", authMiddleware,boardsController.getUserList);
 app.get('/api/user', authMiddleware, usersController.currentUser);
 app.get("/api/dashBoard", authMiddleware, boardsController.getBoards);
+app.get("/api/dashBoard/getWB", authMiddleware, boardsController.getWhiteBoards);
+
 app.get("/api/dashBoard/memberBoards", authMiddleware, boardsController.getMemberBoards);
 
 app.get("/api/boards/:boardId", authMiddleware, boardsController.getBoard);
 app.get("/api/boards/:boardId/columns", authMiddleware, columnsController.getColumns);
 app.get("/api/boards/:boardId/tasks", authMiddleware, tasksController.getTasks);
 app.post("/api/dashBoard", authMiddleware, boardsController.createBoard);
+app.post("/api/dashBoard/createWB", authMiddleware, boardsController.createWhiteBoard);
 
 
 io.use(async (socket: Socket, next) => {
@@ -116,6 +121,15 @@ io.use(async (socket: Socket, next) => {
     });
     socket.on(SocketEventsEnum.dashBoardLeave, (data) => {
         boardsController.leaveDashBoard(io, socket, data);
+    });
+    socket.on(SocketEventsEnum.whiteBoardJoin, (data) => {
+        whiteboardsController.joinWhiteBoard(io, socket, data);
+    });
+    socket.on(SocketEventsEnum.whiteBoardLeave, (data) => {
+        whiteboardsController.leaveWhiteBoard(io, socket, data);
+    });
+    socket.on(SocketEventsEnum.drawdone, (data) => {
+        whiteboardsController.drawDone(io, socket, data);
     });
     // console.log("connect");
 });

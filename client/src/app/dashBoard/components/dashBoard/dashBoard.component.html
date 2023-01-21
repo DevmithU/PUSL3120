@@ -12,8 +12,13 @@
       class="boards-side-menu-option"
       routerLinkActive="boards-side-menu-option-selected"
       [routerLinkActiveOptions]="{ exact: true }"
-    >Home</a
-    >
+    >Home</a>
+    <a
+      routerLink="/whiteBoard"
+      class="boards-side-menu-option"
+      routerLinkActive="boards-side-menu-option-selected"
+      [routerLinkActiveOptions]="{ exact: true }"
+    >whiteBoard</a>
   </div>
   <div class="boards-section-container">
     <div class="my-boards">
@@ -36,6 +41,32 @@
         </a>
       </div>
     </div>
+
+
+
+    <div class="my-boards">
+      <div class="my-boards-section-header">
+        <div class="boards-page-header-name">White boards</div>
+      </div>
+      <div class="board-tile-list">
+        <!--        INLINE FORM-->
+        <inline-form
+          class="create-board-form"
+          defaultText="Create new board"
+          (handleSubmit)="createWhiteBoard($event)"
+        ></inline-form>
+        <a
+          [routerLink]="['/whiteBoard', board.id]"
+          *ngFor="let board of whiteBoards"
+          class="board-tile"
+        >
+          <div class="board-tile-details-name">{{ board.title }}</div>
+        </a>
+      </div>
+    </div>
+
+
+
     <div class="my-boards">
       <div class="my-boards-section-header">
         <div class="boards-page-header-name">Member boards</div>

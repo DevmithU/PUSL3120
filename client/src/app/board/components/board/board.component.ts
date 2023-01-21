@@ -21,11 +21,8 @@ import {TaskInputInterface} from "../../../shared/types/taskInput.interface";
 // export class BoardComponent {
 
 export class BoardComponent implements OnInit ,OnDestroy,AfterViewInit{
-  @ViewChild('myCanvas') public canvas: ElementRef  | undefined;
-  private isDrawing = false;
-  private lastX = 0;
-  private lastY = 0;
-  ctx: CanvasRenderingContext2D | undefined;
+  @ViewChild('r1') r1: ElementRef  | undefined;
+
 
   userList: Array<string> | undefined;
   boardId: string;
@@ -36,6 +33,7 @@ export class BoardComponent implements OnInit ,OnDestroy,AfterViewInit{
 
   }>;
   unsubscribe$ = new Subject<void>();
+  private offset: { x: any; y: any; } | undefined;
 
 
   constructor(
@@ -74,61 +72,26 @@ export class BoardComponent implements OnInit ,OnDestroy,AfterViewInit{
 
   }
 
-  canvasMouseMove(event: MouseEvent):void{
-    // console.log(event.clientX, event.clientY);
-    if (this.canvas && this.ctx) {
-      this.ctx.lineTo(event.clientX, event.clientY);
-      console.log('/////////////////////');
-      this.ctx?.stroke();
-    }
-    // // this.ctx?.stroke();
-    // // if (this.canvas){
-    // //   this.canvas.nativeElement.getContext('2d').lineTo(event.clientX, event.clientY);
-    // //   this.canvas.nativeElement.getContext('2d').stroke()
-    // // }
-    // if (this.canvas) {
-    //   let ctx = this.canvas.nativeElement.getContext('2d');
-    //   ctx.fillStyle = 'black';
-    //   ctx.fillRect(event.clientX, event.clientY, 5, 5);
-    // }
 
-  }
-  startDrawing(event: MouseEvent) {
-    this.isDrawing = true;
-    this.lastX = event.clientX;
-    this.lastY = event.clientY;
-    console.log('stdrw',this.lastX)
-
-  }
-
-  drawLine(event: MouseEvent) {
-    if (!this.isDrawing) {
-      return;
-    }
-    this.ctx?.beginPath();
-    this.ctx?.moveTo(this.lastX, this.lastY);
-    this.ctx?.lineTo(event.clientX, event.clientY);
-    console.log('ctx drawing',this.ctx);
-    this.ctx?.stroke();
-
-    this.lastX = event.clientX;
-    this.lastY = event.clientY;
-  }
-
-  stopDrawing() {
-    this.isDrawing = false;
-  }
   ngAfterViewInit() {
-    if(this.ctx){
-      console.log('defineeeeeeeeeeeeeeeeeed')
-      this.ctx = this.canvas?.nativeElement.getContext('2d');
+
+    if(this.r1){
+
+
+      let r1Rect = this.r1.nativeElement.getBoundingClientRect();
+      this.offset = {x: r1Rect.left, y: r1Rect.top};
+
+      // console.log('r1Rect',r1Rect);
+      // console.log('r1Rect left top',{x: r1Rect.left, y: r1Rect.top});
+      // console.log('r1Rect width',r1Rect.width);
+      // console.log('r1Rect heigth',r1Rect.heigth);
+      // console.log('width3',this.r1.nativeElement.width)
+      // console.log('offset this22222222',this.offset);
+
+
+
 
     }
-    console.log('after intit')
-
-    console.log(this.ctx);
-
-    console.log(this.canvas);
 
 
   }

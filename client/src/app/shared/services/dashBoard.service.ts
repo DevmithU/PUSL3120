@@ -5,6 +5,7 @@ import { environment } from 'src/environments/environment';
 import { BoardInterface } from '../types/board.interface';
 import {SocketEventsEnum} from "../types/socketEvents.enum";
 import {SocketService} from "./socket.service";
+import {WhiteBoardInterface} from "../types/whiteBoard.interface";
 
 @Injectable()
 export class DashBoardService {
@@ -16,6 +17,10 @@ export class DashBoardService {
   getBoards(): Observable<BoardInterface[]> {
     const url = environment.apiUrl + '/dashBoard';
     return this.http.get<BoardInterface[]>(url);
+  }
+  getWhiteBoards(): Observable<WhiteBoardInterface[]> {
+    const url = environment.apiUrl + '/dashBoard/getWB';
+    return this.http.get<WhiteBoardInterface[]>(url);
   }
   getMemberBoards(): Observable<BoardInterface[]> {
     const url = environment.apiUrl + '/dashBoard/memberBoards';
@@ -30,6 +35,10 @@ export class DashBoardService {
   createBoard(title: string): Observable<BoardInterface> {
     const url = environment.apiUrl + '/dashBoard';
     return this.http.post<BoardInterface>(url, { title });
+  }
+  createWhiteBoard(title: string): Observable<WhiteBoardInterface> {
+    const url = environment.apiUrl + '/dashBoard/createWB';
+    return this.http.post<WhiteBoardInterface>(url, { title });
   }
   updateBoard(boardId: string, fields: { title: string }): void {
     this.socketService.emit(SocketEventsEnum.boardsUpdate, { boardId, fields });

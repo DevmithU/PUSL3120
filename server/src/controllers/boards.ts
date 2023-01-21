@@ -7,6 +7,7 @@ import {SocketEventsEnum} from "../types/socketEvents.enum";
 import {getErrorMessage} from "../helpers";
 import UserModel from "../models/user";
 import jwt from "jsonwebtoken";
+import WhiteBoardModel from "../models/whiteBoard";
 import {secret} from "../config";
 import User from "../models/user";
 import * as columnsController from "./columns";
@@ -27,6 +28,23 @@ export const getBoards = async (
     next(err);
   }
 };
+
+export const getWhiteBoards = async (
+    req: ExpressRequestInterface,
+    res: Response,
+    next: NextFunction
+) => {
+  try {
+    if (!req.user) {
+      return res.sendStatus(401);
+    }
+    const whiteBoards = await WhiteBoardModel.find({ userId: req.user.id });
+    res.send(whiteBoards);
+  } catch (err) {
+    next(err);
+  }
+};
+
 export const getMemberBoards = async (
     req: ExpressRequestInterface,
     res: Response,
@@ -101,12 +119,34 @@ export const createBoard = async (
   }
 };
 
+export const createWhiteBoard = async (
+    req: ExpressRequestInterface,
+    res: Response,
+    next: NextFunction
+) => {
+  try {
+    if (!req.user) {
+      return res.sendStatus(401);
+    }
+    const newBoard = new WhiteBoardModel({
+      title: req.body.title,
+      userId: req.user.id,
+    });
+    const savedBoard = await newBoard.save();
+    res.send(savedBoard);
+  } catch (err) {
+    next(err);
+  }
+};
+
 export const joinDashBoard = (
     io: Server,
     socket: Socket,
     data: { userId: string }
 ) => {
-  console.log("server socket io join", socket.user);
+  console.log("server socket io join", socket.user?.email);
+  console.log("server socket io join", data.userId);
+
   //room id given same as board id
   socket.join(data.userId);
 };
@@ -116,6 +156,8 @@ export const leaveDashBoard = (
     data: { userId: string }
 ) => {
   console.log("server socket io leave", data.userId);
+  console.log("server socket io leave", data.userId);
+
   socket.leave(data.userId);
 };
 
@@ -124,7 +166,9 @@ export const joinBoard = (
     socket: Socket,
     data: { boardId: string }
 ) => {
-  console.log("server socket io join", socket.user);
+  console.log("server socket io join", socket.user?.email);
+  console.log("server socket io join", data.boardId);
+
   //room id given same as board id
   socket.join(data.boardId);
 };
@@ -135,6 +179,8 @@ export const leaveBoard = (
     data: { boardId: string }
 ) => {
   console.log("server socket io leave", data.boardId);
+  console.log("server socket io leave", data.boardId);
+
   socket.leave(data.boardId);
 };
 

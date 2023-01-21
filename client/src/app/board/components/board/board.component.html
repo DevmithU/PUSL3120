@@ -6,7 +6,9 @@
 <app-topbar></app-topbar>
 
 <div class="board" >
-  <div class="rotate" *ngIf="data$ | async as data">
+
+
+  <div class="rotate" *ngIf="data$ | async as data" #r1>
   <div class="board-header-container">
     <inline-form
       class="edit-board-form"
@@ -65,11 +67,7 @@
     ></inline-form>
   </div>
   </div>
-  <div class="whiteboard-background">
-    <canvas #myCanvas (mousedown)="startDrawing($event)" (mousemove)="drawLine($event)" (mouseup)="stopDrawing()"></canvas>
 
-
-  </div>
 </div>
 
 <router-outlet></router-outlet>
