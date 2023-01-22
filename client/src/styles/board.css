@@ -1,7 +1,17 @@
-.board {
+
+.board-background{
   background: #9796f0;  /* fallback for old browsers */
   background: -webkit-linear-gradient(to top, #fbc7d4, #9796f0);  /* Chrome 10-25, Safari 5.1-6 */
   background: linear-gradient(to bottom, #fbc7d4, #9796f0); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+  /*height: 100vh;*/
+  min-height: 100vh;
+  height: fit-content;
+  /*height: max(100vh,fit-content);*/
+  /*height: max(100vh,fit-content);*/
+
+}
+
+.board {
 
   /*background-image: url("https://dummyimage.com/600x400/000/fff");*/
   /*background-image: url("/client/src/assets/board_background_image.jpg");*/
@@ -10,21 +20,24 @@
   /*background-repeat: no-repeat;*/
   /*background-size: cover;*/
 
-  height: calc(100vh - 40px);
+  /*height: calc(100vh - 40px);*/
   /*height: 50vh;*/
-
+  height: 100%;
   /*overflow-x: auto;*/
 
 
 }
-@media (max-height: 650px) {
-  .rotate {
-    height: 100%;
-    padding-bottom: 0px;
+/*@media (max-height: 650px) {*/
+/*  .rotate {*/
+/*    height: 100%;*/
+/*    padding-bottom: 0px;*/
 
-  }
-}
+/*  }*/
+/*}*/
 .rotate{
+  /*min-height: fit-content;*/
+  height: fit-content;
+
   overflow-x: auto;
   width: auto;
   padding-bottom: 40px;
@@ -109,7 +122,7 @@
   border-radius: 4px;
   width: 272px;
   margin: 0 4px;
-  max-height: 600px;
+  /*max-height: 600px;*/
   overflow-y: auto;
   min-width: 272px;
   align-self: flex-start;

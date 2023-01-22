@@ -91,6 +91,10 @@ export class whiteBoardComponent implements OnInit,AfterViewInit {
     });
 
   }
+  check():void{
+    this.ctx = this.canvas?.nativeElement.getContext('2d');
+
+  }
 
   ngAfterViewInit(): void {
 
