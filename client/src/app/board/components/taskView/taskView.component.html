@@ -21,9 +21,14 @@
           </option>
         </select>
       </form>
-      <input type="checkbox" [checked]="data.task.hasCheck" (change)="updateTaskHasCheck($event)" value="hasCheck{{data.task.hasCheck}}">
-      Has Check Box
-
+      <div class="task-check-box">
+        <input type="checkbox" [checked]="data.task.hasCheck" (change)="updateTaskHasCheck($event)" value="hasCheck{{data.task.hasCheck}}">
+        Has Check Box
+      </div>
+      <div *ngIf= "data.task.hasCheck" class="task-check-box">
+        <input  type="checkbox" [checked]="data.task.checkStatus" (change)="updateTaskCheckStatus($event)" value="hasCheck{{data.task.checkStatus}}">
+        Status of check
+      </div>
       <div class="task-modal-description">
         <div class="task-modal-description-label">Description</div>
         <inline-form

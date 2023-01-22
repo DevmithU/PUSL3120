@@ -25,6 +25,10 @@ const taskSchema = new Schema<TaskDocument>({
     type: Boolean,
     required: false,
   },
+  checkStatus:{
+    type: Boolean,
+    required: false,
+  },
 });
 
 export default model<TaskDocument>("Task", taskSchema);

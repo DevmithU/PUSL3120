@@ -121,9 +121,7 @@ export class BoardComponent implements OnInit ,OnDestroy,AfterViewInit{
 
     // will add the new column for SELF and OTHER CLIENTS though this listener
     this.socketService
-      .listen<ColumnInterface>(SocketEventsEnum.columnsCreateSuccess)
-      .pipe(takeUntil(this.unsubscribe$))
-      .subscribe((column) => {
+      .listen<ColumnInterface>(SocketEventsEnum.columnsCreateSuccess).pipe(takeUntil(this.unsubscribe$)).subscribe((column) => {
         this.boardService.addColumn(column);
         // console.log('column',column);
 
@@ -253,4 +251,11 @@ export class BoardComponent implements OnInit ,OnDestroy,AfterViewInit{
   openTask(taskId: string): void {
     this.router.navigate(['dashBoard', this.boardId, 'tasks', taskId]);
   }
+
+  updateTaskCheckStatus(event: any, id: string):void{
+    this.tasksService.updateTask(this.boardId, id, {
+      checkStatus: event.target.checked
+    });
+  }
+
 }

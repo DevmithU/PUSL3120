@@ -9,7 +9,7 @@ import {AuthenticationInterceptor} from "./authentication/services/authenticatio
 import {DashBoardModule} from "./dashBoard/dashBoard.module";
 import {BoardModule} from "./board/board.module";
 import { SocketService } from './shared/services/socket.service';
-import {WhiteBoardModule} from "./shared/modules/whiteboard/whiteBoard.module";
+import {WhiteBoardModule} from "./whiteboard/whiteBoard.module";
 
 @NgModule({
   declarations: [AppComponent],

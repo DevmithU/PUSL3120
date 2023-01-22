@@ -1,11 +1,11 @@
 import { Component, ViewChild, ElementRef, AfterViewInit,OnInit } from '@angular/core';
-import {SocketEventsEnum} from "../../../types/socketEvents.enum";
-import {SocketService} from "../../../services/socket.service";
-import {AuthenticationService} from "../../../../authentication/services/authentication.service";
+import {SocketEventsEnum} from "../../../shared/types/socketEvents.enum";
+import {SocketService} from "../../../shared/services/socket.service";
+import {AuthenticationService} from "../../../authentication/services/authentication.service";
 import {Subject, takeUntil} from "rxjs";
 import {ActivatedRoute, NavigationStart, Router} from "@angular/router";
-import {WhiteBoardService} from "../../../services/whiteBoard.service";
-import {WhiteBoardInterface} from "../../../types/whiteBoard.interface";
+import {WhiteBoardService} from "../../services/whiteBoard.service";
+import {WhiteBoardInterface} from "../../../shared/types/whiteBoard.interface";
 
 
 @Component({
@@ -13,6 +13,8 @@ import {WhiteBoardInterface} from "../../../types/whiteBoard.interface";
   templateUrl: './whiteBoard.component.html',
 })
 export class whiteBoardComponent implements OnInit,AfterViewInit {
+  userList: Array<string> | undefined;
+
   unsubscribe$ = new Subject<void>();
   X_page: any | null;
   Y_page: any | null;
@@ -27,7 +29,8 @@ export class whiteBoardComponent implements OnInit,AfterViewInit {
   divBlack: string = "selected-pen";
   divRed: string = "";
   divErase: string = "";
-  whiteBoard: WhiteBoardInterface | undefined;
+  whiteBoard: WhiteBoardInterface | undefined ;
+  WBtitle:string ="Sample Board"
 
 
   @ViewChild('myCanvas') canvas: ElementRef | null;
@@ -136,7 +139,7 @@ export class whiteBoardComponent implements OnInit,AfterViewInit {
     // if (window.scrollY>0){
     //   coordinates = {x: event.pageX - this.offset?.x, y: event.pageY- this.offset?.y - window.scrollY};
     // }
-    this.socketService.emit(SocketEventsEnum.mouseDown, {
+    this.socketService.emit(SocketEventsEnum.mouseDown, {userId: this.userId,
       whiteBoardId: this.whiteBoardId,
       x: coordinates.x,
       y: coordinates.y
@@ -191,74 +194,83 @@ export class whiteBoardComponent implements OnInit,AfterViewInit {
   private initializeListeners(): void {
     this.socketService.listen(SocketEventsEnum.ondraw).pipe(takeUntil(this.unsubscribe$))
       .subscribe((message: any) => {
-        var newX = message.x;
-        var newY = message.y;
-        var newstrColor = message.strColor;
-        var newstrWidth = message.strWidth;
-        let coordinates;
-        //        if(!this.isDrawing && !(message.userId==this.userId)){
-        if (!this.isDrawing) {
-          console.log("block activated");
 
-          // coordinates = {x: newX - this.offset?.x, y: newY - this.offset?.y};
-          //
-          // this.lastX = coordinates.x;
-          // this.lastY = coordinates.y;
-          /////////////end of start
-          if (this.ctx) {
-            console.log("block activated2");
+        if(!(this.userId==message.userId)){
+          var newX = message.x;
+          var newY = message.y;
+          var newstrColor = message.strColor;
+          var newstrWidth = message.strWidth;
+          let coordinates;
+          //        if(!this.isDrawing && !(message.userId==this.userId)){
+          if (!this.isDrawing) {
+
             // coordinates = {x: newX - this.offset?.x, y: newY - this.offset?.y};
-            coordinates = {x: newX, y: newY};
-            this.ctx.beginPath();
-            this.ctx.moveTo(this.lastX, this.lastY);
-            this.ctx.lineTo(coordinates.x, coordinates.y);
-            this.ctx.lineCap = "round";
-            this.ctx.lineJoin = "round";
-            this.ctx.strokeStyle = newstrColor;
-            this.ctx.lineWidth = newstrWidth;
-            this.ctx.stroke();
+            //
+            // this.lastX = coordinates.x;
+            // this.lastY = coordinates.y;
+            /////////////end of start
+            if (this.ctx) {
+              // coordinates = {x: newX - this.offset?.x, y: newY - this.offset?.y};
+              coordinates = {x: newX, y: newY};
+              this.ctx.beginPath();
+              this.ctx.moveTo(this.lastX, this.lastY);
+              this.ctx.lineTo(coordinates.x, coordinates.y);
+              this.ctx.lineCap = "round";
+              this.ctx.lineJoin = "round";
+              this.ctx.strokeStyle = newstrColor;
+              this.ctx.lineWidth = newstrWidth;
+              this.ctx.stroke();
+            }
+            if (coordinates) {
+              this.lastX = coordinates?.x;
+              this.lastY = coordinates?.y;
+            }
+            //////////////////end of draw
+            console.log("whiteBoardId: ", message.whiteBoardId);
+            console.log("x: ", message.x);
+            console.log("y: ", message.y);
+            console.log(this.isDrawing);
           }
-          if (coordinates) {
-            this.lastX = coordinates?.x;
-            this.lastY = coordinates?.y;
-          }
-          //////////////////end of draw
-          console.log("whiteBoardId: ", message.whiteBoardId);
-          console.log("x: ", message.x);
-          console.log("y: ", message.y);
-          console.log(this.isDrawing);
         }
+
 
 
       });
 
 
-    this.socketService.listen(SocketEventsEnum.mouseDownRecieve).pipe(takeUntil(this.unsubscribe$))
+    this.socketService.listen(SocketEventsEnum.mouseDownReceive).pipe(takeUntil(this.unsubscribe$))
       .subscribe((message: any) => {
-        var newX = message.x;
-        var newY = message.y;
-        if (!this.isDrawing) {
-          this.lastX = newX;
-          this.lastY = newY;
-
+        if(!(this.userId == message.userId)){
+          var newX = message.x;
+          var newY = message.y;
+          if (!this.isDrawing) {
+            this.lastX = newX;
+            this.lastY = newY;
+          }
         }
-
-
       });
-    // this.router.events.subscribe((event) => {
-    //   //                                       add this condition to not trigger leavebaord when viewing tasks, condition only checks for /dashBoard/, think of better condition
-    //   if (event instanceof NavigationStart && !event.url.includes('/whiteBoard/')) {
-    //     this.socketService.emit(SocketEventsEnum.whiteBoardLeave, {
-    //       whiteBoardId: this.whiteBoardId,
-    //     });
-    //   }
-    // });
-
+    this.router.events.subscribe((event) => {
+      //                                       add this condition to not trigger leavebaord when viewing tasks, condition only checks for /dashBoard/, think of better condition
+      if (event instanceof NavigationStart && !event.url.includes('/whiteBoard/')) {
+        this.socketService.emit(SocketEventsEnum.whiteBoardLeave, {
+          whiteBoardId: this.whiteBoardId,
+        });
+      }
+    });
+    this.socketService
+      .listen<WhiteBoardInterface>(SocketEventsEnum.whiteboardsUpdateSuccess)
+      .pipe(takeUntil(this.unsubscribe$))
+      .subscribe((updatedWhiteBoard) => {
+        this.WBtitle=updatedWhiteBoard.title;
+        //this.whiteBoardService.updateBoard(updatedBoard);
+      });
 
   }
   fetchData(): void {
     this.whiteBoardService.getWhiteBoard(this.whiteBoardId).subscribe((whiteBoard) => {
       this.whiteBoard = whiteBoard;
+      this.userList = whiteBoard.userList;
+      this.WBtitle = whiteBoard.title;
     });
 
   }
@@ -285,4 +297,18 @@ export class whiteBoardComponent implements OnInit,AfterViewInit {
     this.divRed = "selected-pen";
     this.divErase = "";
   }
+
+  gerUserList(): void {
+    console.log('tis block')
+    this.router.navigate(['whiteBoard', this.whiteBoardId, 'userListWB',], {queryParams: {userList: this.userList}} )
+  }
+
+  // updateBoardName(whiteboardName: string): void {
+  //   this.whiteBoardService.updateBoard(this.whiteBoardId, { title: whiteboardName });
+  // }
+  updateBoardName(whiteBoardName: string): void {
+    this.whiteBoardService.updateWhiteBoard(this.whiteBoardId, { title: whiteBoardName });
+  }
+
+
 }

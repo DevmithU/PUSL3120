@@ -108,6 +108,11 @@ export class TaskViewComponent implements OnDestroy {
       hasCheck: event.target.checked
     });
   }
+  updateTaskCheckStatus(event: any):void{
+    this.tasksService.updateTask(this.boardId, this.taskId, {
+      checkStatus: event.target.checked
+    });
+  }
 }
 
 //dev

@@ -40,10 +40,20 @@
       <div
         *ngFor="let task of getTasksByColumn(column.id, data.tasks)"
         class="task"
-        (click)="openTask(task.id)"
-
+        [ngClass]="{ 'task-not-done': ((task.hasCheck)&&(!(task.checkStatus))), 'task-done': task.checkStatus,'task':true,'task-no-check':!(task.hasCheck)}"
       >
-        {{ task.title }}
+          <div *ngIf= "task.hasCheck" class="task-check-box">
+            <input  type="checkbox" [checked]="task.checkStatus" (change)="updateTaskCheckStatus($event,task.id)" value="hasCheck{{task.checkStatus}}">
+          </div>
+          <div class="task-title"
+               (click)="openTask(task.id)"
+          >
+            {{ task.title }}
+
+          </div>
+
+
+
       </div>
 
       <inline-form

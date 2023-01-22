@@ -26,6 +26,10 @@ export class DashBoardService {
     const url = environment.apiUrl + '/dashBoard/memberBoards';
     return this.http.get<BoardInterface[]>(url);
   }
+  getMemberWhiteBoards(): Observable<WhiteBoardInterface[]> {
+    const url = environment.apiUrl + '/dashBoard/memberWhiteBoards';
+    return this.http.get<WhiteBoardInterface[]>(url);
+  }
   getBoard(boardId: string): Observable<BoardInterface> {
     const url = `${environment.apiUrl}/boards/${boardId}`;
 

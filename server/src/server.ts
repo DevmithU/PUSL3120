@@ -16,7 +16,7 @@ import User from "./models/user";
 import {Socket} from "./types/socket.interface";
 import { secret } from "./config";
 import * as tasksController from "./controllers/tasks";
-import {getWhiteBoard} from "./controllers/whiteBoards";
+import {getWhiteBoard, updateWhiteBoard} from "./controllers/whiteBoards";
 // import {addListUser} from "./controllers/users";
 
 
@@ -54,6 +54,12 @@ app.post("/api/dashBoard/addListUser", authMiddleware, (req, res, next) => {
     boardsController.addUserList(req, res, next, io);
 });
 app.post("/api/dashBoard/getListUser", authMiddleware,boardsController.getUserList);
+app.post("/api/whiteBoard/addListUser", authMiddleware, (req, res, next) => {
+    whiteboardsController.addUserList(req, res, next, io);
+});
+app.post("/api/whiteBoard/getListUser", authMiddleware,whiteboardsController.getUserList);
+app.get("/api/dashBoard/memberWhiteBoards", authMiddleware, whiteboardsController.getMemberWhiteBoards);
+
 app.get('/api/user', authMiddleware, usersController.currentUser);
 app.get("/api/dashBoard", authMiddleware, boardsController.getBoards);
 app.get("/api/dashBoard/getWB", authMiddleware, boardsController.getWhiteBoards);
@@ -134,6 +140,9 @@ io.use(async (socket: Socket, next) => {
     });
     socket.on(SocketEventsEnum.mouseDown, (data) => {
         whiteboardsController.mouseDown(io, socket, data);
+    });
+    socket.on(SocketEventsEnum.whiteboardsUpdate, (data) => {
+        whiteboardsController.updateWhiteBoard(io, socket, data);
     });
     // console.log("connect");
 });

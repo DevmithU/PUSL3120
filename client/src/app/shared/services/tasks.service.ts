@@ -23,7 +23,12 @@ export class TasksService {
   updateTask(
     boardId: string,
     taskId: string,
-    fields: { title?: string; description?: string; columnId?: string | null; hasCheck?: boolean}
+    fields: {
+      title?: string;
+      description?: string;
+      columnId?: string | null;
+      hasCheck?: boolean;
+      checkStatus?: boolean}
   ): void {
 
     this.socketService.emit(SocketEventsEnum.tasksUpdate, {
@@ -32,6 +37,8 @@ export class TasksService {
       fields,
     });
   }
+
+
 
   deleteTask(boardId: string, taskId: string): void {
     this.socketService.emit(SocketEventsEnum.tasksDelete, { boardId, taskId });

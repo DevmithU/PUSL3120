@@ -6,4 +6,6 @@ export interface TaskInterface {
   boardId: string;
   userId: string;
   hasCheck: boolean;
+  checkStatus: boolean;
+
 }

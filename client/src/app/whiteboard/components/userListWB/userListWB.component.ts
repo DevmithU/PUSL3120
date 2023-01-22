@@ -1,17 +1,18 @@
 import {Component, HostBinding, OnDestroy, OnInit} from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import {combineLatest, filter, finalize, map, Observable, Subject, takeUntil} from "rxjs";
-import {UserListService} from "../../../shared/services/userList.service";
+
+import {UserListWBService} from "../../../shared/services/userListWB.service";
 
 @Component({
   selector: 'task-modal',
-  templateUrl: './userList.component.html',
+  templateUrl: './userListWB.component.html',
 })
-export class UserListComponent implements OnInit,OnDestroy {
+export class UserListWBComponent implements OnInit,OnDestroy {
   userList: Array<string> =[];
 
   @HostBinding('class') classes = 'task-modal';
-  boardId: string;
+  whiteBoardId: string;
   unsubscribe$ = new Subject<void>();
 
 
@@ -20,28 +21,30 @@ export class UserListComponent implements OnInit,OnDestroy {
     private route: ActivatedRoute,
 
     private router: Router,
-    private userListService: UserListService,
+    private userListWBService: UserListWBService,
 
 
   ) {
-    const boardId = this.route.parent?.snapshot.paramMap.get('boardId');
-    if (!boardId) {
-      throw new Error("Can't get boardID from URL");
+    console.log('userlistWB arrive04444');
+
+    const whiteBoardId = this.route.parent?.snapshot.paramMap.get('whiteBoardId');
+    if (!whiteBoardId) {
+      throw new Error("Can't get whiteBoardId from URL");
     }
-    this.boardId = boardId;
+    this.whiteBoardId = whiteBoardId;
 
 
   }
 
   goToBoard(): void {
-    this.router.navigate(['dashBoard', this.boardId]);
+    this.router.navigate(['whiteBoard', this.whiteBoardId]);
 
   }
   updateUserList(): void {
     let userList = this.userList;
-    let boardId = this.boardId;
-    let check = { boardId, userList }
-    this.userListService.updateUserList(boardId,userList)
+    let whiteBoardId = this.whiteBoardId;
+    let check = { whiteBoardId, userList }
+    this.userListWBService.updateUserList(whiteBoardId,userList)
       .pipe(
         takeUntil(this.unsubscribe$),
         finalize(() => this.goToBoard())
@@ -65,6 +68,7 @@ export class UserListComponent implements OnInit,OnDestroy {
 
 
   ngOnInit(): void {
+    console.log('userlistWB arrive0');
 
     this.fetchData();
 
@@ -72,7 +76,7 @@ export class UserListComponent implements OnInit,OnDestroy {
   }
   fetchData():void{
 
-    this.userListService.getUserList(this.boardId).pipe(takeUntil(this.unsubscribe$)).subscribe((userList) => {
+    this.userListWBService.getUserList(this.whiteBoardId).pipe(takeUntil(this.unsubscribe$)).subscribe((userList) => {
       this.userList = userList;
 
 

@@ -1,18 +1,21 @@
 <app-topbar></app-topbar>
 
 <!--check now-->
-<div #allfather (mousemove)="logPoint($event)">
-  <div #myIdentifier>
-    <p>This is test.</p>
-    <p>This is test.</p>
-    <p>This is test.</p>
-    <p>This is test.</p>
-    <p>This is test.</p>
+<div #allfather (mousemove)="logPoint($event)" class="whiteboard-cover">
+  <div class="board-header-container">
+    <inline-form
+      class="edit-board-form"
+      [defaultText]="WBtitle"
+      [title]="WBtitle"
+      (handleSubmit)="updateBoardName($event)"
+    ></inline-form>
   </div>
+
   <div class="whiteboard-pen-options">
     <div class="{{divBlack}} whiteboard-pen pen-black " (click)="penBlack()">Black</div>
     <div class="{{divRed}} whiteboard-pen pen-red" (click)="penRed()">Red</div>
     <div class="{{divErase}} whiteboard-pen pen-erase" (click)="penErase()">Erase</div>
+    <div class="add-member-board-WB" (click)="gerUserList()">Add Members</div>
 
   </div>
   <div class="whiteboard-container">
@@ -34,5 +37,8 @@
     <p>y cal : {{y_cal}}</p>
   </div>
 </div>
+
+<router-outlet></router-outlet>
+
 
 

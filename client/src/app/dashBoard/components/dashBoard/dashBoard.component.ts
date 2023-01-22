@@ -14,6 +14,8 @@ import {WhiteBoardInterface} from "../../../shared/types/whiteBoard.interface";
 export class DashBoardComponent implements OnInit , OnDestroy{
   dashBoard: BoardInterface[] = [] ;
   whiteBoards: WhiteBoardInterface[] = [] ;
+  memberWhiteBoards: WhiteBoardInterface[] = [] ;
+
   memberBoards: BoardInterface[] = [] ;
   unsubscribe$ = new Subject<void>();
   userId: string | null | undefined ;
@@ -44,6 +46,10 @@ export class DashBoardComponent implements OnInit , OnDestroy{
       // console.log('dashBoard', memberBoards);
       this.memberBoards = memberBoards;
     });
+    this.boardsService.getMemberWhiteBoards().subscribe((memberWhiteBoards) => {
+      // console.log('dashBoard', memberBoards);
+      this.memberWhiteBoards = memberWhiteBoards;
+    });
     this.initializeListeners();
 
   }
@@ -71,6 +77,16 @@ export class DashBoardComponent implements OnInit , OnDestroy{
         console.log('column',newMemberBoards);
 
       });
+    this.socketService
+      .listen<WhiteBoardInterface[]>(SocketEventsEnum.addMemberSuccessWB)
+      .pipe(takeUntil(this.unsubscribe$))
+      .subscribe((newMemberWhiteBoards) => {
+
+        this.memberWhiteBoards = newMemberWhiteBoards;
+        console.log('column',newMemberWhiteBoards);
+
+      });
+
   }
 
   ngOnDestroy(): void {

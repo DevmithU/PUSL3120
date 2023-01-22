@@ -33,7 +33,10 @@ export enum SocketEventsEnum {
   drawdone = "whiteboard:drawdone",
   ondraw = "whiteboard:ondraw",
   mouseDown = "whiteboard:mouseDown",
-  mouseDownRecieve = "whiteboard:mouseDownRecieve",
-
+  mouseDownReceive = "whiteboard:mouseDownReceive",
+  addMemberSuccessWB = "whiteboard:addMemberSuccessWB",
+  whiteboardsUpdate = 'whiteboards:update',
+  whiteboardsUpdateSuccess = 'whiteboards:updateSuccess',
+  whiteboardsUpdateFailure = 'whiteboards:updateFailure',
 
 }

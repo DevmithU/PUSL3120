@@ -60,7 +60,13 @@ export const updateTask = async (
     data: {
       boardId: string;
       taskId: string;
-      fields: { hasCheck?: boolean; title?: string; description?: string; columnId?: string;  };
+      fields: {
+        hasCheck?: boolean;
+        title?: string;
+        description?: string;
+        columnId?: string;
+        checkStatus?: boolean}
+      ;
     }
 ) => {
   try {

@@ -15,12 +15,12 @@ export class UserListService {
   //   const url = environment.apiUrl + '/dashBoard';
   //   return this.http.get<BoardInterface[]>(url);
   // }
-  getBoard(boardId: string): Observable<BoardInterface> {
-    const url = `${environment.apiUrl}/boards/${boardId}`;
-
-    // console.log("board url",url);
-    return this.http.get<BoardInterface>(url);
-  }
+  // getBoard(boardId: string): Observable<BoardInterface> {
+  //   const url = `${environment.apiUrl}/boards/${boardId}`;
+  //
+  //   // console.log("board url",url);
+  //   return this.http.get<BoardInterface>(url);
+  // }
   getUserList(boardId: string): Observable<Array<string>> {
     const url = environment.apiUrl + '/dashBoard/getListUser';
     return this.http.post<Array<string>>(url, { "boardId":boardId });

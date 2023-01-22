@@ -1,5 +1,4 @@
 import {  Response, NextFunction } from "express";
-import BoardModel from "../models/board";
 import { ExpressRequestInterface } from "../types/expressRequest.interface";
 import { Server } from "socket.io";
 import {Socket} from "../types/socket.interface";
@@ -7,6 +6,7 @@ import {SocketEventsEnum} from "../types/socketEvents.enum";
 import {getErrorMessage} from "../helpers";
 import UserModel from "../models/user";
 import WhiteBoardModel from "../models/whiteBoard";
+import BoardModel from "../models/board";
 
 
 
@@ -46,7 +46,7 @@ export const mouseDown = (
     data: {whiteBoardId: string, x: any, y:any }
 ) => {
     console.log('--------------*********************')
-    io.to(data.whiteBoardId).emit(SocketEventsEnum.mouseDownRecieve,data)
+    io.to(data.whiteBoardId).emit(SocketEventsEnum.mouseDownReceive,data)
 };
 
 export const createWhiteBoard = async (
@@ -81,7 +81,7 @@ export const getWhiteBoard = async (
         }
         // console.log("11111 board--------")
 
-        const whiteBoard = await BoardModel.findById(req.params.whiteBoardId);
+        const whiteBoard = await WhiteBoardModel.findById(req.params.whiteBoardId);
         // console.log("req.params")
         // console.log(req.params);
         // console.log("BOARDS")
@@ -105,5 +105,145 @@ export const getWhiteBoard = async (
         // console.log("error board--------")
 
         next(err);
+    }
+};
+
+
+export const getUserList = async (
+    req: ExpressRequestInterface,
+    res: Response,
+    next: NextFunction
+) => {
+    // let userList = [];
+    let whiteBoardId;
+    let userIdList;
+    let userEmailList = [] ;
+    try {
+        // console.log("7");
+
+        whiteBoardId = req.body.whiteBoardId;
+        const whiteBoard = await WhiteBoardModel.findById(whiteBoardId);
+
+        // console.log(boardId);
+
+        userIdList = whiteBoard?.userList;
+        // console.log(userIdList);
+
+        // console.log(userList);
+        // res.send(userEmailList);
+        for (let i in userIdList) {
+
+            const user = await UserModel.findById(userIdList[parseInt(i)]);
+            userEmailList[+i] = user?.email;
+        }
+        res.send(userEmailList)
+
+
+        // console.log(req.params);
+
+    } catch (err) {
+        next(err);
+    }
+};
+
+export const addUserList = async (
+    req: ExpressRequestInterface,
+    res: Response,
+    next: NextFunction,
+    io:Server,
+) => {
+    let userEmailList = [];
+    let newuserEmailList = [];
+    let userIdList = [];
+    try {
+        // console.log("7");
+        console.log('///////////////////////////////////////////');
+
+        userEmailList = req.body.userList;
+        // console.log(userList);
+        // res.send(userEmailList);
+        for (let i in userEmailList){
+            const user = await UserModel.findOne({ email: userEmailList[i] });
+            userIdList[+i] = user?.id;
+            //
+
+        }
+        // console.log(userList);
+        const updatedWhiteBoard = await WhiteBoardModel.findByIdAndUpdate(
+            req.body.whiteBoardId,
+            { userList: userIdList },
+            { new: true }
+        );
+        for (let i in userIdList){
+            const userId = userIdList[i];
+            const whiteBoards = await WhiteBoardModel.find({ userList: { $in: [userId] } });
+            io.to(userId).emit(SocketEventsEnum.addMemberSuccessWB,whiteBoards);
+
+
+        }
+
+        for (let i in updatedWhiteBoard?.userList) {
+
+            const user = await UserModel.findById(updatedWhiteBoard?.userList[parseInt(i)]);
+            newuserEmailList[+i] = user?.email;
+        }
+        console.log('userEmailList',userEmailList);
+
+        console.log('updatedWhiteBoard',updatedWhiteBoard);
+        console.log('newuserEmailList',newuserEmailList);
+        console.log('///////////////////////////////////////////');
+
+
+        res.send(newuserEmailList)
+
+
+
+    } catch (err) {
+        next(err);
+    }
+};
+
+
+export const getMemberWhiteBoards = async (
+    req: ExpressRequestInterface,
+    res: Response,
+    next: NextFunction
+) => {
+    try {
+        if (!req.user) {
+            return res.sendStatus(401);
+        }
+        const whiteBoards = await WhiteBoardModel.find({ userList: { $in: [req.user.id] } });
+        res.send(whiteBoards);
+    } catch (err) {
+        next(err);
+    }
+};
+
+
+export const updateWhiteBoard = async (
+    io: Server,
+    socket: Socket,
+    data: { whiteBoardId: string; fields: { title: string } }
+) => {
+    try {
+        if (!socket.user) {
+            socket.emit(
+                SocketEventsEnum.whiteboardsUpdateSuccess,
+                "User is not authorized"
+            );
+            return;
+        }
+        const updatedWhiteBoard = await WhiteBoardModel.findByIdAndUpdate(
+            data.whiteBoardId,
+            data.fields,
+            { new: true }
+        );
+        io.to(data.whiteBoardId).emit(
+            SocketEventsEnum.whiteboardsUpdateSuccess,
+            updatedWhiteBoard
+        );
+    } catch (err) {
+        socket.emit(SocketEventsEnum.whiteboardsUpdateFailure, getErrorMessage(err));
     }
 };

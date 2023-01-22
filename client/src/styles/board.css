@@ -145,15 +145,45 @@
   background-color: #fff;
   display: flex;
   align-items: center;
-  padding: 8px;
   margin-bottom: 8px;
   border-radius: 4px;
 
 }
+.task-container{
+  display: flex;
+  margin: 8px;
+  width:100%;
+}
+.task-no-check{
+  padding: 0px 8px 0px 8px;
+}
+.task-no-check:hover{
+  border-bottom-color: rgba(9, 30, 66, 0.25);
+  padding: 0px 8px 0px 8px;
+  background-color: #f4f5f7;
+}
+.task-not-done{
+  color: #fff;
+  background-color: rgba(243, 43, 43, 0.82);
+}
+.task-not-done:hover{
+  color: #fff;
+  background-color: rgba(246, 104, 104, 0.82);
+}
+.task-done{
+  color: #fff;
+  background-color: #2db731;
+
+}
+
+.task-done:hover{
+  color: #fff;
+  background-color: #48e74d;
+
+}
 
 .task:hover {
-  border-bottom-color: rgba(9, 30, 66, 0.25);
-  background-color: #f4f5f7;
+
 }
 
 

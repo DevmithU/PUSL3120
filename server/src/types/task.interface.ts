@@ -9,6 +9,7 @@ export interface Task {
   boardId: Schema.Types.ObjectId;
   columnId: Schema.Types.ObjectId;
   hasCheck: boolean;
+  checkStatus: boolean;
 }
 
 export interface TaskDocument extends Document, Task {}
