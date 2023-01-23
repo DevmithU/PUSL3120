@@ -10,6 +10,7 @@ export interface Task {
   columnId: Schema.Types.ObjectId;
   hasCheck: boolean;
   checkStatus: boolean;
+  caption:string;
 }
 
 export interface TaskDocument extends Document, Task {}

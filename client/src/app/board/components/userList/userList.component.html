@@ -1,7 +1,7 @@
-<div class="task-modal-container" >
+<div class="members-container" >
   <div class="task-modal-header">
-    <div class="inline-form-text">
-      Add Users
+    <div class="members-title">
+      Manage Members
     </div>
 
     <img
@@ -10,24 +10,27 @@
       (click)="goToBoard()"
     />
   </div>
+  <hr class="task-header-divider">
+
   <div class="task-modal-body">
     <div>
-      Got Something
       <div
         *ngFor="let user of userList"
-        class="task"
+        class="member"
 
       >
-        {{ user }}
+        <div class="member-name">
+          {{ user }}
+        </div>
         <img
           src="/assets/close_icon.svg"
-          class="task-modal-close"
+          class="member-remove"
           (click)="removeUser(user)"
         />
       </div>
       <inline-form
-        class="create-task-form"
-        defaultText="Add user"
+        class="add-member-form"
+        defaultText="＋Add user"
         [hasButton]="true"
         buttonText="Add User"
         inputPlaceholder="Enter User Email"
@@ -36,12 +39,11 @@
 
     </div>
     <div class="task-modal-actions">
-      <div class="task-modal-actions-label">Actions</div>
       <div>
-        <div class="task-modal-actions-action"
+        <div class="members-save"
              (click)="updateUserList()">
 
-          Save
+          Save List
         </div>
       </div>
     </div>

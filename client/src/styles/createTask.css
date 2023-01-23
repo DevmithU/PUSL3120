@@ -17,14 +17,14 @@
 }
 
 .create-task-form .inline-form-container-editing {
-  background: #ebecf0;
+  background: rgba(235, 236, 240, 0);
 }
 
 .create-task-form .inline-form-input {
   font-weight: 500;
   font-size: 16px;
   width: 100%;
-  background-color: #fafbfc;
+  background-color: rgba(250, 251, 252, 0);
   border: 2px solid #dfe1e6;
   box-sizing: border-box;
   border-radius: 3px;
@@ -33,8 +33,11 @@
 }
 
 .create-task-form .inline-form-button {
-  background: #5aac44;
-  border-radius: 0.3em;
+  background: #DCE35B;  /* fallback for old browsers */
+  background: -webkit-linear-gradient(45deg, #26d3e8, #0b9fff);
+  background: linear-gradient(45deg, #26d3e8, #0b9fff); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+
+  border-radius: 12px;
   color: #fff;
   display: inline-block;
   font-weight: bold;

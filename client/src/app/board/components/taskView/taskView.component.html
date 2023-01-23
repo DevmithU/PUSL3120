@@ -12,8 +12,13 @@
       (click)="goToBoard()"
     />
   </div>
+  <hr class="task-header-divider">
+
   <div class="task-modal-body">
     <div class="task-modal-fields">
+      <div class="task-modal-description-label">
+        Column
+    </div>
       <form [formGroup]="columnForm" class="column-select-container">
         <select formControlName="columnId" class="column-select">
           <option *ngFor="let column of data.columns" [ngValue]="column.id">
@@ -22,35 +27,42 @@
         </select>
       </form>
       <div class="task-check-box">
-        <input type="checkbox" [checked]="data.task.hasCheck" (change)="updateTaskHasCheck($event)" value="hasCheck{{data.task.hasCheck}}">
-        Has Check Box
+
+        <div class="task-modal-description-label">
+          <input class="task-modal-checkbox" type="checkbox" [checked]="data.task.hasCheck" (change)="updateTaskHasCheck($event)" value="hasCheck{{data.task.hasCheck}}">
+          Has Checkbox</div>
+
       </div>
       <div *ngIf= "data.task.hasCheck" class="task-check-box">
-        <input  type="checkbox" [checked]="data.task.checkStatus" (change)="updateTaskCheckStatus($event)" value="hasCheck{{data.task.checkStatus}}">
-        Status of check
+        <div class="task-modal-description-title">
+          <input class="task-modal-checkbox"  type="checkbox" [checked]="data.task.checkStatus" (change)="updateTaskCheckStatus($event)" value="hasCheck{{data.task.checkStatus}}">
+          Status of check
+        </div>
       </div>
       <div class="task-modal-description">
-        <div class="task-modal-description-label">Description</div>
-        <inline-form
-          class="task-modal-edit-description-form"
-          [defaultText]="
+        <div class="task-modal-description-title">Description</div>
+        <div class="task-modal-description-body">
+          <inline-form
+            class="task-modal-edit-description-form"
+            [defaultText]="
             data.task.description || 'Add a more detailed description'
           "
-          [title]="data.task.description || ''"
-          inputType="textarea"
-          [hasButton]="true"
-          buttonText="Save"
-          (handleSubmit)="updateTaskDescription($event)"
-        ></inline-form>
+            [title]="data.task.description || ''"
+            inputType="textarea"
+            [hasButton]="true"
+            buttonText="Save"
+            (handleSubmit)="updateTaskDescription($event)"
+          ></inline-form>
+        </div>
+
       </div>
 
     </div>
     <div class="task-modal-actions">
-      <div class="task-modal-actions-label">Actions</div>
       <div>
         <div class="task-modal-actions-action" (click)="deleteTask()">
           <img src="/assets/trash.svg" class="task-modal-actions-icon" />
-          Delete
+          Delete Task
         </div>
       </div>
     </div>

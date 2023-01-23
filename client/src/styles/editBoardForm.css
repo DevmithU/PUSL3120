@@ -1,7 +1,8 @@
-.edit-board-form .inline-form-text {
+.edit-board-form .
+inline-form-text {
   font-size: 30px;
   margin-right: 20px;
-  color: #f7586b;
+  color: #070707;
   font-weight: bold;
 
 }
@@ -9,16 +10,15 @@
 .edit-board-form .inline-form-input {
   font-size: 30px;
 
-  font-weight: 300;
   width: 100%;
   background-color: #fafbfc;
   border: 2px solid #dfe1e6;
   box-sizing: border-box;
   border-radius: 3px;
   height: 30px;
-  padding: 7px;
+  /*padding: 7px;*/
 }
 
 .edit-board-form .inline-form {
-  padding: 5px 12px;
+  /*padding: 5px 12px;*/
 }

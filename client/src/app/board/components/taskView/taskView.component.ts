@@ -62,12 +62,15 @@ export class TaskViewComponent implements OnDestroy {
     );
 
     this.task$.pipe(takeUntil(this.unsubscribe$)).subscribe((task) => {
+      // console.log('here222');
       this.columnForm.patchValue({ columnId: task.columnId });
     });
 
     combineLatest([this.task$, this.columnForm.get('columnId')!.valueChanges])
       .pipe(takeUntil(this.unsubscribe$))
       .subscribe(([task, columnId]) => {
+        // console.log('44444');
+
         if (task.columnId !== columnId) {
           this.tasksService.updateTask(this.boardId, task.id, { columnId });
         }

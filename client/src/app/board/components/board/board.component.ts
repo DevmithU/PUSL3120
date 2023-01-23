@@ -12,6 +12,7 @@ import {ColumnInputInterface} from "../../../shared/types/columnInput.interface"
 import {TaskInterface} from "../../../shared/types/task.interface";
 import {TasksService} from "../../../shared/services/tasks.service";
 import {TaskInputInterface} from "../../../shared/types/taskInput.interface";
+import {AuthenticationService} from "../../../authentication/services/authentication.service";
 
 @Component({
   selector: 'board',
@@ -34,6 +35,7 @@ export class BoardComponent implements OnInit ,OnDestroy,AfterViewInit{
   }>;
   unsubscribe$ = new Subject<void>();
   private offset: { x: any; y: any; } | undefined;
+  userId: string | undefined;
 
 
   constructor(
@@ -44,6 +46,8 @@ export class BoardComponent implements OnInit ,OnDestroy,AfterViewInit{
     private socketService: SocketService,
     private columnsService: ColumnsService,
     private tasksService: TasksService,
+    private authService: AuthenticationService,
+
   ) {
     const boardId = this.route.snapshot.paramMap.get('boardId');
     if (!boardId) {
@@ -96,6 +100,7 @@ export class BoardComponent implements OnInit ,OnDestroy,AfterViewInit{
 
   }
   ngOnInit(): void {
+    this.userId = this.authService.currentUser$.value?.id;
 
 
 

@@ -3,7 +3,11 @@
   [ngClass]="{ 'inline-form-container-editing': isEditing }"
   (click)="activeEditing()"
 >
-  <div class="inline-form-text" *ngIf="!isEditing">{{ defaultText }}</div>
+  <div class="inline-form-text" *ngIf="!isEditing">
+      {{ defaultText }}
+
+
+</div>
   <form
     [formGroup]="form"
     (ngSubmit)="onSubmit()"
@@ -15,8 +19,6 @@
       type="text"
       formControlName="title"
       class="inline-form-input"
-      (focusout)="leaveEditingWithCheck()"
-
       [placeholder]="inputPlaceholder"
       *ngIf="inputType === 'input'"
 
@@ -40,6 +42,9 @@
     </button>
   </form>
 </div>
+
+
+<!--(focusout)="leaveEditingWithCheck()"-->
 
 <!--*ngIf="isEditing; then setFocus();"-->
 

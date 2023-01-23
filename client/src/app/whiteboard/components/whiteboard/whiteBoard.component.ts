@@ -43,7 +43,7 @@ export class whiteBoardComponent implements OnInit,AfterViewInit {
   userId: string | null | undefined;
   whiteBoardId: string;
   strColor: string = '#000000';
-  strWidth: number = 2;
+  strWidth: number = 8;
 
   constructor(
     private whiteBoardService : WhiteBoardService,
@@ -102,8 +102,8 @@ export class whiteBoardComponent implements OnInit,AfterViewInit {
       console.log('width3', this.WBback.nativeElement.width)
 
       let wbRect = this.WBback.nativeElement.getBoundingClientRect();
-      this.canvas.nativeElement.width = wbRect.width;
-      this.canvas.nativeElement.height = wbRect.height;
+      this.canvas.nativeElement.width = wbRect.width*4;
+      this.canvas.nativeElement.height = wbRect.height*4;
       this.ctx = this.canvas?.nativeElement.getContext('2d');
       this.offset = {x: wbRect.left, y: wbRect.top};
       // this.offset = {x: wbRect.left, y: 560.667+40};
@@ -139,7 +139,9 @@ export class whiteBoardComponent implements OnInit,AfterViewInit {
     this.y_cal = event.pageY - this.offset?.y;
 
     this.isDrawing = true;
-    let coordinates = {x: event.pageX - this.offset?.x, y: event.pageY - this.offset?.y};
+    let coordinates = {x:4*( event.pageX - this.offset?.x), y:4*( event.pageY - this.offset?.y)};
+
+    // let coordinates = {x: event.pageX, y: event.pageY};
     // if (window.scrollY>0){
     //   coordinates = {x: event.pageX - this.offset?.x, y: event.pageY- this.offset?.y - window.scrollY};
     // }
@@ -161,8 +163,9 @@ export class whiteBoardComponent implements OnInit,AfterViewInit {
     }
     if (this.ctx) {
       // console.log("block activated333");
+      coordinates = {x:4*( event.pageX - this.offset?.x), y:4*( event.pageY - this.offset?.y)};
 
-      coordinates = {x: event.pageX - this.offset?.x, y: event.pageY - this.offset?.y};
+      // coordinates = {x: event.pageX, y: event.pageY};
       // if (window.scrollY>0){
       //   coordinates = {x: event.pageX - this.offset?.x, y: event.pageY- this.offset?.y - window.scrollY};
       // }
@@ -281,7 +284,7 @@ export class whiteBoardComponent implements OnInit,AfterViewInit {
 
   penBlack():void{
     this.strColor = '#000000';
-    this.strWidth = 2;
+    this.strWidth = 8;
     this.divBlack = "selected-pen";
     this.divRed = "";
     this.divErase = "";
@@ -289,7 +292,7 @@ export class whiteBoardComponent implements OnInit,AfterViewInit {
   }
   penRed():void{
     this.strColor = '#ff0000';
-    this.strWidth = 2;
+    this.strWidth = 8;
     this.divBlack = "";
     this.divRed = "selected-pen";
     this.divErase = "";

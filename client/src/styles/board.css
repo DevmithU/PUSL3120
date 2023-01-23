@@ -1,14 +1,18 @@
 
 .board-background{
-  background: #9796f0;  /* fallback for old browsers */
-  background: -webkit-linear-gradient(to top, #fbc7d4, #9796f0);  /* Chrome 10-25, Safari 5.1-6 */
-  background: linear-gradient(to bottom, #fbc7d4, #9796f0); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+  /*background: #9796f0;  !* fallback for old browsers *!*/
+  /*background: -webkit-linear-gradient(to top, #fbc7d4, #9796f0);  !* Chrome 10-25, Safari 5.1-6 *!*/
+  /*background: linear-gradient(to bottom, #fbc7d4, #9796f0); !* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ *!*/
+
+
   /*height: 100vh;*/
-  min-height: 100vh;
+  min-height: calc(100vh - 44px);
   height: fit-content;
   /*height: max(100vh,fit-content);*/
   /*height: max(100vh,fit-content);*/
-
+  background-image: url("/assets/test1.jpg");
+  background-repeat: no-repeat;
+  background-size: cover;
 }
 
 .board {
@@ -106,10 +110,22 @@
 .add-member-board:hover {
   background-color: hsla(0, 0%, 100%, 0.15);
 }
+.board-title{
+  font-size: 30px;
+  margin-right: 20px;
+  color: #f7586b;
+  font-weight: bold;
+  /*background: #00adcc;*/
+  border-radius: 8px;
+  padding: 14px;
+  background-color: rgb(255, 255, 255);
+  backdrop-filter: blur(14px);
 
+}
 .columns {
+  width: max-content;
   display: flex;
-  padding-right: 10px;
+  padding-right: 200px;
   padding-left: 10px;
 }
 
@@ -129,8 +145,10 @@
 }
 
 .column-title {
+  white-space: pre-line;
+
   color: #1d3045;
-  font-size: 14px;
+  font-size: 17px;
   font-weight: 600;
   margin-bottom: 12px;
   display: flex;
@@ -150,7 +168,7 @@
 }
 
 .task {
-  box-shadow: 0 1px 0 rgb(9 30 66 / 25%);
+  box-shadow: 0 2px 2px rgb(9 30 66 / 25%);
   cursor: pointer;
   max-width: 300px;
   min-height: 20px;
@@ -168,20 +186,20 @@
   width:100%;
 }
 .task-no-check{
-  padding: 0px 8px 0px 8px;
+  padding: 0px 0px 0px 8px;
 }
 .task-no-check:hover{
   border-bottom-color: rgba(9, 30, 66, 0.25);
-  padding: 0px 8px 0px 8px;
+  padding: 0px 0px 0px 8px;
   background-color: #f4f5f7;
 }
 .task-not-done{
   color: #fff;
-  background-color: rgba(243, 43, 43, 0.82);
+  background-color: rgba(255, 32, 51, 0.91)
 }
 .task-not-done:hover{
   color: #fff;
-  background-color: rgba(246, 104, 104, 0.82);
+  background-color: rgb(253, 109, 120)
 }
 .task-done{
   color: #fff;
@@ -204,4 +222,14 @@
   padding-left: 5px;
   padding-top: 7px;
 
+}
+.edit-column-form .inline-form-input {
+  font-size: 17px;
+
+  width: 100%;
+  background-color: rgba(250, 251, 252, 0);
+  border: 2px solid #dfe1e6;
+  box-sizing: border-box;
+  border-radius: 3px;
+  /*padding: 7px;*/
 }

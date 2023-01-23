@@ -30,20 +30,25 @@ export class InlineFormComponent implements AfterViewInit{
   ) {}
 
   activeEditing(): void {
-    if (this.title) {
-      this.form.patchValue({ title: this.title });
+    if(!this.isEditing){
+      if (this.title) {
+        this.form.patchValue({ title: this.title });
+      }
+
+      this.isEditing = true;
+      //need time to delay execution for after render of element
+      setTimeout(() => {
+        if (this.input2?.nativeElement) {
+          this.input2.nativeElement.focus();
+        }
+        if (this.input1?.nativeElement) {
+          this.input1.nativeElement.focus();
+        }
+      }, 0);
+
+
     }
 
-    this.isEditing = true;
-    //need time to delay execution for after render of element
-    setTimeout(() => {
-      if (this.input2?.nativeElement) {
-        this.input2.nativeElement.focus();
-      }
-      if (this.input1?.nativeElement) {
-        this.input1.nativeElement.focus();
-      }
-    }, 0);
   }
   buttonHoverEnter():void{
     this.isButtonHOver =true;
@@ -59,10 +64,15 @@ export class InlineFormComponent implements AfterViewInit{
     this.isEditing = false;
   }
   leaveEditingWithCheck(): void {
+    console.log('1111111')
     if(!this.isButtonHOver){
       this.isEditing = false;
-
+      console.log('2222222')
     }
+  }
+  stillTextArea():void{
+    this.isEditing = true;
+
   }
 
   onSubmit(): void {
@@ -75,4 +85,7 @@ export class InlineFormComponent implements AfterViewInit{
 
   ngAfterViewInit(): void {
   }
+
+
+
 }

@@ -11,15 +11,20 @@
 
     <div class="rotate" *ngIf="data$ | async as data" #r1>
       <div class="board-header-container">
-        <inline-form
-          class="edit-board-form"
-          [defaultText]="data.board.title"
-          [title]="data.board.title"
-          (handleSubmit)="updateBoardName($event)"
-        ></inline-form>
-        <div class="add-member-board" (click)="gerUserList()">Add Members</div>
+        <div class="board-title">
+          <inline-form
+            class="edit-board-form"
+            [defaultText]="data.board.title"
+            [title]="data.board.title"
+            (handleSubmit)="updateBoardName($event)"
+          ></inline-form>
 
-        <div class="delete-board" (click)="deleteBoard()">Delete board</div>
+
+        </div>
+
+        <div *ngIf="userId==data.board.userId" class="add-member-board" (click)="gerUserList()">Manage Members</div>
+
+        <div *ngIf="userId==data.board.userId" class="delete-board" (click)="deleteBoard()">Delete board</div>
       </div>
       <hr class="board-header-divider">
 
@@ -41,15 +46,23 @@
           <div
             *ngFor="let task of getTasksByColumn(column.id, data.tasks)"
             class="task"
-            [ngClass]="{ 'task-not-done': ((task.hasCheck)&&(!(task.checkStatus))), 'task-done': task.checkStatus,'task':true,'task-no-check':!(task.hasCheck)}"
+            [ngClass]="{ 'task-not-done': ((task.hasCheck)&&(!(task.checkStatus))), 'task-done': ((task.hasCheck)&&((task.checkStatus))),'task':true,'task-no-check':!(task.hasCheck)}"
           >
             <div *ngIf= "task.hasCheck" class="task-check-box">
               <input  type="checkbox" [checked]="task.checkStatus" (change)="updateTaskCheckStatus($event,task.id)" value="hasCheck{{task.checkStatus}}">
             </div>
-            <div class="task-title"
+            <div class="task-body"
                  (click)="openTask(task.id)"
             >
-              {{ task.title }}
+              <div class="task-title">
+                {{ task.title }}
+
+              </div>
+              <hr  *ngIf= "task.description" class="task-header-divider">
+
+              <div *ngIf= "task.description" class="task-description">
+               {{ task.description }}
+              </div>
 
             </div>
           </div>

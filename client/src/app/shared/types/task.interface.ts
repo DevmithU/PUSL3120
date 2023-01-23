@@ -7,5 +7,6 @@ export interface TaskInterface {
   userId: string;
   hasCheck: boolean;
   checkStatus: boolean;
+  caption?:string;
 
 }
