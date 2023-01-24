@@ -1,14 +1,19 @@
 .create-board-form {
-  background: rgba(9, 30, 66, 0.2);
+  background: #e96443;  /* fallback for old browsers */
+  background: -webkit-linear-gradient(220deg, #ff4b1f, #ff9068);  /* Chrome 10-25, Safari 5.1-6 */
+  background: linear-gradient(  220deg, #ff4b1f, #ff9068); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
   width: 23%;
-  margin: 0 2% 2% 0;
+  margin: 0 1% 2% 1%;
   line-height: 20px;
   padding: 8px;
   position: relative;
   text-decoration: none;
-  border-radius: 3px;
+  border-radius: 12px;
   height: 80px;
   cursor: pointer;
+  color: #ffffff;
+  font-size: 17px;
+  /*font-weight: 700;*/
 }
 
 .create-board-form .inline-form {
@@ -24,14 +29,17 @@
 }
 
 .create-board-form:hover {
-  background-color: rgba(9, 30, 66, 0.3);
+  background: #e96443;  /* fallback for old browsers */
+  background: -webkit-linear-gradient(  220deg, #ec3207, #f36537);  /* Chrome 10-25, Safari 5.1-6 */
+  background: -webkit-linear-gradient(  220deg, #ec3207, #f36537);  /* Chrome 10-25, Safari 5.1-6 */
 }
 
 .create-board-form .inline-form-input {
   font-weight: 500;
   font-size: 16px;
   width: 100%;
-  background-color: #fafbfc;
+  color: #ffffff;
+  background-color: rgba(250, 251, 252, 0);
   border: 2px solid #dfe1e6;
   box-sizing: border-box;
   border-radius: 3px;

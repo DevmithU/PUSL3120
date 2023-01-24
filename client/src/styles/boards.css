@@ -1,8 +1,15 @@
 .boards-page-container {
+  min-height: calc(100vh - 44px);
+  height: fit-content;
   display: flex;
+  padding-bottom: 40px;
   flex-direction: row;
   align-items: flex-start;
   justify-content: center;
+  width: 100%;
+  background-image: url("/assets/test1.jpg");
+  background-repeat: no-repeat;
+  background-size: cover;
 }
 
 .home-left-sidebar {
@@ -39,12 +46,16 @@
 }
 
 .boards-section-container {
+  border-radius: 10px;
+  background-color: rgba(255, 255, 255, .45);
+  backdrop-filter: blur(14px);
   display: flex;
   flex-direction: column;
-  margin: 40px 16px 0;
+  padding: 32px 65px 50px;
+  margin-top: 40px;
   width: 100%;
-  max-width: 825px;
-  min-width: 288px;
+  max-width: 1102px;
+  min-width: 415px;
 }
 
 .my-boards-section-header {
@@ -52,16 +63,20 @@
 }
 
 .my-boards {
+  margin: 20px 0px;
+  background-color: rgba(0, 0, 0, 0.15);
+  border-radius: 10px;
+  padding: 24px 25px 20px 25px;
   display: flex;
   flex-direction: column;
 }
 
 .boards-page-header-name {
+  color: #ffffff;
   display: inline-block;
-  line-height: 24px;
-  margin: 4px 0 0 8px;
+  margin: 0px 0 0 1%;
   padding-bottom: 11px;
-  font-size: 24px;
+  font-size: 34px;
   font-weight: 700;
   flex: 1;
   overflow: hidden;
@@ -76,14 +91,16 @@
 
 .board-tile {
   width: 23%;
-  margin: 0 2% 2% 0;
-  background: #00adcc;
+  margin: 0 1% 2% 1%;
+  background: #0052D4;  /* fallback for old browsers */
+  background: -webkit-linear-gradient(  220deg,#8e2de2, #4a00e0);  /* Chrome 10-25, Safari 5.1-6 */
+  background: linear-gradient(  220deg,#8e2de2, #4a00e0); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
   color: #fff;
   line-height: 20px;
-  padding: 8px;
+  padding: 15px;
   position: relative;
   text-decoration: none;
-  border-radius: 3px;
+  border-radius: 12px;
   height: 80px;
   cursor: pointer;
 }

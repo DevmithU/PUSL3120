@@ -2,14 +2,21 @@
 
 <!--check now-->
 <div #allfather (mousemove)="logPoint($event)" class="whiteboard-cover">
-  <div class="board-header-container">
-    <inline-form
-      class="edit-board-form"
-      [defaultText]="WBtitle"
-      [title]="WBtitle"
-      (handleSubmit)="updateBoardName($event)"
-    ></inline-form>
+  <div class="whiteBoard-header-container">
+    <div class="board-title">
+      <inline-form
+        class="edit-board-form"
+        [defaultText]="WBtitle"
+        [title]="WBtitle"
+        (handleSubmit)="updateBoardName($event)"
+      ></inline-form>
+
+
+    </div>
+    <div *ngIf="userId==whiteBoard?.userId" class="add-member-board" (click)="gerUserList()">Manage Members</div>
+    <div *ngIf="userId==whiteBoard?.userId" class="delete-board" >Delete board</div>
   </div>
+  <hr class="board-header-divider">
 
   <div class="whiteboard-pen-options">
     <div class="{{divBlack}} whiteboard-pen pen-black " (click)="penBlack()">Black</div>
@@ -21,11 +28,12 @@
   </div>
   <div class="whiteboard-container">
     <div class="whiteboard-background" #WBback >
-      <canvas class="whiteboard-canvas" #myCanvas (mousedown)="startDrawing($event)" (mousemove)="drawLine($event)" (mouseup)="stopDrawing()"></canvas>
+      <canvas class="whiteboard-canvas" #myCanvas (mousedown)="startDrawing($event)" (mousemove)="drawLine($event)" (mouseup)="stopDrawing()"
+      (touchstart)="startDrawingTouch($event)" (touchmove)="drawLineTouch($event)" (touchend)="stopDrawing()"></canvas>
 
     </div>
   </div>
-  <div #myIdentifier>
+  <div *ngIf="dev_tools_view">
     <p>X page : {{X_page}}</p>
     <p>Y page : {{Y_page}}</p>
     <p>X client : {{X_client}}</p>
@@ -36,6 +44,13 @@
     <p>wb_width : {{wb_width}}</p>
     <p>x cal : {{x_cal}}</p>
     <p>y cal : {{y_cal}}</p>
+    <p>offset x: {{offset.x}}</p>
+    <p>offset y: {{offset.y}}</p>
+
+    <p>offset test x: {{offset_test.x}}</p>
+    <p>offset tset y: {{offset_test.y}}</p>
+    <p>scroll y: {{scrollTest}}</p>
+
   </div>
 </div>
 

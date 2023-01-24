@@ -1,4 +1,4 @@
-import { Component, ViewChild, ElementRef, AfterViewInit,OnInit } from '@angular/core';
+import {Component, ViewChild, ElementRef, AfterViewInit, OnInit, HostListener} from '@angular/core';
 import {SocketEventsEnum} from "../../../shared/types/socketEvents.enum";
 import {SocketService} from "../../../shared/services/socket.service";
 import {AuthenticationService} from "../../../authentication/services/authentication.service";
@@ -13,8 +13,19 @@ import {WhiteBoardInterface} from "../../../shared/types/whiteBoard.interface";
   templateUrl: './whiteBoard.component.html',
 })
 export class whiteBoardComponent implements OnInit,AfterViewInit {
-  userList: Array<string> | undefined;
+  private _event: any;
+  @HostListener('window:resize', ['$event'])
+  onResize(event: any) {
+    this._event = event;
+    console.log(event)
+    console.log(`Scroll position: ${window.scrollY}`);
+    let scrollY = window.scrollY;
+    this.scrollTest= scrollY;
+    this.resetOffset(scrollY);
+  }
 
+  userList: Array<string> | undefined;
+  dev_tools_view:boolean;
   unsubscribe$ = new Subject<void>();
   X_page: any | null;
   Y_page: any | null;
@@ -39,12 +50,13 @@ export class whiteBoardComponent implements OnInit,AfterViewInit {
   private isDrawing = false;
   private lastX = 0;
   private lastY = 0;
-  private offset: { x: any; y: any; } | undefined;
+  offset= { x: 0, y: 0, } ;
+  offset_test= { x: 0, y: 0, } ;
   userId: string | null | undefined;
   whiteBoardId: string;
   strColor: string = '#000000';
   strWidth: number = 8;
-
+  scrollTest:any
   constructor(
     private whiteBoardService : WhiteBoardService,
     private socketService: SocketService,
@@ -52,6 +64,10 @@ export class whiteBoardComponent implements OnInit,AfterViewInit {
     private route: ActivatedRoute,
     private router: Router,
   ) {
+    this.dev_tools_view=false;
+    this.scrollTest=0;
+    this.offset= { x: 0, y: 0, } ;
+    this.offset_test= { x: 0, y: 0, } ;
     const whiteBoardId = this.route.snapshot.paramMap.get('whiteBoardId');
     if (!whiteBoardId) {
       throw new Error('Cant get whiteBoardId from url');
@@ -96,6 +112,32 @@ export class whiteBoardComponent implements OnInit,AfterViewInit {
 
   }
 
+  resetOffset(scrollY: number):void{
+    console.log('reset/////////////////////////////////////////')
+
+    if (this.canvas && this.WBback) {
+      console.log('reset/////////////', this.WBback.nativeElement.width)
+
+      let wbRect = this.WBback.nativeElement.getBoundingClientRect();
+
+      this.offset = {x: wbRect.left, y: wbRect.top};
+      this.offset_test = {x: wbRect.left, y: wbRect.top};
+      if(this.offset_test.y<0){
+      }
+      // this.offset = {x: wbRect.left, y: 560.667+40};
+
+      this.wb_left = wbRect.left;
+      this.wb_top = wbRect.top;
+      this.wb_hiegt = wbRect.height;
+      this.wb_width = wbRect.width;
+
+      console.log('wbrect', wbRect);
+      console.log('offset this', this.offset);
+
+
+    }
+
+  }
   ngAfterViewInit(): void {
 
     if (this.canvas && this.WBback) {
@@ -106,13 +148,10 @@ export class whiteBoardComponent implements OnInit,AfterViewInit {
       this.canvas.nativeElement.height = wbRect.height*4;
       this.ctx = this.canvas?.nativeElement.getContext('2d');
       this.offset = {x: wbRect.left, y: wbRect.top};
-      // this.offset = {x: wbRect.left, y: 560.667+40};
-
       this.wb_left = wbRect.left;
       this.wb_top = wbRect.top;
       this.wb_hiegt = wbRect.height;
       this.wb_width = wbRect.width;
-
       console.log('wbrect', wbRect);
       console.log('offset this', this.offset);
 
@@ -129,22 +168,17 @@ export class whiteBoardComponent implements OnInit,AfterViewInit {
     this.x_cal = event.pageX - this.offset?.x;
     this.y_cal = event.pageY - this.offset?.y;
   }
-
-  startDrawing(event: MouseEvent): void {
-    this.X_page = event.pageX;
-    this.Y_page = event.pageY;
-    this.X_client = event.clientX;
-    this.Y_client = event.clientY;
-    this.x_cal = event.pageX - this.offset?.x;
-    this.y_cal = event.pageY - this.offset?.y;
+  startDrawingCommon(pageX :any,pageY:any,clientX:any,clientY :any):void{
+    this.X_page = pageX;
+    this.Y_page = pageY;
+    this.X_client = clientX;
+    this.Y_client = clientY;
+    this.x_cal = pageX - this.offset?.x;
+    this.y_cal = pageY - this.offset?.y;
 
     this.isDrawing = true;
-    let coordinates = {x:4*( event.pageX - this.offset?.x), y:4*( event.pageY - this.offset?.y)};
+    let coordinates = {x:4*( pageX - this.offset?.x), y:4*( pageY - this.offset?.y-this.scrollTest)};
 
-    // let coordinates = {x: event.pageX, y: event.pageY};
-    // if (window.scrollY>0){
-    //   coordinates = {x: event.pageX - this.offset?.x, y: event.pageY- this.offset?.y - window.scrollY};
-    // }
     this.socketService.emit(SocketEventsEnum.mouseDown, {userId: this.userId,
       whiteBoardId: this.whiteBoardId,
       x: coordinates.x,
@@ -153,25 +187,61 @@ export class whiteBoardComponent implements OnInit,AfterViewInit {
 
     this.lastX = coordinates.x;
     this.lastY = coordinates.y;
+
   }
 
+
+  startDrawing(event: MouseEvent): void {
+    this.startDrawingCommon(
+      event.pageX,
+      event.pageY,
+      event.clientX,
+      event.clientY);
+  }
   drawLine(event: MouseEvent): void {
-    // console.log('scroll window',window.scrollX, window.scrollY)
+    this.drawLineCommon(event.pageX,event.pageY);
+  }
+
+
+  startDrawingTouch(event: TouchEvent): void {
+    event.preventDefault();
+    this.startDrawingCommon(
+      event.touches[0].pageX,
+      event.touches[0].pageY,
+      event.touches[0].clientX,
+      event.touches[0].clientY);
+  }
+
+  drawLineTouch(event: TouchEvent): void {
+    event.preventDefault();
+    this.drawLineCommon(event.touches[0].pageX,event.touches[0].pageY);
+  }
+
+  stopDrawing(): void {
+    var dataURL = this.canvas?.nativeElement.toDataURL()
+    console.log('dataurl');
+    console.log(dataURL);
+
+    this.isDrawing = false;
+  }
+
+  drawLineCommon(x: any,y: any):void{
     let coordinates;
     if (!this.isDrawing) {
       return;
     }
     if (this.ctx) {
-      // console.log("block activated333");
-      coordinates = {x:4*( event.pageX - this.offset?.x), y:4*( event.pageY - this.offset?.y)};
-
-      // coordinates = {x: event.pageX, y: event.pageY};
-      // if (window.scrollY>0){
-      //   coordinates = {x: event.pageX - this.offset?.x, y: event.pageY- this.offset?.y - window.scrollY};
-      // }
+      coordinates = {x:4*( x - this.offset?.x), y:4*( y - this.offset?.y-this.scrollTest)};
       this.ctx.beginPath();
       this.ctx.moveTo(this.lastX, this.lastY);
-      // console.log('event check 435///////////////////////////////////////////////////')
+
+      this.ctx.lineTo(coordinates.x, coordinates.y);
+      this.ctx.lineCap = "round";
+      this.ctx.lineJoin = "round";
+      this.ctx.strokeStyle = this.strColor;
+      this.ctx.lineWidth = this.strWidth;
+      this.ctx.stroke();
+
       this.socketService.emit(SocketEventsEnum.drawdone, {
         userId: this.userId,
         whiteBoardId: this.whiteBoardId,
@@ -180,24 +250,13 @@ export class whiteBoardComponent implements OnInit,AfterViewInit {
         strColor: this.strColor,
         strWidth: this.strWidth,
       });
-      this.ctx.lineTo(coordinates.x, coordinates.y);
-      this.ctx.lineCap = "round";
-      this.ctx.lineJoin = "round";
-      this.ctx.strokeStyle = this.strColor;
-      this.ctx.lineWidth = this.strWidth;
-      this.ctx.stroke();
     }
     if (coordinates) {
       this.lastX = coordinates?.x;
       this.lastY = coordinates?.y;
     }
+
   }
-
-  stopDrawing(): void {
-    this.isDrawing = false;
-  }
-
-
   private initializeListeners(): void {
     this.socketService.listen(SocketEventsEnum.ondraw).pipe(takeUntil(this.unsubscribe$))
       .subscribe((message: any) => {
@@ -208,16 +267,10 @@ export class whiteBoardComponent implements OnInit,AfterViewInit {
           var newstrColor = message.strColor;
           var newstrWidth = message.strWidth;
           let coordinates;
-          //        if(!this.isDrawing && !(message.userId==this.userId)){
           if (!this.isDrawing) {
 
-            // coordinates = {x: newX - this.offset?.x, y: newY - this.offset?.y};
-            //
-            // this.lastX = coordinates.x;
-            // this.lastY = coordinates.y;
-            /////////////end of start
+
             if (this.ctx) {
-              // coordinates = {x: newX - this.offset?.x, y: newY - this.offset?.y};
               coordinates = {x: newX, y: newY};
               this.ctx.beginPath();
               this.ctx.moveTo(this.lastX, this.lastY);
@@ -299,7 +352,7 @@ export class whiteBoardComponent implements OnInit,AfterViewInit {
   }
   penErase():void{
     this.strColor = '#ffffff';
-    this.strWidth = 16;
+    this.strWidth = 166;
     this.divBlack = "";
     this.divRed = "selected-pen";
     this.divErase = "";

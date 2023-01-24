@@ -4,7 +4,7 @@
   <div class="boards-section-container">
     <div class="my-boards">
       <div class="my-boards-section-header">
-        <div class="boards-page-header-name">My boards</div>
+        <div class="boards-page-header-name">My Boards</div>
       </div>
       <div class="board-tile-list">
 <!--        INLINE FORM-->
@@ -23,11 +23,28 @@
       </div>
     </div>
 
+    <div class="my-boards">
+      <div class="my-boards-section-header">
+        <div class="boards-page-header-name">Member Boards</div>
+      </div>
 
+      <div class="board-tile-list">
+        <a
+          [routerLink]="['/dashBoard', board.id]"
+          *ngFor="let board of memberBoards"
+          class="board-tile"
+        >
+          <div class="board-tile-details-name">{{ board.title }}</div>
+        </a>
+      </div>
+
+
+
+    </div>
 
     <div class="my-boards">
       <div class="my-boards-section-header">
-        <div class="boards-page-header-name">White boards</div>
+        <div class="boards-page-header-name">White Boards</div>
       </div>
       <div class="board-tile-list">
         <!--        INLINE FORM-->
@@ -48,27 +65,10 @@
 
 
 
+
     <div class="my-boards">
       <div class="my-boards-section-header">
-        <div class="boards-page-header-name">Member boards</div>
-      </div>
-
-      <div class="board-tile-list">
-      <a
-        [routerLink]="['/dashBoard', board.id]"
-        *ngFor="let board of memberBoards"
-        class="board-tile"
-      >
-        <div class="board-tile-details-name">{{ board.title }}</div>
-      </a>
-      </div>
-
-
-
-      </div>
-    <div class="my-boards">
-      <div class="my-boards-section-header">
-        <div class="boards-page-header-name">Member White boards</div>
+        <div class="boards-page-header-name">Member White Boards</div>
       </div>
 
       <div class="board-tile-list">

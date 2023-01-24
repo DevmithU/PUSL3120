@@ -113,13 +113,14 @@
 .board-title{
   font-size: 30px;
   margin-right: 20px;
-  color: #f7586b;
+  color: #ffffff;
   font-weight: bold;
   /*background: #00adcc;*/
   border-radius: 8px;
   padding: 14px;
-  background-color: rgb(255, 255, 255);
-  backdrop-filter: blur(14px);
+  background: #0052D4;  /* fallback for old browsers */
+  background: -webkit-linear-gradient(  190deg,#8e2de2, #4a00e0);  /* Chrome 10-25, Safari 5.1-6 */
+  background: linear-gradient(  190deg,#8e2de2, #4a00e0); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */  backdrop-filter: blur(14px);
 
 }
 .columns {
@@ -147,7 +148,7 @@
 .column-title {
   white-space: pre-line;
 
-  color: #1d3045;
+  color: #4a00e0;
   font-size: 17px;
   font-weight: 600;
   margin-bottom: 12px;

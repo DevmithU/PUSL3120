@@ -11,7 +11,7 @@
   /*width: 100%;*/
   margin-left: auto;
   margin-right: auto;
-  /*background-color: #e0e0e0;*/
+  background-color: #ffffff;
   border: 16px solid #e0e0e0;
   border-radius: 40px;
   zoom: 25%;
@@ -70,11 +70,22 @@
   align-items: center;
   cursor: pointer;
 }
-
+.whiteBoard-header-container {
+  padding-top: 5px;
+  min-height: 48px;
+  display: flex;
+  align-items: center;
+  padding-right: 10px;
+  padding-left: 10px;
+}
 .add-member-board-WB:hover {
   background-color: #608ebe;
 }
 .whiteboard-cover{
-
+  background-image: url("/assets/test1.jpg");
+  background-repeat: no-repeat;
+  background-size: cover;
+  min-height: calc(100vh - 44px);
+  height: fit-content;
 }
 

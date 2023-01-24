@@ -1,9 +1,9 @@
 <div class="login-page">
-  <a routerLink="/">
-    <img src="/assets/trello-logo.svg" class="trello-main-logo" />
+  <a routerLink="/" class="login-home-link">
+    Quickboard
   </a>
   <div class="form-container">
-    <div class="login-header">Register to Trello</div>
+    <div class="login-header">Register New Account</div>
     <div class="errors" *ngIf="errorMessage">{{ errorMessage }}</div>
     <form [formGroup]="form" (ngSubmit)="onSubmit()">
       <input
@@ -14,8 +14,24 @@
         (change)="onTextChanged($event)"
       />
       <input
+        formControlName="firstname"
+        placeholder="First Name"
+        class="login-input"
+      />
+      <input
+        formControlName="lastname"
+        placeholder="Last Name"
+        class="login-input"
+      />
+      <input
         formControlName="username"
         placeholder="Username"
+        class="login-input"
+      />
+      <input
+        formControlName="passwordCheck"
+        type="password"
+        placeholder="Password"
         class="login-input"
       />
       <input
@@ -24,8 +40,11 @@
         placeholder="Password"
         class="login-input"
       />
+
       <button type="submit" [class.disabled]="isButtonDisabled2" class="login-submit-button" [disabled]="isButtonDisabled">Register</button>
     </form>
+    <button (click)="check()" class="login-submit-button" >Register</button>
+
     <div class="bottom-form-links">
       <a routerLink="/login" class="register-link">Sign in</a>
     </div>
