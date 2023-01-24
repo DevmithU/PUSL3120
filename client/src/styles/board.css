@@ -78,6 +78,7 @@
 }
 
 .delete-board {
+  margin-top: auto;
   color: #fff;
   padding: 5px 8px;
   margin-left: auto;
@@ -96,6 +97,7 @@
 }
 
 .add-member-board {
+  margin-top: auto;
   color: #fff;
   padding: 5px 8px;
   border-radius: 3px;
@@ -146,9 +148,12 @@
 }
 
 .column-title {
+  padding: 9px 12px 7px 12px;
   white-space: pre-line;
-
-  color: #4a00e0;
+  background: #6e2cef;  /* fallback for old browsers */
+  background: -webkit-linear-gradient(  183deg , #b065fa, #7d3efa);  /* Chrome 10-25, Safari 5.1-6 */
+  background: linear-gradient(  183deg, #b065fa, #7d3efa); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */   border-radius: 4px;
+  color: #ffffff;
   font-size: 17px;
   font-weight: 600;
   margin-bottom: 12px;
@@ -164,7 +169,7 @@
 }
 
 .column-delete-icon:hover {
-  background-color: rgba(9, 30, 66, 0.08);
+  background-color: rgba(0, 0, 0, 0.17);
   border-radius: 15%;
 }
 
@@ -220,13 +225,13 @@
 
 
 .edit-column-form{
-  padding-left: 5px;
-  padding-top: 7px;
+  /*padding-left: 5px;*/
+  /*padding-top: 7px;*/
 
 }
 .edit-column-form .inline-form-input {
   font-size: 17px;
-
+  color: #ffffff;
   width: 100%;
   background-color: rgba(250, 251, 252, 0);
   border: 2px solid #dfe1e6;

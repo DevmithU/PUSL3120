@@ -27,6 +27,8 @@ export class RegisterComponent {
     firstname: ['', Validators.required],
     lastname: ['', Validators.required],
     password: ['', Validators.required],
+    passwordCheck: ['', Validators.required],
+
   });
 
   constructor(
@@ -40,70 +42,78 @@ export class RegisterComponent {
     this.isButtonDisabled2 = true;
 
   }
-  check():void{
-    this.newEmail=this.form.get('email')?.toString();
-    this.newUsername=this.form.get('username')?.toString();
-    this.newPassword=this.form.get('password')?.toString();
-    console.log('>>>>>>>>>>>>>>>>>>>>>>>>>',this.newEmail);
-    console.log('>>>>>>>>>>>>>>>>>>>>>>>>>',this.newEmail?.toString());
 
-  }
   onSubmit(): void {
-    this.newEmail=this.form.get('email')?.toString();
-    this.newUsername=this.form.get('username')?.toString();
-    this.newPassword=this.form.get('password')?.toString();
-    console.log('>>>>>>>>>>>>>>>>>>>>>>>>>',this.newEmail);
+    this.newPassword=this.form.getRawValue().password?.toString();
+    if(this.newPassword==this.form.getRawValue().passwordCheck?.toString()){
 
-    if(typeof this.newEmail !== 'undefined' && typeof this.newUsername !== 'undefined' && typeof this.newPassword !== 'undefined'){
-      this.newUser = {
-        email: this.newEmail,
-        username: this.newUsername,
-        password: this.newPassword
-      };
-      console.log('22222222222222222222222222222222',this.newUser );
-      console.log('22222222222222222222222222222222',this.form.value );
+      this.newEmail=this.form.getRawValue().email?.toString();
+      this.newUsername=this.form.getRawValue().username?.toString();
 
-      this.authService.register(<RegisterRequestInterface>(this.form.value)).subscribe({
-        next: (currentUser) => {
-          console.log('currentUser', currentUser);
-          this.authService.setToken(currentUser);
-          this.socketService.setupSocketConnection(currentUser);
-          this.authService.setCurrentUser(currentUser);
-          this.errorMessage = null;
-          this.router.navigateByUrl('/');
-        },
-        error: (err: HttpErrorResponse) => {
-          console.log('err', err.error);
-          this.errorMessage = err.error.message;
-          // console.log('errorMessage', this.errorMessage);
+      if(typeof this.newEmail !== 'undefined' && typeof this.newUsername !== 'undefined' && typeof this.newPassword !== 'undefined'){
+        this.newUser = {
+          email: this.newEmail,
+          username: this.newUsername,
+          password: this.newPassword
+        };
 
-        },
-      });
+
+        this.authService.register(<RegisterRequestInterface>(this.newUser)).subscribe({
+          next: (currentUser) => {
+            console.log('currentUser', currentUser);
+            this.authService.setToken(currentUser);
+            this.socketService.setupSocketConnection(currentUser);
+            this.authService.setCurrentUser(currentUser);
+            this.errorMessage = null;
+            this.router.navigateByUrl('/');
+          },
+          error: (err: HttpErrorResponse) => {
+            console.log('err', err.error);
+            this.errorMessage = err.error.message;
+            // console.log('errorMessage', this.errorMessage);
+
+          },
+        });
+      }
+
     }
-
-
-
+    else{
+      this.errorMessage = "passwords don't match";
+    }
 
   }
 
   onTextChanged(event: any) {
     let email : string;
     email = event.target.value
-    this.authService.emailAvailable(email).subscribe( (isChecked) =>  {
-      // console.log(isChecked);
-      if(!isChecked){
-        this.errorMessage = "Email already in use";
-        this.isButtonDisabled = "disabled";
-        this.isButtonDisabled2 = true;
+    var re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+    if(re.test(String(email).toLowerCase())){
+      this.authService.emailAvailable(email).subscribe( (isChecked) =>  {
+        // console.log(isChecked);
 
-        // console.log("email exist");
-      }else{
-        this.errorMessage = null;
-        this.isButtonDisabled = "";
-        this.isButtonDisabled2 = false;
+        if(!isChecked){
+          this.errorMessage = "Email already in use";
+          this.isButtonDisabled = "disabled";
+          this.isButtonDisabled2 = true;
 
-      }
-    }) ;
+          // console.log("email exist");
+        }else{
+          this.errorMessage = null;
+          this.isButtonDisabled = "";
+          this.isButtonDisabled2 = false;
+
+        }
+      }) ;
+
+
+
+    }
+    else{
+      this.errorMessage = "Email is Incorrect";
+      this.isButtonDisabled = "disabled";
+      this.isButtonDisabled2 = true;
+    }
+
   }
 
 

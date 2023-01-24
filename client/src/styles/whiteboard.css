@@ -6,7 +6,7 @@
   /*background-color: #5aac44;*/
 
 }
-.whiteboard-canvas{
+.whiteboard-canvas {
   /*height: 100%;*/
   /*width: 100%;*/
   margin-left: auto;
@@ -15,8 +15,32 @@
   border: 16px solid #e0e0e0;
   border-radius: 40px;
   zoom: 25%;
+}
+.pen-range{
+  margin: 0px 7px;
 
-
+}
+.color-picker{
+  margin: 0px 7px;
+  height: auto;
+}
+input[type="color"] {
+  -webkit-appearance: none;
+  border:none;
+  border-radius:7px;
+}
+input[type="color"]::-webkit-color-swatch-wrapper {
+  padding: 0;
+  border-radius: 7px;
+}
+input[type="color"]::-webkit-color-swatch {
+  border: 2px solid rgb(255, 255, 255);
+  border-radius: 7px;
+}
+.stroke-width{
+  color: #00357e;
+  height: fit-content;
+  margin: auto 0 auto 0;
 }
 .whiteboard-container{
   /*background-color: #0061e8;*/
@@ -24,41 +48,64 @@
   align-items: center;
   justify-content: center;
   width: 100%;
+  margin-top: 20px;
 }
 .whiteboard-pen-options{
+  background-color: rgba(255, 255, 255, .45);
+  backdrop-filter: blur(14px);
+  border-radius: 10px;
+  margin: 20px 10px 10px 10px;
+  width: fit-content;
+  padding: 15px 15px 15px 15px;
   display: flex;
 
 }
+
 .whiteboard-pen {
   padding: 4px 10px;
   border-radius: 5px;
   font-size: 14px;
   /*background-color: #ffffff;*/
-  border: 3px solid #e0e0e0;
   display: flex;
   align-items: center;
   cursor: pointer;
-  margin: 0px 5px;
+  margin: 0px 7px;
 }
 
 .whiteboard-pen:hover {
-  background-color: #e0e0e0;
+  outline: 5px solid rgb(255, 255, 255);
 }
 .pen-black{
-  color: #000000;
+  /*border: 6px solid #cbcbcb;*/
+
+  background-color: #000000;
+  color: #ffffff;
 
 }
 .pen-red{
-  color: #ff0000;
+  /*border: 6px solid #ff4646;*/
+
+  background-color: #ff0000;
+  color: #ffffff;
 }
 .pen-erase{
-  color: #777777;
+  /*border: 6px solid #c9c9c9;*/
+
+  background-color: #ffffff;
+  color: #8f8f8f;
 }
 .selected-pen{
-  background-color: #e0e0e0;
+  outline: 5px solid rgb(255, 255, 255);
 
 }
+.pen-options-divider{
+  height: auto;
+  width:2px;
+  border: 2px solid rgb(0 0 0 / 19%);
+  margin: 0px 23px;
+  border-radius: 5px;
 
+}
 .add-member-board-WB {
   color: #fff;
   padding: 5px 8px;
@@ -74,7 +121,7 @@
   padding-top: 5px;
   min-height: 48px;
   display: flex;
-  align-items: center;
+  align-items: baseline;
   padding-right: 10px;
   padding-left: 10px;
 }
@@ -82,9 +129,15 @@
   background-color: #608ebe;
 }
 .whiteboard-cover{
-  background-image: url("/assets/test1.jpg");
-  background-repeat: no-repeat;
-  background-size: cover;
+  background: #0f0c29;  /* fallback for old browsers */
+  background: -webkit-linear-gradient(45deg, #6190e8, #a7bfe8);   /* Chrome 10-25, Safari 5.1-6 */
+  background: linear-gradient( 45deg, #6190e8, #a7bfe8);  /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+
+  /*background-image: url("/assets/test1.jpg");*/
+  /*background-repeat: no-repeat;*/
+  /*background-size: cover;*/
+
+
   min-height: calc(100vh - 44px);
   height: fit-content;
 }

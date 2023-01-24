@@ -17,13 +17,20 @@
     <div *ngIf="userId==whiteBoard?.userId" class="delete-board" >Delete board</div>
   </div>
   <hr class="board-header-divider">
-
   <div class="whiteboard-pen-options">
     <div class="{{divBlack}} whiteboard-pen pen-black " (click)="penBlack()">Black</div>
     <div class="{{divRed}} whiteboard-pen pen-red" (click)="penRed()">Red</div>
     <div class="{{divErase}} whiteboard-pen pen-erase" (click)="penErase()">Erase</div>
-    <div class="add-member-board-WB" (click)="gerUserList()">Add Members</div>
-    <div class="add-member-board-WB" (click)="check()">check</div>
+    <hr class="pen-options-divider" >
+    <div class="stroke-width"> Color Picker</div>
+
+    <!--    <div class="add-member-board-WB" (click)="clearBoard()">clear</div>-->
+<!--    <div class="add-member-board-WB" (click)="restoreBoard()">re store</div>-->
+    <input (input)="changeColor()" type="color" class="color-picker" #colorpicker>
+    <hr class="pen-options-divider" >
+
+    <input  (input)="changeWidth()" type="range" min="1" max="200" class="pen-range" #widthSelector value="{{strWidth}}">
+    <div class="stroke-width"> Pen Size : {{strWidth}}</div>
 
   </div>
   <div class="whiteboard-container">

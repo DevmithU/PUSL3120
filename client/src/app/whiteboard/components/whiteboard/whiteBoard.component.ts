@@ -23,7 +23,7 @@ export class whiteBoardComponent implements OnInit,AfterViewInit {
     this.scrollTest= scrollY;
     this.resetOffset(scrollY);
   }
-
+  dataURL:any|undefined;
   userList: Array<string> | undefined;
   dev_tools_view:boolean;
   unsubscribe$ = new Subject<void>();
@@ -46,6 +46,9 @@ export class whiteBoardComponent implements OnInit,AfterViewInit {
 
   @ViewChild('myCanvas') canvas: ElementRef | null;
   @ViewChild('WBback') WBback: ElementRef | null | undefined;
+  @ViewChild('colorpicker') colorPicker: ElementRef | null | undefined;
+  @ViewChild('widthSelector') widthSelector: ElementRef | null | undefined;
+
   private ctx: CanvasRenderingContext2D | null;
   private isDrawing = false;
   private lastX = 0;
@@ -216,12 +219,24 @@ export class whiteBoardComponent implements OnInit,AfterViewInit {
     event.preventDefault();
     this.drawLineCommon(event.touches[0].pageX,event.touches[0].pageY);
   }
+  clearBoard(): void {
+    this.dataURL = this.canvas?.nativeElement.toDataURL()
+    console.log('dataurl');
+    console.log(typeof this.dataURL);
+    console.log(this.dataURL);
+
+    this.ctx?.clearRect(0, 0, this.canvas?.nativeElement.width, this.canvas?.nativeElement.height);
+  }
+
+  restoreBoard(): void {
+    var img = new Image();
+    img.src = this.dataURL;
+    img.onload = () => {
+      this.ctx?.drawImage(img, 0, 0);
+    }
+  }
 
   stopDrawing(): void {
-    var dataURL = this.canvas?.nativeElement.toDataURL()
-    console.log('dataurl');
-    console.log(dataURL);
-
     this.isDrawing = false;
   }
 
@@ -357,9 +372,19 @@ export class whiteBoardComponent implements OnInit,AfterViewInit {
     this.divRed = "selected-pen";
     this.divErase = "";
   }
+  changeWidth():void{
+    this.strWidth=this.widthSelector?.nativeElement.value;
+    // console.log(this.colorPicker?.nativeElement.value);
+
+  }
+  changeColor():void{
+    this.strColor=this.colorPicker?.nativeElement.value;
+    // console.log(this.colorPicker?.nativeElement.value);
+    // this.strColor = event?.target?
+  }
 
   gerUserList(): void {
-    console.log('tis block')
+    // console.log('tis block')
     this.router.navigate(['whiteBoard', this.whiteBoardId, 'userListWB',], {queryParams: {userList: this.userList}} )
   }
 
