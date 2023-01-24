@@ -60,7 +60,7 @@ export class TaskViewComponent implements OnDestroy {
         columns,
       }))
     );
-
+//test
     this.task$.pipe(takeUntil(this.unsubscribe$)).subscribe((task) => {
       // console.log('here222');
       this.columnForm.patchValue({ columnId: task.columnId });
