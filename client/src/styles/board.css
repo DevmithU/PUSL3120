@@ -1,8 +1,8 @@
 
-.board-background{
-  /*background: #9796f0;  !* fallback for old browsers *!*/
-  /*background: -webkit-linear-gradient(to top, #fbc7d4, #9796f0);  !* Chrome 10-25, Safari 5.1-6 *!*/
-  /*background: linear-gradient(to bottom, #fbc7d4, #9796f0); !* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ *!*/
+.board-background-drop{
+  background: #9796f0;  /* fallback for old browsers */
+  background: -webkit-linear-gradient(to top, #fbc7d4, #9796f0);  /* Chrome 10-25, Safari 5.1-6 */
+  background: linear-gradient(to bottom, #fbc7d4, #9796f0); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
 
 
   /*height: 100vh;*/
@@ -10,10 +10,30 @@
   height: fit-content;
   /*height: max(100vh,fit-content);*/
   /*height: max(100vh,fit-content);*/
-  background-image: url("/assets/test1.jpg");
+
+
+
+
+
+
+  /*background-image: url("/assets/test22.svg");*/
+  /*background-repeat: no-repeat;*/
+  /*background-size: cover;*/
+}
+.board-background{
+  min-height: calc(100vh - 44px);
+  height: fit-content;
+
+
+
+  background-image: url("/assets/new23.svg");
   background-repeat: no-repeat;
   background-size: cover;
+  background-blend-mode: overlay;
 }
+
+
+
 
 .board {
 

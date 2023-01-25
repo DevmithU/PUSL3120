@@ -6,6 +6,9 @@ import {Socket} from "../types/socket.interface";
 import {SocketEventsEnum} from "../types/socketEvents.enum";
 import {getErrorMessage} from "../helpers";
 import UserModel from "../models/user";
+import TaskModel from "../models/task";
+import ColumnModel from "../models/column";
+
 import jwt from "jsonwebtoken";
 import WhiteBoardModel from "../models/whiteBoard";
 import {secret} from "../config";
@@ -225,6 +228,9 @@ export const deleteBoard = async (
       return;
     }
     await BoardModel.deleteOne({ _id: data.boardId });
+    await TaskModel.deleteMany({ boardId: data.boardId });
+    await ColumnModel.deleteMany({ boardId: data.boardId });
+
     io.to(data.boardId).emit(SocketEventsEnum.boardsDeleteSuccess);
   } catch (err) {
     socket.emit(SocketEventsEnum.boardsDeleteFailure, getErrorMessage(err));

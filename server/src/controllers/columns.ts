@@ -5,6 +5,7 @@ import {SocketEventsEnum} from "../types/socketEvents.enum";
 import {Socket} from "../types/socket.interface";
 import { Server } from "socket.io";
 import {getErrorMessage} from "../helpers";
+import TaskModel from "../models/task";
 
 export const getColumns = async (
   req: ExpressRequestInterface,
@@ -64,6 +65,8 @@ export const deleteColumn = async (
       return;
     }
     await ColumnModel.deleteOne({ _id: data.columnId });
+    await TaskModel.deleteMany({ columnId: data.columnId });
+
     io.to(data.boardId).emit(
         SocketEventsEnum.columnsDeleteSuccess,
         data.columnId
