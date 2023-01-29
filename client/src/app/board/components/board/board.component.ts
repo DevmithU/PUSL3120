@@ -236,8 +236,8 @@ export class BoardComponent implements OnInit ,OnDestroy,AfterViewInit{
     this.boardsService.updateBoard(this.boardId, { title: boardName });
   }
   gerUserList(): void {
-    this.router.navigate(['dashBoard', this.boardId, 'userList', ], {queryParams: {userList: this.userList}} )
-  }
+    this.router.navigate(['dashBoard', this.boardId, 'userList',], {queryParams: {userList: this.userList}}).then(r =>{})
+   }
   deleteBoard(): void {
     if (confirm('Are you sure you want to delete the board?')) {
       this.boardsService.deleteBoard(this.boardId);
