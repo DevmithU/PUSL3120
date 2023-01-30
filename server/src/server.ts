@@ -156,5 +156,5 @@ mongoose.connect('mongodb://localhost:27017/mdbt1').then(() =>{
     });
 });
 
-export default app;
+export { app };
 
