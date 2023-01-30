@@ -1,0 +1,5 @@
+ npx mocha -ui tdd --require ts-node/register
+
+
+ npx mocha -ui tdd
+

@@ -1,6 +1,8 @@
+require("ts-node").register({ files: true });
+
 let chai = require("chai");
 let chaiHttp = require("chai-http");
-let server = require("../../server/dist/server.js");
+let server = require("../../server/src/server");
 // let server = require("../../server/src/server");
 
 chai.use(chaiHttp);

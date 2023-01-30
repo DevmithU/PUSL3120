@@ -1,15 +1,16 @@
-require("ts-node").register({ files: true });
-
+let path = require("../../server_path")
+// require("ts-node").register({ files: true });
 let chai = require("chai");
 let chaiHttp = require("chai-http");
-let server = require("../../server/src/server");
+let server = require(path.path_dist);
 // let server = require("../../server/src/server");
+// let server = require("../../server/dist/server.js");
 
 chai.use(chaiHttp);
 let app;
 var expect = chai.expect;
 
-suite("Test sayHello server check name change NEw File", function() {
+suite("Test sayHello server 22222555", function() {
 
     setup(function() {
         this.app = server.app;
@@ -57,7 +58,7 @@ suite("Test sayHello server check name change NEw File", function() {
         expect(response.body).to.have.property('username');
         expect(response.body).to.have.property('id');
     });
-    test("Test br4413", async function() {
+    test("Test boards44ttt", async function() {
         let response = await chai.request(this.app).get("/api/dashBoard").set("Authorization", "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYzYWMwNGVlYjQwNWMxOTM1OGY1MmVkMyIsImVtYWlsIjoicTEyQGdtYWlsLmNvbSIsImlhdCI6MTY3NTAzMDgxOX0.qbyguJE2-vcmrv-SctiHFvQPRjmDHlaw-xAgAd9UUpY");
         // chai2.assert.equal(response.status, 200, "Wrong response code");
         // console.log(response.body);
