@@ -42,7 +42,7 @@ mongoose.set("toJSON", {
 });
 
 app.get("/",(req, res)=>{
-    res.send("API is UPt5");
+    res.send("API is UP");
 });
 
 app.post("/api/users", usersController.register);
