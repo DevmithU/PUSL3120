@@ -7,13 +7,13 @@ chai.use(chaiHttp);
 let app;
 var expect = chai.expect;
 
-suite("Test sayHello server other file", function() {
+suite("Test sayHello server other ", function() {
 
     setup(function() {
         this.app = server.app;
     });
 
-    test("Test is working", async function() {
+    test("Test is working33", async function() {
         let response = await chai.request(this.app).get("/");
         expect(response.text).to.equal("API is UP");
         expect(response.status).to.equal(200);
