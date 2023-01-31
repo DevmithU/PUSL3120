@@ -76,14 +76,14 @@ export class whiteBoardComponent implements OnInit,AfterViewInit {
       throw new Error('Cant get whiteBoardId from url');
     }
     this.whiteBoardId = whiteBoardId;
-    console.log('WB id', this.whiteBoardId)
+    // console.log('WB id', this.whiteBoardId)
     this.ctx = null;
     this.canvas = null;
-    console.log('width1', this.WBback?.nativeElement)
+    // console.log('width1', this.WBback?.nativeElement)
   }
 
   ngOnInit(): void {
-    console.log('WB id', this.whiteBoardId)
+    // console.log('WB id', this.whiteBoardId)
     this.userId = this.authService.currentUser$.value?.id;
 
     this.socketService.emit(SocketEventsEnum.whiteBoardJoin, {
@@ -116,10 +116,10 @@ export class whiteBoardComponent implements OnInit,AfterViewInit {
   }
 
   resetOffset(scrollY: number):void{
-    console.log('reset/////////////////////////////////////////')
+    console.log('resetOffset')
 
     if (this.canvas && this.WBback) {
-      console.log('reset/////////////', this.WBback.nativeElement.width)
+      console.log('resetOffset2', this.WBback.nativeElement.width)
 
       let wbRect = this.WBback.nativeElement.getBoundingClientRect();
 
@@ -134,7 +134,7 @@ export class whiteBoardComponent implements OnInit,AfterViewInit {
       this.wb_hiegt = wbRect.height;
       this.wb_width = wbRect.width;
 
-      console.log('wbrect', wbRect);
+      console.log('wbRect', wbRect);
       console.log('offset this', this.offset);
 
 
@@ -155,7 +155,7 @@ export class whiteBoardComponent implements OnInit,AfterViewInit {
       this.wb_top = wbRect.top;
       this.wb_hiegt = wbRect.height;
       this.wb_width = wbRect.width;
-      console.log('wbrect', wbRect);
+      console.log('wbRect', wbRect);
       console.log('offset this', this.offset);
 
 
@@ -380,7 +380,6 @@ export class whiteBoardComponent implements OnInit,AfterViewInit {
   changeColor():void{
     this.strColor=this.colorPicker?.nativeElement.value;
     // console.log(this.colorPicker?.nativeElement.value);
-    // this.strColor = event?.target?
   }
 
   gerUserList(): void {
@@ -388,9 +387,6 @@ export class whiteBoardComponent implements OnInit,AfterViewInit {
     this.router.navigate(['whiteBoard', this.whiteBoardId, 'userListWB',], {queryParams: {userList: this.userList}} )
   }
 
-  // updateBoardName(whiteboardName: string): void {
-  //   this.whiteBoardService.updateBoard(this.whiteBoardId, { title: whiteboardName });
-  // }
   updateBoardName(whiteBoardName: string): void {
     this.whiteBoardService.updateWhiteBoard(this.whiteBoardId, { title: whiteBoardName });
   }

@@ -27,14 +27,14 @@ export class AppComponent implements OnInit {
       },
     });
 
-    ///////////////to check logged in status dev check
-    // this.authService.currentUser$.subscribe((res)=> {
-    //     console.log('res',res);
-    //   });
-    // this.authService.isLogged$.subscribe((isLoggedIn)=>{
-    //   console.log('isLoggedIn',isLoggedIn);
-    // });
-    /////////////////
+    /////////////to check logged in status dev check
+    this.authService.currentUser$.subscribe((res)=> {
+        console.log('res',res);
+      });
+    this.authService.isLogged$.subscribe((isLoggedIn)=>{
+      console.log('isLoggedIn',isLoggedIn);
+    });
+    ///////////////
 
 
   }

@@ -38,5 +38,7 @@ export enum SocketEventsEnum {
   whiteboardsUpdate = 'whiteboards:update',
   whiteboardsUpdateSuccess = 'whiteboards:updateSuccess',
   whiteboardsUpdateFailure = 'whiteboards:updateFailure',
+  newChatMessage = 'chat:newMessage',
+  newChatMessageSuccess = 'chat:newMessageSuccess',
 
 }

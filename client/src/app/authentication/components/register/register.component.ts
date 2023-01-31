@@ -70,7 +70,7 @@ export class RegisterComponent {
           error: (err: HttpErrorResponse) => {
             console.log('err', err.error);
             this.errorMessage = err.error.message;
-            // console.log('errorMessage', this.errorMessage);
+            console.log('errorMessage', this.errorMessage);
 
           },
         });

@@ -64,10 +64,9 @@ export class InlineFormComponent implements AfterViewInit{
     this.isEditing = false;
   }
   leaveEditingWithCheck(): void {
-    console.log('1111111')
     if(!this.isButtonHOver){
       this.isEditing = false;
-      console.log('2222222')
+      console.log('leave editing completed')
     }
   }
   stillTextArea():void{

@@ -1,9 +1,13 @@
 .home-hero {
-  background: linear-gradient(135deg, #0079bf, #5067c5);
+  background: #43cea2;  /* fallback for old browsers */
+  background: -webkit-linear-gradient(22deg, #185a9d, #43cea2);  /* Chrome 10-25, Safari 5.1-6 */
+  background: linear-gradient(22deg , #185a9d, #43cea2); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+  height: 700px;
 }
 
 .home-container {
-  max-width: 1140px;
+  height:100%;
+  max-width: 620px;
   color: #fff;
   display: flex;
   margin: 0 auto;
@@ -12,16 +16,45 @@
   padding-top: 80px;
   justify-content: space-between;
 }
+.home-team{
+  height: 700px;
 
+  /*background: #43cea2;  !* fallback for old browsers *!*/
+  /*background: -webkit-linear-gradient(22deg, #185a9d, #43cea2);  !* Chrome 10-25, Safari 5.1-6 *!*/
+  /*background: linear-gradient(22deg , #185a9d, #43cea2); !* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ *!*/
+}
+.home-information{
+  height: 700px;
+
+  background: #43cea2;  /* fallback for old browsers */
+  background: -webkit-linear-gradient(22deg, #185a9d, #43cea2);  /* Chrome 10-25, Safari 5.1-6 */
+  background: linear-gradient(22deg , #185a9d, #43cea2); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+}
 .home-title {
   font-size: 48px;
   font-weight: 600;
-  margin-bottom: 8px;
+  margin-bottom: 110px;
+  text-align: center;
+}
+.home-title2{
+  color: #f3225b;
+  font-size: 48px;
+  font-weight: 600;
+  margin-bottom: 110px;
+  text-align: center;
 }
 
 .home-description {
   font-size: 25px;
   font-weight: 300;
+  text-align: center;
+}
+.home-description2 {
+  color: #f3225b;
+
+  font-size: 25px;
+  font-weight: 300;
+  text-align: center;
 }
 
 .home-header {
@@ -70,7 +103,7 @@
 }
 
 .information-container {
-  color: #2c3e50;
+  color: #ffffff;
 }
 
 .workflow-container {

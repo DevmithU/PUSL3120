@@ -16,6 +16,8 @@ import User from "./models/user";
 import {Socket} from "./types/socket.interface";
 import { secret } from "./config";
 import * as tasksController from "./controllers/tasks";
+import * as chatController from "./controllers/chat";
+
 import {getWhiteBoard, updateWhiteBoard} from "./controllers/whiteBoards";
 // import {addListUser} from "./controllers/users";
 
@@ -72,6 +74,7 @@ app.get("/api/boards/:boardId/tasks", authMiddleware, tasksController.getTasks);
 app.post("/api/dashBoard", authMiddleware, boardsController.createBoard);
 app.post("/api/dashBoard/createWB", authMiddleware, whiteboardsController.createWhiteBoard);
 app.get("/api/whiteBoards/:whiteBoardId", authMiddleware, whiteboardsController.getWhiteBoard);
+app.get("/api/chat/:boardId", authMiddleware, chatController.getChats);
 
 
 io.use(async (socket: Socket, next) => {
@@ -143,6 +146,9 @@ io.use(async (socket: Socket, next) => {
     });
     socket.on(SocketEventsEnum.whiteboardsUpdate, (data) => {
         whiteboardsController.updateWhiteBoard(io, socket, data);
+    });
+    socket.on(SocketEventsEnum.newChatMessage, (data) => {
+        chatController.newMessage(io, socket, data);
     });
     // console.log("connect");
 });

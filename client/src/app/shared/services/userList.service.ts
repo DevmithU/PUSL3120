@@ -11,16 +11,6 @@ export class UserListService {
     private http: HttpClient,
   ) {}
 
-  // getBoards(): Observable<BoardInterface[]> {
-  //   const url = environment.apiUrl + '/dashBoard';
-  //   return this.http.get<BoardInterface[]>(url);
-  // }
-  // getBoard(boardId: string): Observable<BoardInterface> {
-  //   const url = `${environment.apiUrl}/boards/${boardId}`;
-  //
-  //   // console.log("board url",url);
-  //   return this.http.get<BoardInterface>(url);
-  // }
   getUserList(boardId: string): Observable<Array<string>> {
     const url = environment.apiUrl + '/dashBoard/getListUser';
     return this.http.post<Array<string>>(url, { "boardId":boardId });
@@ -31,11 +21,8 @@ export class UserListService {
 
 
   updateUserList(boardId: string,userList: Array<string>): Observable<Array<string>> {
-    console.log('here 222');
     console.log('boardId',boardId);
     console.log('userList',userList);
-    console.log('here 333');
-
     const url = environment.apiUrl + '/dashBoard/addListUser';
     let check = this.http.post<Array<string>>(url, {"boardId": boardId, "userList": userList});
     console.log('check',check)

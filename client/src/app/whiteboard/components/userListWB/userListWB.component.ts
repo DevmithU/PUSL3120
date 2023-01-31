@@ -25,7 +25,6 @@ export class UserListWBComponent implements OnInit,OnDestroy {
 
 
   ) {
-    console.log('userlistWB arrive04444');
 
     const whiteBoardId = this.route.parent?.snapshot.paramMap.get('whiteBoardId');
     if (!whiteBoardId) {
@@ -68,7 +67,6 @@ export class UserListWBComponent implements OnInit,OnDestroy {
 
 
   ngOnInit(): void {
-    console.log('userlistWB arrive0');
 
     this.fetchData();
 

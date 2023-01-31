@@ -1,0 +1,143 @@
+.chat-window {
+  height: calc(100vh - 219px);
+  min-height: 100%;
+  background-color: rgba(255, 255, 255, .45);
+  backdrop-filter: blur(14px);
+  padding: 8px;
+  margin: 0 4px 0px 12px;
+  border-radius: 7px;
+}
+.chat-window-body{
+  min-width: 420px;
+}
+.chat-window-header{
+  align-items: center;
+  display: flex;
+  padding: 7px 0px 7px 0px;
+
+}
+.chats{
+  /*background-color: #fff;*/
+  border-radius: 4px;
+  height:calc(100vh - 350px);
+  overflow-y: auto;
+  color: #696969;
+}
+.chat-header{
+  font-size: 20px;
+  font-weight: 700;
+  color: #f11a65;
+  padding-left: 11px;
+}
+.chats::-webkit-scrollbar {
+  background: hsla(0, 0%, 0%, 0.13);;
+  border-radius: 20px;
+  width: 12px;               /* width of the entire scrollbar */
+}
+.chats::-webkit-scrollbar-track {
+  background:  hsla(0, 0%, 0%, 0.0);        /* color of the tracking area */
+  border-radius: 20px;
+
+}
+.chat-username{
+  font-size: 13px;
+  font-style: italic;
+  margin-bottom: 6px;
+}
+.chat-username-user{
+  color:#f0146b;
+  text-align: right;
+}
+.chat-username-member{
+  color:#ff6902;
+  text-align: left;
+
+}
+.chats::-webkit-scrollbar-thumb {
+  background:  hsla(0, 0%, 100%, 0.55);        /* color of the tracking area */
+  border-radius: 20px;       /* roundness of the scroll thumb */
+  border: 3px solid hsla(0, 0%, 100%, 0.25);;  /* creates padding around scroll thumb */
+}
+
+.chat-input{
+  margin-top: 15px;
+  background-color: rgba(255, 255, 255, 0);
+  border-radius: 4px;
+  display:flex;
+
+}
+.chat-common{
+  max-width: 80%;
+  padding: 9px 12px;
+  width: fit-content;
+  border-radius: 9px;
+  margin: 2px;
+  background-color: #ffffff;
+}
+.chat-member{
+  /*background-color: #8c2387;*/
+  text-align: left;
+  margin-right: auto;
+  margin-left: 14px;
+}
+.chat-user{
+  /*background-color: #f32458;*/
+  text-align: right;
+  margin-left: auto;
+  margin-right: 14px;
+
+}
+.chat-input-box {
+  font-weight: 500;
+  font-size: 14px;
+  flex: 1;
+
+  background-color: #fafbfc;
+  border: 2px solid #dfe1e6;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+  border-radius: 8px;
+  height: 44px;
+  padding: 7px;
+  -webkit-transition: background-color 0.2s ease-in-out 0s,
+  border-color 0.2s ease-in-out 0s;
+  transition: background-color 0.2s ease-in-out 0s,
+  border-color 0.2s ease-in-out 0s;
+  margin: 0 0 1.2em;
+}
+.chat-submit-button {
+  background: #f11a65;  /* fallback for old browsers */
+  margin-left: 7px;
+  border-radius: 14px;
+  color: #fff;
+  display: inline-block;
+  font-weight: lighter;
+  margin-bottom: 0.8em;
+  font-size: 18px;
+  position: relative;
+  text-decoration: none;
+  border: 0px;
+  cursor: pointer;
+}
+
+.chat-submit-button:hover {
+  background: #f11a65;  /* fallback for old browsers */
+
+}
+.chat-window-show-button{
+  margin-left: auto;
+  border-radius: 8px;
+  background: rgb(0 0 0 / 22%);
+  color: #fff;
+  font-weight: bold;
+  border: 0px;
+  font-size: 25px;
+  padding: 3px 11px 2px 11px;
+  cursor: pointer;
+
+}
+.chat-window-show-button:hover{
+  background: rgb(0 0 0 / 58%);
+
+
+}

@@ -7,9 +7,12 @@
   align-items: flex-start;
   justify-content: center;
   width: 100%;
-  background-image: url("/assets/test1.jpg");
-  background-repeat: no-repeat;
-  background-size: cover;
+  background: #43cea2;  /* fallback for old browsers */
+  background: -webkit-linear-gradient(22deg, #0b2255, #1b93a3);  /* Chrome 10-25, Safari 5.1-6 */
+  background: linear-gradient(22deg, #0b2255, #1b93a3);  /* Chrome 10-25, Safari 5.1-6 */
+  /*background-image: url("/assets/test1.jpg");*/
+  /*background-repeat: no-repeat;*/
+  /*background-size: cover;*/
 }
 
 .home-left-sidebar {

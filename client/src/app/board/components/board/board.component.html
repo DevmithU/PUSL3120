@@ -12,7 +12,7 @@
   <div class="board" >
 
 
-    <div class="rotate" *ngIf="data$ | async as data" #r1>
+    <div class="rotate" *ngIf="data$ | async as data" >
       <div class="board-header-container">
         <div class="board-title">
           <inline-form
@@ -30,65 +30,116 @@
         <div *ngIf="userId==data.board.userId" class="delete-board" (click)="deleteBoard()">Delete board</div>
       </div>
       <hr class="board-header-divider">
+      <div class="board-body-container">
+        <div class="chat-window" >
+          <div class="chat-window-header">
+            <div *ngIf="showChat" class="chat-header">
+              Chats
 
-      <div class="columns">
-        <div class="column" *ngFor="let column of data.columns">
-          <div class="column-title">
-            <inline-form
-              class="edit-column-form"
-              [defaultText]="column.title"
-              [title]="column.title"
-              (handleSubmit)="updateColumnName($event, column.id)"
-            ></inline-form>
-            <img
-              src="/assets/close_icon.svg"
-              class="column-delete-icon"
-              (click)="deleteColumn(column.id)"
-            />
-          </div>
-          <div
-            *ngFor="let task of getTasksByColumn(column.id, data.tasks)"
-            class="task"
-            [ngClass]="{ 'task-not-done': ((task.hasCheck)&&(!(task.checkStatus))), 'task-done': ((task.hasCheck)&&((task.checkStatus))),'task':true,'task-no-check':!(task.hasCheck)}"
-          >
-            <div *ngIf= "task.hasCheck" class="task-check-box">
-              <input  type="checkbox" [checked]="task.checkStatus" (change)="updateTaskCheckStatus($event,task.id)" value="hasCheck{{task.checkStatus}}">
             </div>
-            <div class="task-body"
-                 (click)="openTask(task.id)"
-            >
-              <div class="task-title">
-                {{ task.title }}
+            <button  class="chat-window-show-button" (click)="closeChat()"> {{showChatPlaceholder}} </button>
+          </div>
+          <div class="chat-window-body" *ngIf="showChat">
 
-              </div>
-              <hr  *ngIf= "task.description" class="task-header-divider">
 
-              <div *ngIf= "task.description" class="task-description">
-               {{ task.description }}
+            <div #chatsElement class="chats"  (resize)="scrollToBottom()">
+
+              <div   *ngFor="let chat of chatList; index as i"
+                     [ngClass]="{'chat-user':chat.userId==userId,'chat-member':chat.userId!==userId,'chat-common':true}">
+                <div  *ngIf="(nameList[i]==1)&& (chat.userId!=userId)"
+                      [ngClass]="{'chat-username-user':chat.userId==userId,'chat-username-member':chat.userId!==userId,'chat-username':true}">
+
+                  {{chat.userName}}
+                </div>
+                {{chat.text}}
               </div>
 
             </div>
+            <form [formGroup]="form" (ngSubmit)="onChatSubmit()">
+
+              <div class="chat-input">
+                <input
+                  formControlName="newChat"
+                  type="text"
+                  placeholder=""
+                  class="chat-input-box"
+                />
+                <button type="submit" class="chat-submit-button"> send </button>
+
+
+              </div>
+            </form >
+
+
           </div>
 
-          <inline-form
-            class="create-task-form"
-            defaultText="＋Add a card"
-            [hasButton]="true"
-            buttonText="Add Card"
-            inputPlaceholder="Enter a title for this card"
-            (handleSubmit)="createTask($event, column.id)"
-          >
 
-          </inline-form>
         </div>
-        <inline-form
-          class="create-column-form"
-          defaultText="Add a list"
-          [hasButton]="true"
-          buttonText="Add List"
-          inputPlaceholder="Add column name"
-          (handleSubmit)="createColumn($event)"
-        ></inline-form>
+
+
+        <div class="columns">
+
+          <div *ngFor="let column of data.columns" class="column">
+            <div class="column-title">
+              <inline-form
+                class="edit-column-form"
+                [defaultText]="column.title"
+                [title]="column.title"
+                (handleSubmit)="updateColumnName($event, column.id)"
+              ></inline-form>
+              <img
+                src="/assets/close_icon.svg"
+                class="column-delete-icon"
+                (click)="deleteColumn(column.id)"
+              />
+            </div>
+            <div
+              *ngFor="let task of getTasksByColumn(column.id, data.tasks)"
+              class="task"
+              [ngClass]="{ 'task-not-done': ((task.hasCheck)&&(!(task.checkStatus))), 'task-done': ((task.hasCheck)&&((task.checkStatus))),'task':true,'task-no-check':!(task.hasCheck)}"
+            >
+              <div *ngIf= "task.hasCheck" class="task-check-box">
+                <input  type="checkbox" [checked]="task.checkStatus" (change)="updateTaskCheckStatus($event,task.id)" value="hasCheck{{task.checkStatus}}">
+              </div>
+              <div class="task-body"
+                   (click)="openTask(task.id)"
+              >
+                <div class="task-title">
+                  {{ task.title }}
+
+                </div>
+                <hr  *ngIf= "task.description" class="task-header-divider">
+
+                <div *ngIf= "task.description" class="task-description">
+                  {{ task.description }}
+                </div>
+
+              </div>
+            </div>
+
+            <inline-form
+              class="create-task-form"
+              defaultText="＋Add a card"
+              [hasButton]="true"
+              buttonText="Add Card"
+              inputPlaceholder="Enter a title for this card"
+              (handleSubmit)="createTask($event, column.id)"
+            >
+
+            </inline-form>
+          </div>
+          <inline-form
+            class="create-column-form"
+            defaultText="Add a list"
+            [hasButton]="true"
+            buttonText="Add List"
+            inputPlaceholder="Add column name"
+            (handleSubmit)="createColumn($event)"
+          ></inline-form>
+        </div>
+
+
+
       </div>
 
   </div>

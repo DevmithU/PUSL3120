@@ -13,6 +13,8 @@ import { BoardService } from './services/board.service';
 import {UserListComponent} from "./components/userList/userList.component";
 import {UserListService} from "../shared/services/userList.service";
 import {WhiteBoardModule} from "../whiteboard/whiteBoard.module";
+import {ChatService} from "../shared/services/chat.service";
+import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
 
 const routes: Routes = [
   {
@@ -40,8 +42,10 @@ const routes: Routes = [
     InlineFormModule,
     ReactiveFormsModule,
     WhiteBoardModule,
+    BrowserAnimationsModule,
+
   ],
   declarations: [BoardComponent, TaskViewComponent, UserListComponent],
-  providers: [BoardService, ColumnsService, TasksService, UserListService],
+  providers: [BoardService, ColumnsService, TasksService, UserListService,ChatService],
 })
 export class BoardModule {}
