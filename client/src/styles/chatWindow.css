@@ -6,6 +6,7 @@
   padding: 8px;
   margin: 0 4px 0px 12px;
   border-radius: 7px;
+  max-width: 440px;
 }
 .chat-window-body{
   min-width: 420px;
